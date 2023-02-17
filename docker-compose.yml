@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+
+  hp-client:
+    build:
+      context: ./client
+    container_name: hp-client
+    tty: true
+    # command: "yarn dev"
+    environment:
+      TZ: "Asia/Tokyo"
+      HOST: "0.0.0.0"
+    volumes:
+      - ./client:/home/client
+    ports:
+      - "3000:3000"
+  
+  hp-api:
+    build: ./api
+    tty: true
+    container_name: hp-api
+    volumes:
+      - ./api:/var/www/html
+    environment:
+      TZ: Asia/Tokyo
+    # command: "sh -c 'bash /var/www/html/bin/init.sh && apache2-foreground'"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - hp-db
+  
+  hp-db:
+    build:
+      context: ./database
+    container_name: hp-db
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      PGPASSWORD: docker
+      POSTGRES_DB: main
+      TZ: "Asia/Tokyo"
+    ports:
+      - 50432:5432
+    volumes:
+      - ./database/data:/var/lib/postgresql/data
