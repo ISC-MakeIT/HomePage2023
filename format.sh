@@ -2,7 +2,7 @@
 
 main() {
     checkStartedTheApiContainer
-    runTest
+    runFormat
 }
 
 checkStartedTheApiContainer() {
@@ -23,7 +23,7 @@ abend() {
     exit 1
 }
 
-runTest() {
+runFormat() {
     docker compose exec -T hp-api composer format
 }
 
