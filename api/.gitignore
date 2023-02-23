@@ -1,3 +1,4 @@
+.php-cs-fixer.cache
 /.phpunit.cache
 /node_modules
 /public/build
@@ -14,7 +15,6 @@ auth.json
 npm-debug.log
 yarn-error.log
 .phpunit.result.cache
-.php-cs-fixer.cache
 /.fleet
 /.idea
 /.vscode

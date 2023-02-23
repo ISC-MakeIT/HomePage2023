@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Member\AlreadyCreatedUserNameOfMember;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -34,6 +35,13 @@ class Handler extends ExceptionHandler {
         'password',
         'password_confirmation',
     ];
+
+    public function render($request, Throwable $e) {
+        if ($e instanceof AlreadyCreatedUserNameOfMember) {
+            return response('既に使用されているユーザー名です', 400);
+        }
+        return parent::render($request, $e);
+    }
 
     /**
      * Register the exception handling callbacks for the application.

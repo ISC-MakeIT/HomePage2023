@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ActiveMember extends Model {
     use HasFactory;
 
-    public const UPDATED_AT = null;
-
     protected $primaryKey = 'member_id';
-    protected $fillable = [
+    protected $fillable   = [
         'member_id',
         'name',
         'job_title',
@@ -20,7 +18,9 @@ class ActiveMember extends Model {
         'github',
         'description',
         'username',
-        'password'
+        'password',
+        'creator',
+        'updator'
     ];
     protected $hidden = [
         'password',
@@ -36,5 +36,9 @@ class ActiveMember extends Model {
             'github'      => $this->github,
             'description' => $this->description,
         ];
+    }
+
+    public static function isExistsUserNameBy(string $username): bool {
+        return ActiveMember::where('username', $username)->exists();
     }
 }

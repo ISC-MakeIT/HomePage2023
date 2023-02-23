@@ -3,6 +3,7 @@
 namespace App\Models\Member;
 
 use App\Domain\Beans\Member\MemberWithAbility;
+use App\Exceptions\Member\AlreadyCreatedUserNameOfMember;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,10 +17,15 @@ class Member extends Authenticatable {
     public const UPDATED_AT = null;
 
     protected $primaryKey = 'member_id';
-    protected $fillable = [
-    ];
 
-    public static function createMemberWithAbility(MemberWithAbility $memberWithAbility) {
+    public static function createMemberWithAbility(MemberWithAbility $memberWithAbility): Member {
+        if (ActiveMember::isExistsUserNameBy($memberWithAbility->username())) {
+            throw new AlreadyCreatedUserNameOfMember();
+        }
+        if (NonActiveMember::isExistsUserNameBy($memberWithAbility->username())) {
+            throw new AlreadyCreatedUserNameOfMember();
+        }
+
         $member               = Member::create();
         $memberContent        = [
             'member_id'   => $member->member_id,
@@ -31,13 +37,18 @@ class Member extends Authenticatable {
             'description' => $memberWithAbility->description(),
             'username'    => $memberWithAbility->username(),
             'password'    => $memberWithAbility->password(),
+            'creator'     => $memberWithAbility->creator(),
+            'updator'     => $memberWithAbility->updator(),
         ];
         $memberAbilityContent = [
             'member_id' => $member->member_id,
             'role_id'   => $memberWithAbility->roleId(),
+            'creator'   => $memberWithAbility->creator(),
+            'updator'   => $memberWithAbility->updator(),
         ];
-        /** @var ActiveMember */
         ActiveMember::create($memberContent);
         MemberAbility::create($memberAbilityContent);
+
+        return $member;
     }
 }

@@ -11,7 +11,7 @@ class Role extends Model {
     public const UPDATED_AT = null;
 
     protected $primaryKey = 'role_id';
-    protected $fillable = [
+    protected $fillable   = [
         'name',
     ];
 }

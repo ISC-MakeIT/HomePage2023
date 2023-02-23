@@ -12,6 +12,8 @@ class MemberWithAbility {
     private string $username;
     private string $password;
     private int $roleId;
+    private int $creator;
+    private int $updator;
 
     private function __construct(
         string $name,
@@ -23,16 +25,20 @@ class MemberWithAbility {
         string $username,
         string $password,
         int $roleId,
+        int $creator,
+        int $updator,
     ) {
-        $this->name = $name;
-        $this->jobTitle = $jobTitle;
-        $this->discord = $discord;
-        $this->twitter = $twitter;
-        $this->github = $github;
+        $this->name        = $name;
+        $this->jobTitle    = $jobTitle;
+        $this->discord     = $discord;
+        $this->twitter     = $twitter;
+        $this->github      = $github;
         $this->description = $description;
-        $this->username = $username;
-        $this->password = $password;
-        $this->roleId = $roleId;
+        $this->username    = $username;
+        $this->password    = $password;
+        $this->roleId      = $roleId;
+        $this->creator     = $creator;
+        $this->updator     = $updator;
     }
 
     public function name(): string {
@@ -71,6 +77,14 @@ class MemberWithAbility {
         return $this->roleId;
     }
 
+    public function creator(): int {
+        return $this->creator;
+    }
+
+    public function updator(): int {
+        return $this->updator;
+    }
+
     public static function from(
         string $name,
         string $jobTitle,
@@ -81,6 +95,8 @@ class MemberWithAbility {
         string $username,
         string $password,
         int $roleId,
+        int $creator,
+        int $updator,
     ): MemberWithAbility {
         return new MemberWithAbility(
             $name,
@@ -92,6 +108,8 @@ class MemberWithAbility {
             $username,
             $password,
             $roleId,
+            $creator,
+            $updator
         );
     }
 }
