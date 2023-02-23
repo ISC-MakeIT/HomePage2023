@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminMemberController extends Controller {
     public function register(RegisterMemberRequest $request): Response {
-        DB::transaction(function() use ($request) {
+        DB::transaction(function () use ($request) {
             $validatedRequest = $request->validated();
             $hashedPassword   = Hash::make($validatedRequest['password']);
 
@@ -25,7 +25,9 @@ class AdminMemberController extends Controller {
                 $validatedRequest['description'],
                 $validatedRequest['username'],
                 $hashedPassword,
-                $validatedRequest['roleId']
+                $validatedRequest['roleId'],
+                auth()->id(),
+                auth()->id(),
             ));
         });
 

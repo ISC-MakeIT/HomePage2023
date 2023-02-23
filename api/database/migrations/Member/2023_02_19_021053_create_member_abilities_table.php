@@ -13,10 +13,14 @@ return new class () extends Migration {
 
             $table->foreignId('member_id');
             $table->foreignId('role_id');
+            $table->foreignId('creator');
+            $table->foreignId('updator');
             $table->timestamp('created_at')->useCurrent();
 
             $table->foreign('member_id')->references('member_id')->on('members');
             $table->foreign('role_id')->references('role_id')->on('roles');
+            $table->foreign('creator')->references('member_id')->on('members');
+            $table->foreign('updator')->references('member_id')->on('members');
         });
     }
 

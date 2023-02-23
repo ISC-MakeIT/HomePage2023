@@ -11,7 +11,7 @@ class ArchiveMember extends Model {
     public const UPDATED_AT = null;
 
     protected $primaryKey = 'member_id';
-    protected $fillable = [
+    protected $fillable   = [
         'member_id',
         'name',
         'job_title',
@@ -20,7 +20,8 @@ class ArchiveMember extends Model {
         'github',
         'description',
         'username',
-        'password'
+        'password',
+        'creator'
     ];
     protected $hidden = [
         'password',

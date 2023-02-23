@@ -13,5 +13,7 @@ class MemberAbility extends Model {
     protected $fillable = [
         'member_id',
         'role_id',
+        'creator',
+        'updator',
     ];
 }

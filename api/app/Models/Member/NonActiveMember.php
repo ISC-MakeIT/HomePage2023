@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class NonActiveMember extends Model {
     use HasFactory;
 
-    public const UPDATED_AT = null;
-
     protected $primaryKey = 'member_id';
-    protected $fillable = [
+    protected $fillable   = [
         'member_id',
         'name',
         'job_title',
@@ -20,9 +18,15 @@ class NonActiveMember extends Model {
         'github',
         'description',
         'username',
-        'password'
+        'password',
+        'creator',
+        'updator'
     ];
     protected $hidden = [
         'password',
     ];
+
+    public static function isExistsUserNameBy(string $username): bool {
+        return NonActiveMember::where('username', $username)->exists();
+    }
 }
