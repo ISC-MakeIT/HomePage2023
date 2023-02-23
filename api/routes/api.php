@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Member\AdminMemberController;
 use App\Http\Controllers\Notification\AdminNotificationController;
+use App\Http\Controllers\Work\AdminWorkController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/admin')->group(function () {
@@ -11,6 +12,9 @@ Route::prefix('/admin')->group(function () {
     });
     Route::prefix('/notifications')->group(function () {
         Route::post('/', [AdminNotificationController::class, 'register']);
+    });
+    Route::prefix('/works')->group(function () {
+        Route::post('/', [AdminWorkController::class, 'register']);
     });
     // });
 });
