@@ -16,6 +16,8 @@ Route::prefix('/admin')->group(function () {
         Route::prefix('/works')->group(function () {
             Route::post('/', [AdminWorkController::class, 'register']);
         });
+
+        Route::post('/logout', [AdminMemberController::class, 'logout'])->name('logout');
     });
 
     Route::post('/login', [AdminMemberController::class, 'login'])->name('login');
