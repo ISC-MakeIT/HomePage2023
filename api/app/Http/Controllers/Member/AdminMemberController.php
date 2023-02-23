@@ -9,6 +9,7 @@ use App\Http\Requests\Member\Admin\RegisterMemberRequest;
 use App\Models\Member\ActiveMember;
 use App\Models\Member\Member;
 use App\Models\Member\NonActiveMember;
+use App\Models\Member\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -58,6 +59,12 @@ class AdminMemberController extends Controller {
                 'message' => 'ログアウトに成功しました。',
             ]);
         });
+    }
+
+    public function roles(): JsonResponse {
+        return response()->json(['roles' => Role::all()->map(function($role) {
+            return $role->toLowerCamelCaseJson();
+        })]);
     }
 
     public function register(RegisterMemberRequest $request): JsonResponse {

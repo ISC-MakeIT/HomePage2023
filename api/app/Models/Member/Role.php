@@ -14,4 +14,11 @@ class Role extends Model {
     protected $fillable   = [
         'name',
     ];
+
+    public function toLowerCamelCaseJson(): array {
+        return [
+            'roleId' => $this->role_id,
+            'name'   => $this->name,
+        ];
+    }
 }

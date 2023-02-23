@@ -9,6 +9,8 @@ Route::prefix('/admin')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('/members')->group(function () {
             Route::post('/', [AdminMemberController::class, 'register']);
+
+            Route::get('/roles', [AdminMemberController::class, 'roles']);
         });
         Route::prefix('/notifications')->group(function () {
             Route::post('/', [AdminNotificationController::class, 'register']);

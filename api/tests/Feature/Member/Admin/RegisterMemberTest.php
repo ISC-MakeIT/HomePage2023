@@ -10,8 +10,6 @@ use App\Models\Member\Role;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
 class RegisterMemberTest extends AlreadyLoggedInTestCase {
-    protected bool $isLoggedIn = true;
-
     public function test_メンバーの作成を行えること(): void {
         $role = Role::where('name', RoleName::MEMBER->toString())->first();
 
