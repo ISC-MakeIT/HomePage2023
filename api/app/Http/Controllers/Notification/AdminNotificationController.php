@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Notification\Admin\RegisterNotificationRequest;
 use App\Models\Notification\NonActiveNotification;
 use App\Models\Notification\Notification;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
 class AdminNotificationController extends Controller {
-    public function register(RegisterNotificationRequest $request): Response {
+    public function register(RegisterNotificationRequest $request): JsonResponse {
         DB::transaction(function () use ($request) {
             $validatedRequest = $request->validated();
 
@@ -26,6 +26,6 @@ class AdminNotificationController extends Controller {
             NonActiveNotification::create($nonActiveNotificationContent);
         });
 
-        return response('お知らせの作成に成功しました。', 201);
+        return response()->json(['message' => 'お知らせの作成に成功しました。'], 201);
     }
 }

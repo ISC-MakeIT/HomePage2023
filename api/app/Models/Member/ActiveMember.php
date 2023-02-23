@@ -4,8 +4,11 @@ namespace App\Models\Member;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\HasApiTokens;
 
 class ActiveMember extends Model {
+    use HasApiTokens;
     use HasFactory;
 
     protected $primaryKey = 'member_id';
@@ -22,9 +25,6 @@ class ActiveMember extends Model {
         'creator',
         'updator'
     ];
-    protected $hidden = [
-        'password',
-    ];
 
     public function toLowerCamelCaseJson(): array {
         return [
@@ -40,5 +40,16 @@ class ActiveMember extends Model {
 
     public static function isExistsUserNameBy(string $username): bool {
         return ActiveMember::where('username', $username)->exists();
+    }
+
+    public static function getActiveMemberIfCanLogin(string $username, string $password): ?ActiveMember {
+        if (ActiveMember::isExistsUserNameBy($username)) {
+            $member = ActiveMember::where('username', $username)->first();
+            if (Hash::check($password, $member->password)) {
+                return $member;
+            }
+        }
+
+        return null;
     }
 }

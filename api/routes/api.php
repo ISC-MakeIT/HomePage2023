@@ -6,15 +6,17 @@ use App\Http\Controllers\Work\AdminWorkController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/admin')->group(function () {
-    // Route::middleware('auth:sanctum')->group(function() {
-    Route::prefix('/members')->group(function () {
-        Route::post('/', [AdminMemberController::class, 'register']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::prefix('/members')->group(function () {
+            Route::post('/', [AdminMemberController::class, 'register']);
+        });
+        Route::prefix('/notifications')->group(function () {
+            Route::post('/', [AdminNotificationController::class, 'register']);
+        });
+        Route::prefix('/works')->group(function () {
+            Route::post('/', [AdminWorkController::class, 'register']);
+        });
     });
-    Route::prefix('/notifications')->group(function () {
-        Route::post('/', [AdminNotificationController::class, 'register']);
-    });
-    Route::prefix('/works')->group(function () {
-        Route::post('/', [AdminWorkController::class, 'register']);
-    });
-    // });
+
+    Route::post('/login', [AdminMemberController::class, 'login'])->name('login');
 });

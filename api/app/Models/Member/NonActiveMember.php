@@ -4,8 +4,11 @@ namespace App\Models\Member;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\HasApiTokens;
 
 class NonActiveMember extends Model {
+    use HasApiTokens;
     use HasFactory;
 
     protected $primaryKey = 'member_id';
@@ -22,11 +25,19 @@ class NonActiveMember extends Model {
         'creator',
         'updator'
     ];
-    protected $hidden = [
-        'password',
-    ];
 
     public static function isExistsUserNameBy(string $username): bool {
         return NonActiveMember::where('username', $username)->exists();
+    }
+
+    public static function getNonActiveMemberIfCanLogin(string $username, string $password): ?ActiveMember {
+        if (NonActiveMember::isExistsUserNameBy($username)) {
+            $member = NonActiveMember::where('username', $username)->first();
+            if (Hash::check($password, $member->password)) {
+                return $member;
+            }
+        }
+
+        return null;
     }
 }
