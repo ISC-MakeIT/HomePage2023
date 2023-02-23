@@ -10,6 +10,7 @@ use App\Models\Member\ActiveMember;
 use App\Models\Member\Member;
 use App\Models\Member\NonActiveMember;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -36,6 +37,26 @@ class AdminMemberController extends Controller {
             }
 
             throw new AccessDeniedHttpException('ユーザー名かパスワードが違います。');
+        });
+    }
+
+    public function logout(Request $request): JsonResponse {
+        return DB::transaction(function() use ($request) {
+            $currentToken = $request->bearerToken();
+
+            $activeMember    = ActiveMember::where('member_id', auth()->id())->first();
+            $nonActiveMember = NonActiveMember::where('member_id', auth()->id())->first();
+
+            if ($activeMember) {
+                $activeMember->deleteTokensBy($currentToken);
+            }
+            if ($nonActiveMember) {
+                $nonActiveMember->deleteTokensBy($currentToken);
+            }
+
+            return response()->json([
+                'message' => 'ログアウトに成功しました。',
+            ]);
         });
     }
 

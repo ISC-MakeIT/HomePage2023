@@ -26,7 +26,7 @@ services:
       TZ: Asia/Tokyo
     # command: "sh -c 'bash /var/www/html/bin/init.sh && apache2-foreground'"
     ports:
-      - "8000:8000"
+      - "8000:80"
     depends_on:
       - hp-db
   
