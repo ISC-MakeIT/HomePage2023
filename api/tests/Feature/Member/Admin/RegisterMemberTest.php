@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Member\Admin;
 
-use App\Domain\Beans\Member\MemberWithAbility;
 use App\Domain\ValueObjects\Member\RoleName;
 use App\Http\Requests\Member\Admin\RegisterMemberRequest;
 use App\Models\Member\ActiveMember;
