@@ -20,12 +20,10 @@ return new class () extends Migration {
             $table->string('username', 255);
             $table->string('password', 255);
             $table->foreignId('creator');
-            $table->foreignId('updator');
             $table->timestamps();
 
             $table->foreign('member_id')->references('member_id')->on('members');
             $table->foreign('creator')->references('member_id')->on('members');
-            $table->foreign('updator')->references('member_id')->on('members');
         });
     }
 

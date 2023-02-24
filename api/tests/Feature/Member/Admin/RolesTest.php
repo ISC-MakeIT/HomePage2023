@@ -10,7 +10,7 @@ class RolesTest extends AlreadyLoggedInTestCase {
         $response = $this->get('/api/admin/members/roles');
         $response->assertOk();
         $response->assertJson([
-            'roles' => Role::all()->map(function($role) {
+            'roles' => Role::all()->map(function ($role) {
                 return $role->toLowerCamelCaseJson();
             })->toArray()
         ]);

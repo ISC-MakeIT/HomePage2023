@@ -23,7 +23,6 @@ class NonActiveMember extends Model {
         'username',
         'password',
         'creator',
-        'updator'
     ];
 
     public function getAuthIdentifier() {

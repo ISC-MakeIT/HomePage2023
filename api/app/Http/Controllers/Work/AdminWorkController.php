@@ -14,12 +14,14 @@ class AdminWorkController extends Controller {
         DB::transaction(function () use ($request) {
             $validatedRequest = $request->validated();
 
-            $work                 = Work::create(['creator' => auth()->id()]);
+            $work = Work::create([
+                'creator' => auth()->id(),
+                'updator' => auth()->id(),
+            ]);
             $nonActiveWorkContent = array_merge(
                 [
                     'work_id'  => $work->work_id,
                     'creator'  => auth()->id(),
-                    'updator'  => auth()->id(),
                 ],
                 $validatedRequest
             );

@@ -12,6 +12,8 @@ class Work extends Model {
 
     protected $primaryKey = 'work_id';
     protected $fillable   = [
+        'version',
         'creator',
+        'updator',
     ];
 }

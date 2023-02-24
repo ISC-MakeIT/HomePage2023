@@ -14,12 +14,10 @@ return new class () extends Migration {
             $table->string('title', 255);
             $table->text('contents');
             $table->foreignId('creator');
-            $table->foreignId('updator');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
 
             $table->foreign('notification_id')->references('notification_id')->on('notifications');
             $table->foreign('creator')->references('member_id')->on('members');
-            $table->foreign('updator')->references('member_id')->on('members');
         });
     }
 

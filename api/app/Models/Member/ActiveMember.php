@@ -24,7 +24,6 @@ class ActiveMember extends Model {
         'username',
         'password',
         'creator',
-        'updator'
     ];
 
     public function toLowerCamelCaseJson(): array {
