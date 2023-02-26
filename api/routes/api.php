@@ -15,6 +15,7 @@ Route::prefix('/admin')->group(function () {
         Route::prefix('/notifications')->group(function () {
             Route::post('/', [AdminNotificationController::class, 'register']);
             Route::put('/', [AdminNotificationController::class, 'edit']);
+            Route::delete('/', [AdminNotificationController::class, 'delete']);
         });
         Route::prefix('/works')->group(function () {
             Route::post('/', [AdminWorkController::class, 'register']);
