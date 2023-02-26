@@ -1,32 +1,35 @@
 <?php
 
-namespace Tests\Feature;
+namespace App\Console\Commands\Insert;
 
 use App\Domain\ValueObjects\Member\RoleName;
 use App\Models\Member\ActiveMember;
 use App\Models\Member\Member;
 use App\Models\Member\MemberAbility;
 use App\Models\Member\Role;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
-class AlreadyLoggedInTestCase extends BaseTestCase {
-    use DatabaseTransactions;
+class RandomAdminUser202302261107 extends Command {
+    protected $signature   = 'insert:random_admin_member';
+    protected $description = 'insert random admin member into the members table';
 
-    protected function setUp(): void {
-        parent::setUp();
+    public function handle(): void {
+        $username = Str::random(16);
+        $password = Str::random(16);
 
         $member = Member::create();
         ActiveMember::create([
             'member_id'   => $member->member_id,
-            'name'        => 'test',
+            'name'        => 'Test',
             'job_title'   => 'Programer',
             'discord'     => null,
             'twitter'     => null,
             'github'      => null,
             'description' => 'test',
-            'username'    => 'admin',
-            'password'    => Hash::make('password'),
+            'username'    => $username,
+            'password'    => Hash::make($password),
             'creator'     => $member->member_id,
             'updator'     => $member->member_id,
         ]);
@@ -36,6 +39,8 @@ class AlreadyLoggedInTestCase extends BaseTestCase {
             'creator'   => $member->member_id,
             'updator'   => $member->member_id,
         ]);
-        $this->actingAs($member);
+
+        print('Username: ' . $username . "\n");
+        print('Password: ' . $password . "\n");
     }
 }
