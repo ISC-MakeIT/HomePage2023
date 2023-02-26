@@ -6,7 +6,9 @@ use App\Exceptions\Notification\AlreadyEditedNotificationException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Notification\Admin\EditNotificationRequest;
 use App\Http\Requests\Notification\Admin\RegisterNotificationRequest;
+use App\Http\Requests\Notification\DeleteNotificationRequest;
 use App\Models\Notification\ActiveNotification;
+use App\Models\Notification\ArchiveNotification;
 use App\Models\Notification\NonActiveNotification;
 use App\Models\Notification\Notification;
 use Illuminate\Http\JsonResponse;
@@ -39,7 +41,8 @@ class AdminNotificationController extends Controller {
             $validatedRequest = $request->validated();
 
             /** @var Notification */
-            $foundNotification = Notification::findOrFail($validatedRequest['notificationId']);
+            $foundNotification = Notification::doesntHave('archiveNotification')
+                ->findOrFail($validatedRequest['notificationId']);
             if ($foundNotification->hasDifferentVersion($validatedRequest['currentVersion'])) {
                 throw new AlreadyEditedNotificationException();
             }
@@ -70,6 +73,39 @@ class AdminNotificationController extends Controller {
                 'creator'         => auth()->id(),
             ]);
             return response()->json(['message' => 'お知らせ実装の更新に成功しました。']);
+        });
+    }
+
+    public function delete(DeleteNotificationRequest $request): JsonResponse {
+        return DB::transaction(function () use ($request) {
+            $validatedRequest = $request->validated();
+
+            $foundNotification = Notification::doesntHave('archiveNotification')
+                ->with(['activeNotification', 'nonActiveNotification'])
+                ->findOrFail($validatedRequest['notificationId']);
+
+            if ($foundNotification->activeNotification) {
+                ArchiveNotification::create([
+                    'notification_id' => $foundNotification->activeNotification->notification_id,
+                    'title'           => $foundNotification->activeNotification->title,
+                    'contents'        => $foundNotification->activeNotification->contents,
+                    'creator'         => auth()->id(),
+                ]);
+                $foundNotification->activeNotification->delete();
+                return response()->json(['message' => 'お知らせの削除に成功しました。']);
+            }
+            if ($foundNotification->nonActiveNotification) {
+                ArchiveNotification::create([
+                    'notification_id' => $foundNotification->nonActiveNotification->notification_id,
+                    'title'           => $foundNotification->nonActiveNotification->title,
+                    'contents'        => $foundNotification->nonActiveNotification->contents,
+                    'creator'         => auth()->id(),
+                ]);
+                $foundNotification->nonActiveNotification->delete();
+                return response()->json(['message' => 'お知らせの削除に成功しました。']);
+            }
+
+            return response()->json(['message' => '予期しないエラーが発生しました。'], 500);
         });
     }
 }

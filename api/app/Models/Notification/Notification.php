@@ -27,4 +27,8 @@ class Notification extends Model {
     public function nonActiveNotification(): HasOne {
         return $this->hasOne(NonActiveNotification::class, 'notification_id', 'notification_id');
     }
+
+    public function archiveNotification(): HasOne {
+        return $this->hasOne(ArchiveNotification::class, 'notification_id', 'notification_id');
+    }
 }
