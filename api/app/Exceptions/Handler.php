@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
-use App\Exceptions\Member\AlreadyCreatedUserNameOfMember;
+use App\Exceptions\Member\AlreadyCreatedUserNameOfMemberException;
+use App\Exceptions\Notification\AlreadyEditedNotificationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler {
@@ -37,9 +39,16 @@ class Handler extends ExceptionHandler {
     ];
 
     public function render($request, Throwable $e) {
-        if ($e instanceof AlreadyCreatedUserNameOfMember) {
-            return response('既に使用されているユーザー名です', 400);
+        if ($e instanceof AlreadyCreatedUserNameOfMemberException) {
+            return response(['message' => '既に使用されているユーザー名です'], 400);
         }
+        if ($e instanceof AlreadyEditedNotificationException) {
+            return response(['message' => '既に編集されているお知らせです。'], 500);
+        }
+        if ($e instanceof ValidationException) {
+            return response($e->errors(), 400);
+        }
+
         return parent::render($request, $e);
     }
 

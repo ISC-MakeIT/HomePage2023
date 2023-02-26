@@ -42,7 +42,7 @@ class AdminMemberController extends Controller {
     }
 
     public function logout(Request $request): JsonResponse {
-        return DB::transaction(function() use ($request) {
+        return DB::transaction(function () use ($request) {
             $currentToken = $request->bearerToken();
 
             $activeMember    = ActiveMember::where('member_id', auth()->id())->first();
@@ -62,7 +62,7 @@ class AdminMemberController extends Controller {
     }
 
     public function roles(): JsonResponse {
-        return response()->json(['roles' => Role::all()->map(function($role) {
+        return response()->json(['roles' => Role::all()->map(function ($role) {
             return $role->toLowerCamelCaseJson();
         })]);
     }

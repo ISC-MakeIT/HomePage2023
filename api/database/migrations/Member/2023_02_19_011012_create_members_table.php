@@ -11,6 +11,7 @@ return new class () extends Migration {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->id('member_id');
 
+            $table->bigInteger('version', false, false)->default(0);
             $table->timestamp('created_at')->useCurrent();
         });
     }

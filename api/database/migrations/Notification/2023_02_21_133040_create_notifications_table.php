@@ -11,8 +11,13 @@ return new class () extends Migration {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->id('notification_id');
 
+            $table->bigInteger('version', false, false)->default(0);
             $table->foreignId('creator');
-            $table->timestamp('created_at')->useCurrent();
+            $table->foreignId('updator');
+            $table->timestamps();
+
+            $table->foreign('creator')->references('member_id')->on('members');
+            $table->foreign('updator')->references('member_id')->on('members');
         });
     }
 

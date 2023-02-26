@@ -14,6 +14,5 @@ class ActiveWork extends Model {
         'title',
         'contents',
         'creator',
-        'updator',
     ];
 }

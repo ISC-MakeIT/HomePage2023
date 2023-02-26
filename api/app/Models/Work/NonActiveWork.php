@@ -14,6 +14,5 @@ class NonActiveWork extends Model {
         'title',
         'contents',
         'creator',
-        'updator',
     ];
 }
