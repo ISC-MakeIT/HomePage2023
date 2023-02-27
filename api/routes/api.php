@@ -19,6 +19,7 @@ Route::prefix('/admin')->group(function () {
         });
         Route::prefix('/works')->group(function () {
             Route::post('/', [AdminWorkController::class, 'register']);
+            Route::put('/', [AdminWorkController::class, 'edit']);
         });
         Route::post('/logout', [AdminMemberController::class, 'logout'])->name('logout');
     });
