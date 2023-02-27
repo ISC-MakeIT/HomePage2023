@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use App\Exceptions\Member\AlreadyCreatedUserNameOfMemberException;
 use App\Exceptions\Notification\AlreadyEditedNotificationException;
+use App\Exceptions\Work\AlreadyEditedWorkException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -44,6 +45,9 @@ class Handler extends ExceptionHandler {
         }
         if ($e instanceof AlreadyEditedNotificationException) {
             return response(['message' => '既に編集されているお知らせです。'], 500);
+        }
+        if ($e instanceof AlreadyEditedWorkException) {
+            return response(['message' => '既に編集されている活動実績です。'], 500);
         }
         if ($e instanceof ValidationException) {
             return response($e->errors(), 400);
