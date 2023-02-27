@@ -3,7 +3,7 @@
 namespace Tests\Feature\Notification\Admin;
 
 use App\Http\Requests\Notification\Admin\RegisterNotificationRequest;
-use App\Http\Requests\Notification\DeleteNotificationRequest;
+use App\Http\Requests\Notification\Admin\DeleteNotificationRequest;
 use App\Models\Notification\ArchiveNotification;
 use App\Models\Notification\Notification;
 use Tests\Feature\AlreadyLoggedInTestCase;

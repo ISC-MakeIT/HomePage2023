@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Member;
 
 use App\Domain\Beans\Member\MemberWithAbility;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Member\Admin\ChangePasswordRequest;
 use App\Http\Requests\Member\Admin\MemberLoginRequest;
 use App\Http\Requests\Member\Admin\RegisterMemberRequest;
 use App\Models\Member\ActiveMember;
@@ -65,6 +66,31 @@ class AdminMemberController extends Controller {
         return response()->json(['roles' => Role::all()->map(function ($role) {
             return $role->toLowerCamelCaseJson();
         })]);
+    }
+
+    public function changePassword(ChangePasswordRequest $request): JsonResponse {
+        return DB::transaction(function () use ($request) {
+            $validatedRequest = $request->validated();
+            /** @var Member */
+            $member = Member::with(['activeMember', 'nonActiveMember'])->find(auth()->id());
+
+            if ($member->withActiveMemberIsExistsBy($validatedRequest['oldPassword'])) {
+                $activeMember = ActiveMember::find(auth()->id());
+                $activeMember->update([
+                    'password' => Hash::make($validatedRequest['newPassword'])
+                ]);
+                return response()->json(['message' => 'パスワードの変更に成功しました。']);
+            }
+            if ($member->withNonActiveMemberIsExistsBy($validatedRequest['oldPassword'])) {
+                $nonActiveMember = NonActiveMember::find(auth()->id());
+                $nonActiveMember->update([
+                    'password' => Hash::make($validatedRequest['newPassword'])
+                ]);
+                return response()->json(['message' => 'パスワードの変更に成功しました。']);
+            }
+
+            throw new AccessDeniedHttpException('パスワードが違います。');
+        });
     }
 
     public function register(RegisterMemberRequest $request): JsonResponse {
