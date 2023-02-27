@@ -6,7 +6,7 @@ use App\Exceptions\Notification\AlreadyEditedNotificationException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Notification\Admin\EditNotificationRequest;
 use App\Http\Requests\Notification\Admin\RegisterNotificationRequest;
-use App\Http\Requests\Notification\DeleteNotificationRequest;
+use App\Http\Requests\Notification\Admin\DeleteNotificationRequest;
 use App\Models\Notification\ActiveNotification;
 use App\Models\Notification\ArchiveNotification;
 use App\Models\Notification\NonActiveNotification;

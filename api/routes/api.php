@@ -9,7 +9,7 @@ Route::prefix('/admin')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('/members')->group(function () {
             Route::post('/', [AdminMemberController::class, 'register']);
-
+            Route::put('/password', [AdminMemberController::class, 'changePassword']);
             Route::get('/roles', [AdminMemberController::class, 'roles']);
         });
         Route::prefix('/notifications')->group(function () {
@@ -20,7 +20,6 @@ Route::prefix('/admin')->group(function () {
         Route::prefix('/works')->group(function () {
             Route::post('/', [AdminWorkController::class, 'register']);
         });
-
         Route::post('/logout', [AdminMemberController::class, 'logout'])->name('logout');
     });
 

@@ -5,8 +5,10 @@ namespace App\Models\Member;
 use App\Domain\Beans\Member\MemberWithAbility;
 use App\Exceptions\Member\AlreadyCreatedUserNameOfMemberException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class Member extends Authenticatable {
@@ -20,6 +22,22 @@ class Member extends Authenticatable {
     protected $fillable   = [
         'version'
     ];
+
+    public function activeMember(): HasOne {
+        return $this->hasOne(ActiveMember::class, 'member_id', 'member_id');
+    }
+
+    public function nonActiveMember(): HasOne {
+        return $this->hasOne(NonActiveMember::class, 'member_id', 'member_id');
+    }
+
+    public function withActiveMemberIsExistsBy(string $password): bool {
+        return $this->activeMember && Hash::check($password, $this->activeMember->password);
+    }
+
+    public function withNonActiveMemberIsExistsBy(string $password): bool {
+        return $this->nonActiveMember && Hash::check($password, $this->nonActiveMember->password);
+    }
 
     public static function createMemberWithAbility(MemberWithAbility $memberWithAbility): Member {
         if (ActiveMember::isExistsUserNameBy($memberWithAbility->username())) {
