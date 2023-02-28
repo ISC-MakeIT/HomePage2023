@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Member;
 use App\Domain\Beans\Member\MemberWithAbility;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Member\Admin\ChangePasswordRequest;
+use App\Http\Requests\Member\Admin\EditMemberRequest;
 use App\Http\Requests\Member\Admin\MemberLoginRequest;
 use App\Http\Requests\Member\Admin\RegisterMemberRequest;
 use App\Models\Member\ActiveMember;
@@ -114,5 +115,50 @@ class AdminMemberController extends Controller {
         });
 
         return response()->json(['message' => 'メンバーの作成に成功しました。'], 201);
+    }
+
+    public function edit(EditMemberRequest $request): JsonResponse {
+        return DB::transaction(function () use ($request) {
+            $validatedRequest = $request->validated();
+
+            $member = Member::doesntHave('archiveMember')
+                ->with(['activeMember', 'nonActiveMember'])
+                ->find(auth()->id());
+            $member->update([
+                'updator' => auth()->id()
+            ]);
+            $member->activeMember()->delete();
+            $member->nonActiveMember()->delete();
+
+            if ($validatedRequest['isActive']) {
+                ActiveMember::create([
+                    'member_id'   => $member->member_id,
+                    'name'        => $validatedRequest['name'],
+                    'job_title'   => $validatedRequest['jobTitle'],
+                    'discord'     => $validatedRequest['discord'],
+                    'twitter'     => $validatedRequest['twitter'],
+                    'github'      => $validatedRequest['github'],
+                    'description' => $validatedRequest['description'],
+                    'username'    => $member->activeMember->username,
+                    'password'    => $member->activeMember->password,
+                    'creator'     => auth()->id(),
+                ]);
+                return response()->json(['message' => 'メンバーの編集に成功しました。']);
+            }
+
+            NonActiveMember::create([
+                'member_id'   => $member->member_id,
+                'name'        => $validatedRequest['name'],
+                'job_title'   => $validatedRequest['jobTitle'],
+                'discord'     => $validatedRequest['discord'],
+                'twitter'     => $validatedRequest['twitter'],
+                'github'      => $validatedRequest['github'],
+                'description' => $validatedRequest['description'],
+                'username'    => $member->activeMember->username,
+                'password'    => $member->activeMember->password,
+                'creator'     => auth()->id(),
+            ]);
+            return response()->json(['message' => 'メンバーの編集に成功しました。']);
+        });
     }
 }
