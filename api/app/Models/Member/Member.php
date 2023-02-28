@@ -31,6 +31,10 @@ class Member extends Authenticatable {
         return $this->hasOne(NonActiveMember::class, 'member_id', 'member_id');
     }
 
+    public function archiveMember(): HasOne {
+        return $this->hasOne(ArchiveMember::class, 'member_id', 'member_id');
+    }
+
     public function withActiveMemberIsExistsBy(string $password): bool {
         return $this->activeMember && Hash::check($password, $this->activeMember->password);
     }
