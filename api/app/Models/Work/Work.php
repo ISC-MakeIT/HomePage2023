@@ -29,4 +29,8 @@ class Work extends Model {
     public function nonActiveWork(): HasOne {
         return $this->hasOne(NonActiveWork::class, 'work_id', 'work_id');
     }
+
+    public function archiveWork(): HasOne {
+        return $this->hasOne(ArchiveWork::class, 'work_id', 'work_id');
+    }
 }
