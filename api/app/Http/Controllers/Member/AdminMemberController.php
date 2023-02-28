@@ -64,12 +64,16 @@ class AdminMemberController extends Controller {
     }
 
     public function roles(): JsonResponse {
+        $this->authorize('roles', Member::class);
+
         return response()->json(['roles' => Role::all()->map(function ($role) {
             return $role->toLowerCamelCaseJson();
         })]);
     }
 
     public function changePassword(ChangePasswordRequest $request): JsonResponse {
+        $this->authorize('changePassword', Member::class);
+
         return DB::transaction(function () use ($request) {
             $validatedRequest = $request->validated();
             /** @var Member */
@@ -95,6 +99,8 @@ class AdminMemberController extends Controller {
     }
 
     public function register(RegisterMemberRequest $request): JsonResponse {
+        $this->authorize('register', Member::class);
+
         DB::transaction(function () use ($request) {
             $validatedRequest = $request->validated();
             $hashedPassword   = Hash::make($validatedRequest['password']);
@@ -118,6 +124,8 @@ class AdminMemberController extends Controller {
     }
 
     public function edit(EditMemberRequest $request): JsonResponse {
+        $this->authorize('edit', Member::class);
+
         return DB::transaction(function () use ($request) {
             $validatedRequest = $request->validated();
 

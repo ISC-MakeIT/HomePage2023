@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\DB;
 
 class AdminNotificationController extends Controller {
     public function register(RegisterNotificationRequest $request): JsonResponse {
+        $this->authorize('register', Notification::class);
+
         DB::transaction(function () use ($request) {
             $validatedRequest = $request->validated();
 
@@ -37,6 +39,8 @@ class AdminNotificationController extends Controller {
     }
 
     public function edit(EditNotificationRequest $request): JsonResponse {
+        $this->authorize('edit', Notification::class);
+
         return DB::transaction(function () use ($request) {
             $validatedRequest = $request->validated();
 
@@ -77,6 +81,8 @@ class AdminNotificationController extends Controller {
     }
 
     public function delete(DeleteNotificationRequest $request): JsonResponse {
+        $this->authorize('delete', Notification::class);
+
         return DB::transaction(function () use ($request) {
             $validatedRequest = $request->validated();
 

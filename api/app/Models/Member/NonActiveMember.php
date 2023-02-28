@@ -2,6 +2,7 @@
 
 namespace App\Models\Member;
 
+use App\Domain\ValueObjects\Member\RoleName;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
@@ -46,5 +47,17 @@ class NonActiveMember extends Model {
         }
 
         return null;
+    }
+
+    public function isAdmin(): bool {
+        return $this->role_id === Role::where('name', RoleName::ADMIN)->first()->role_id;
+    }
+
+    public function isMember(): bool {
+        return $this->role_id === Role::where('name', RoleName::MEMBER)->first()->role_id;
+    }
+
+    public function isTrial(): bool {
+        return $this->role_id === Role::where('name', RoleName::TRIAL)->first()->role_id;
     }
 }
