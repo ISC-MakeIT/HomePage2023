@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Work;
 
 use App\Exceptions\Work\AlreadyEditedWorkException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Work\Admin\DeleteWorkRequest;
 use App\Http\Requests\Work\Admin\EditWorkRequest;
 use App\Http\Requests\Work\Admin\RegisterWorkRequest;
 use App\Models\Work\ActiveWork;
+use App\Models\Work\ArchiveWork;
 use App\Models\Work\NonActiveWork;
 use App\Models\Work\Work;
 use Illuminate\Http\JsonResponse;
@@ -38,7 +40,7 @@ class AdminWorkController extends Controller {
         return DB::transaction(function () use ($request) {
             $validatedRequest = $request->validated();
 
-            $foundWork = Work::findOrFail($validatedRequest['workId']);
+            $foundWork = Work::doesntHave('archiveWork')->findOrFail($validatedRequest['workId']);
             if ($foundWork->hasDifferentVersion($validatedRequest['currentVersion'])) {
                 throw new AlreadyEditedWorkException();
             }
@@ -67,6 +69,39 @@ class AdminWorkController extends Controller {
                 'creator'  => auth()->id(),
             ]);
             return response()->json(['message' => '活動実績の編集に成功しました。']);
+        });
+    }
+
+    public function delete(DeleteWorkRequest $request): JsonResponse {
+        return DB::transaction(function () use ($request) {
+            $validatedRequest = $request->validated();
+
+            $foundWork = Work::doesntHave('archiveWork')
+                ->with(['activeWork', 'nonActiveWork'])
+                ->findOrFail($validatedRequest['workId']);
+            $foundWork->update(['updator' => auth()->id()]);
+
+            if ($foundWork->activeWork) {
+                ArchiveWork::create([
+                    'work_id'  => $foundWork->activeWork->work_id,
+                    'title'    => $foundWork->activeWork->title,
+                    'contents' => $foundWork->activeWork->contents,
+                    'creator'  => auth()->id(),
+                ]);
+                $foundWork->activeWork()->delete();
+                return response()->json(['message' => '活動実績の削除に成功しました。']);
+            }
+            if ($foundWork->nonActiveWork) {
+                ArchiveWork::create([
+                    'work_id'  => $foundWork->nonActiveWork->work_id,
+                    'title'    => $foundWork->nonActiveWork->title,
+                    'contents' => $foundWork->nonActiveWork->contents,
+                    'creator'  => auth()->id(),
+                ]);
+                $foundWork->nonActiveWork()->delete();
+                return response()->json(['message' => '活動実績の削除に成功しました。']);
+            }
+            return response()->json(['message' => '予期しないエラーが発生しました。'], 500);
         });
     }
 }
