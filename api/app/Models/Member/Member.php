@@ -3,6 +3,7 @@
 namespace App\Models\Member;
 
 use App\Domain\Beans\Member\MemberWithAbility;
+use App\Domain\ValueObjects\Member\RoleName;
 use App\Exceptions\Member\AlreadyCreatedUserNameOfMemberException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -35,12 +36,40 @@ class Member extends Authenticatable {
         return $this->hasOne(ArchiveMember::class, 'member_id', 'member_id');
     }
 
+    public function withAbility(): HasOne {
+        return $this->hasOne(MemberAbility::class, 'member_id', 'member_id');
+    }
+
     public function withActiveMemberIsExistsBy(string $password): bool {
         return $this->activeMember && Hash::check($password, $this->activeMember->password);
     }
 
     public function withNonActiveMemberIsExistsBy(string $password): bool {
         return $this->nonActiveMember && Hash::check($password, $this->nonActiveMember->password);
+    }
+
+    public function isAdmin(): bool {
+        return $this->withAbility()->first()->role_id === Role::where('name', RoleName::ADMIN)->first()->role_id;
+    }
+
+    public function isMember(): bool {
+        return $this->withAbility()->first()->role_id === Role::where('name', RoleName::MEMBER)->first()->role_id;
+    }
+
+    public function isTrial(): bool {
+        return $this->withAbility()->first()->role_id === Role::where('name', RoleName::TRIAL)->first()->role_id;
+    }
+
+    public function isAdminOrMore(): bool {
+        return $this->isAdmin();
+    }
+
+    public function isMemberOrMore(): bool {
+        return $this->isMember() || $this->isAdmin();
+    }
+
+    public function isTrialOrMore(): bool {
+        return $this->isTrial() || $this->isMember() || $this->isAdmin();
     }
 
     public static function createMemberWithAbility(MemberWithAbility $memberWithAbility): Member {

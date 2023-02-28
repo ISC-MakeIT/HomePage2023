@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\DB;
 
 class AdminWorkController extends Controller {
     public function register(RegisterWorkRequest $request): JsonResponse {
+        $this->authorize('register', Work::class);
+
         DB::transaction(function () use ($request) {
             $validatedRequest = $request->validated();
 
@@ -37,6 +39,8 @@ class AdminWorkController extends Controller {
     }
 
     public function edit(EditWorkRequest $request): JsonResponse {
+        $this->authorize('edit', Work::class);
+
         return DB::transaction(function () use ($request) {
             $validatedRequest = $request->validated();
 
@@ -73,6 +77,8 @@ class AdminWorkController extends Controller {
     }
 
     public function delete(DeleteWorkRequest $request): JsonResponse {
+        $this->authorize('delete', Work::class);
+
         return DB::transaction(function () use ($request) {
             $validatedRequest = $request->validated();
 
