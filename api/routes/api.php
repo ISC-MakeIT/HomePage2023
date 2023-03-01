@@ -10,6 +10,7 @@ Route::prefix('/admin')->group(function () {
         Route::prefix('/members')->group(function () {
             Route::post('/', [AdminMemberController::class, 'register']);
             Route::put('/', [AdminMemberController::class, 'edit']);
+            Route::delete('/', [AdminMemberController::class, 'delete']);
             Route::get('/roles', [AdminMemberController::class, 'roles']);
             Route::put('/password', [AdminMemberController::class, 'changePassword']);
         });
