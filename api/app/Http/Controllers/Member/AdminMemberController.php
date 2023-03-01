@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Member;
 use App\Domain\Beans\Member\MemberWithAbility;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Member\Admin\ChangePasswordRequest;
+use App\Http\Requests\Member\Admin\DeleteMemberRequest;
 use App\Http\Requests\Member\Admin\EditMemberRequest;
 use App\Http\Requests\Member\Admin\MemberLoginRequest;
 use App\Http\Requests\Member\Admin\RegisterMemberRequest;
 use App\Models\Member\ActiveMember;
+use App\Models\Member\ArchiveMember;
 use App\Models\Member\Member;
 use App\Models\Member\NonActiveMember;
 use App\Models\Member\Role;
@@ -167,6 +169,52 @@ class AdminMemberController extends Controller {
                 'creator'     => auth()->id(),
             ]);
             return response()->json(['message' => 'メンバーの編集に成功しました。']);
+        });
+    }
+
+    public function delete(DeleteMemberRequest $request): JsonResponse {
+        $this->authorize('delete', Member::class);
+
+        return DB::transaction(function () use ($request) {
+            $validatedRequest = $request->validated();
+
+            $member = Member::doesntHave('archiveMember')
+                ->with(['activeMember', 'nonActiveMember'])
+                ->findOrFail($validatedRequest['memberId']);
+            $member->activeMember()->delete();
+            $member->nonActiveMember()->delete();
+
+            if ($member->activeMember) {
+                ArchiveMember::create([
+                    'member_id'   => $member->activeMember->member_id,
+                    'name'        => $member->activeMember->name,
+                    'job_title'   => $member->activeMember->job_title,
+                    'discord'     => $member->activeMember->discord,
+                    'twitter'     => $member->activeMember->twitter,
+                    'github'      => $member->activeMember->github,
+                    'description' => $member->activeMember->description,
+                    'username'    => $member->activeMember->username,
+                    'password'    => $member->activeMember->password,
+                    'creator'     => auth()->id()
+                ]);
+                return response()->json(['message' => 'メンバーの削除に成功しました。']);
+            }
+            if ($member->nonActiveMember) {
+                ArchiveMember::create([
+                    'member_id'   => $member->nonActiveMember->member_id,
+                    'name'        => $member->nonActiveMember->name,
+                    'job_title'   => $member->nonActiveMember->job_title,
+                    'discord'     => $member->nonActiveMember->discord,
+                    'twitter'     => $member->nonActiveMember->twitter,
+                    'github'      => $member->nonActiveMember->github,
+                    'description' => $member->nonActiveMember->description,
+                    'username'    => $member->nonActiveMember->username,
+                    'password'    => $member->nonActiveMember->password,
+                    'creator'     => auth()->id()
+                ]);
+                return response()->json(['message' => 'メンバーの削除に成功しました。']);
+            }
+            return response()->json(['message' => '予期しないエラーです。'], 500);
         });
     }
 }

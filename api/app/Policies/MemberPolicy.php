@@ -23,4 +23,8 @@ class MemberPolicy {
     public function edit(Member $member): bool {
         return $member->isTrialOrMore();
     }
+
+    public function delete(Member $member): bool {
+        return $member->isAdminOrMore();
+    }
 }
