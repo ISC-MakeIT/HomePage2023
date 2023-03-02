@@ -2,12 +2,10 @@
 
 namespace App\Models\Member;
 
-use App\Domain\ValueObjects\Member\RoleName;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Str;
 
 class ActiveMember extends Model {
     use HasApiTokens;
@@ -41,11 +39,6 @@ class ActiveMember extends Model {
 
     public function getAuthIdentifier() {
         return $this->member_id;
-    }
-
-    public function deleteTokensBy(string $currentToken): void {
-        $tokenId = Str::before($currentToken, '|');
-        $this->tokens()->where('id', $tokenId)->delete();
     }
 
     public static function isExistsUserNameBy(string $username): bool {

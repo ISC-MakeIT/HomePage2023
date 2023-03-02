@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Work\Admin\DeleteWorkRequest;
 use App\Http\Requests\Work\Admin\EditWorkRequest;
 use App\Http\Requests\Work\Admin\RegisterWorkRequest;
+use App\Http\Resources\Member\Admin\WorksResource;
 use App\Models\Work\ActiveWork;
 use App\Models\Work\ArchiveWork;
 use App\Models\Work\NonActiveWork;
@@ -109,5 +110,15 @@ class AdminWorkController extends Controller {
             }
             return response()->json(['message' => '予期しないエラーが発生しました。'], 500);
         });
+    }
+
+    public function works(): JsonResponse {
+        $this->authorize('works', Work::class);
+
+        $works = Work::doesntHave('archiveWork')
+            ->with(['activeWork', 'nonActiveWork'])
+            ->get();
+
+        return WorksResource::collection($works)->response();
     }
 }

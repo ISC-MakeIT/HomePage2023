@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class Member extends Authenticatable {
     use HasApiTokens;
@@ -46,6 +47,11 @@ class Member extends Authenticatable {
 
     public function withNonActiveMemberIsExistsBy(string $password): bool {
         return $this->nonActiveMember && Hash::check($password, $this->nonActiveMember->password);
+    }
+
+    public function deleteTokensBy(string $currentToken): void {
+        $tokenId = Str::before($currentToken, '|');
+        $this->tokens()->where('id', $tokenId)->delete();
     }
 
     public function isAdmin(): bool {

@@ -30,10 +30,6 @@ class NonActiveMember extends Model {
         return $this->member_id;
     }
 
-    public function deleteTokensBy(string $currentToken): void {
-        $this->tokens()->where('token', $currentToken)->delete();
-    }
-
     public static function isExistsUserNameBy(string $username): bool {
         return NonActiveMember::where('username', $username)->exists();
     }
