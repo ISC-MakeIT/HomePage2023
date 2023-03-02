@@ -23,4 +23,8 @@ class WorkPolicy {
     public function works(Member $member): bool {
         return $member->isMemberOrMore();
     }
+
+    public function work(Member $member): bool {
+        return $member->isMemberOrMore();
+    }
 }
