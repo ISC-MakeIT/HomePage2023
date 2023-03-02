@@ -28,7 +28,7 @@ class AdminMemberController extends Controller {
             $activeMember = ActiveMember::getActiveMemberIfCanLogin($validatedRequest['username'], $validatedRequest['password']);
             if ($activeMember) {
                 return response()->json([
-                    'token'   => $activeMember->createToken(config('app.key'))->plainTextToken,
+                    'token'   => Member::find($activeMember->member_id)->createToken(config('app.key'))->plainTextToken,
                     'message' => 'ログインに成功しました。',
                 ]);
             }
@@ -36,7 +36,7 @@ class AdminMemberController extends Controller {
             $nonActiveMember = NonActiveMember::getNonActiveMemberIfCanLogin($validatedRequest['username'], $validatedRequest['password']);
             if ($nonActiveMember) {
                 return response()->json([
-                    'token'   => $nonActiveMember->createToken(config('app.key'))->plainTextToken,
+                    'token'   => Member::find($nonActiveMember->member_id)->createToken(config('app.key'))->plainTextToken,
                     'message' => 'ログインに成功しました。',
                 ]);
             }
@@ -49,16 +49,7 @@ class AdminMemberController extends Controller {
         return DB::transaction(function () use ($request) {
             $currentToken = $request->bearerToken();
 
-            $activeMember    = ActiveMember::where('member_id', auth()->id())->first();
-            $nonActiveMember = NonActiveMember::where('member_id', auth()->id())->first();
-
-            if ($activeMember) {
-                $activeMember->deleteTokensBy($currentToken);
-            }
-            if ($nonActiveMember) {
-                $nonActiveMember->deleteTokensBy($currentToken);
-            }
-
+            Member::find(auth()->id())->deleteTokensBy($currentToken);
             return response()->json([
                 'message' => 'ログアウトに成功しました。',
             ]);

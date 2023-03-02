@@ -20,6 +20,7 @@ Route::prefix('/admin')->group(function () {
             Route::delete('/', [AdminNotificationController::class, 'delete']);
         });
         Route::prefix('/works')->group(function () {
+            Route::get('/', [AdminWorkController::class, 'works']);
             Route::post('/', [AdminWorkController::class, 'register']);
             Route::put('/', [AdminWorkController::class, 'edit']);
             Route::delete('/', [AdminWorkController::class, 'delete']);

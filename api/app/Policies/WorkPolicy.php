@@ -19,4 +19,8 @@ class WorkPolicy {
     public function delete(Member $member): bool {
         return $member->isMemberOrMore();
     }
+
+    public function works(Member $member): bool {
+        return $member->isMemberOrMore();
+    }
 }
