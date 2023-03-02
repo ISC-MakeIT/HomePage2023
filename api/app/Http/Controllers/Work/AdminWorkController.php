@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Work\Admin\DeleteWorkRequest;
 use App\Http\Requests\Work\Admin\EditWorkRequest;
 use App\Http\Requests\Work\Admin\RegisterWorkRequest;
+use App\Http\Requests\Work\Admin\WorkRequest;
 use App\Http\Resources\Member\Admin\WorksResource;
 use App\Models\Work\ActiveWork;
 use App\Models\Work\ArchiveWork;
@@ -120,5 +121,15 @@ class AdminWorkController extends Controller {
             ->get();
 
         return WorksResource::collection($works)->response();
+    }
+
+    public function work(WorkRequest $request): array {
+        $this->authorize('work', Work::class);
+
+        $work = Work::doesntHave('archiveWork')
+            ->with(['activeWork', 'nonActiveWork'])
+            ->findOrFail($request->workId);
+
+        return WorksResource::make($work)->toArray($request);
     }
 }

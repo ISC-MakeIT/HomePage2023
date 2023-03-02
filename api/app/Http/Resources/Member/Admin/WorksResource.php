@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Member\Admin;
 
+use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,8 +16,8 @@ class WorksResource extends JsonResource {
                 'title'     => $this->activeWork->title,
                 'contents'  => $this->activeWork->contents,
                 'version'   => $this->version,
-                'createdAt' => $this->created_at,
-                'updatedAt' => $this->activeWork->created_at,
+                'createdAt' => (new CarbonImmutable($this->created_at))->toIsoString(),
+                'updatedAt' => (new CarbonImmutable($this->activeWork->created_at))->toIsoString(),
                 'isActive'  => true,
             ];
         }
@@ -26,8 +27,8 @@ class WorksResource extends JsonResource {
             'title'     => $this->nonActiveWork->title,
             'contents'  => $this->nonActiveWork->contents,
             'version'   => $this->version,
-            'createdAt' => $this->created_at,
-            'updatedAt' => $this->nonActiveWork->created_at,
+            'createdAt' => (new CarbonImmutable($this->created_at))->toIsoString(),
+            'updatedAt' => (new CarbonImmutable($this->nonActiveWork->created_at))->toIsoString(),
             'isActive'  => false,
         ];
     }
