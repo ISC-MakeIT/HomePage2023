@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Member\Admin;
+namespace App\Http\Resources\Work\Admin;
 
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;

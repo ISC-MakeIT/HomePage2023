@@ -8,7 +8,7 @@ use App\Http\Requests\Work\Admin\DeleteWorkRequest;
 use App\Http\Requests\Work\Admin\EditWorkRequest;
 use App\Http\Requests\Work\Admin\RegisterWorkRequest;
 use App\Http\Requests\Work\Admin\WorkRequest;
-use App\Http\Resources\Member\Admin\WorksResource;
+use App\Http\Resources\Work\Admin\WorksResource;
 use App\Models\Work\ActiveWork;
 use App\Models\Work\ArchiveWork;
 use App\Models\Work\NonActiveWork;
