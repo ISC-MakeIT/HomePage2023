@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Notification\Admin\EditNotificationRequest;
 use App\Http\Requests\Notification\Admin\RegisterNotificationRequest;
 use App\Http\Requests\Notification\Admin\DeleteNotificationRequest;
+use App\Http\Resources\Notification\Admin\NotificationsResource;
 use App\Models\Notification\ActiveNotification;
 use App\Models\Notification\ArchiveNotification;
 use App\Models\Notification\NonActiveNotification;
@@ -113,5 +114,13 @@ class AdminNotificationController extends Controller {
 
             return response()->json(['message' => '予期しないエラーが発生しました。'], 500);
         });
+    }
+
+    public function notifications(): JsonResponse {
+        $notifications = Notification::doesntHave('archiveNotification')
+            ->with(['activeNotification', 'nonActiveNotification'])
+            ->get();
+
+        return NotificationsResource::collection($notifications)->response();
     }
 }

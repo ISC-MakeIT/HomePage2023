@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Work\Admin;
 
-use App\Http\Resources\Member\Admin\WorksResource;
+use App\Http\Resources\Work\Admin\WorksResource;
 use App\Models\Work\Work;
 use Illuminate\Http\Request;
 use Tests\Feature\AlreadyLoggedInTestCase;
