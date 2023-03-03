@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Notification\Admin\EditNotificationRequest;
 use App\Http\Requests\Notification\Admin\RegisterNotificationRequest;
 use App\Http\Requests\Notification\Admin\DeleteNotificationRequest;
+use App\Http\Requests\Notification\Admin\NotificationRequest;
 use App\Http\Resources\Notification\Admin\NotificationsResource;
 use App\Models\Notification\ActiveNotification;
 use App\Models\Notification\ArchiveNotification;
@@ -122,5 +123,15 @@ class AdminNotificationController extends Controller {
             ->get();
 
         return NotificationsResource::collection($notifications)->response();
+    }
+
+    public function notification(NotificationRequest $request): array {
+        $validatedRequest = $request->validated();
+
+        $notification = Notification::doesntHave('archiveNotification')
+            ->with(['activeNotification', 'nonActiveNotification'])
+            ->findOrFail($validatedRequest['notificationId']);
+
+        return NotificationsResource::make($notification)->toArray($request);
     }
 }
