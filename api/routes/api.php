@@ -19,6 +19,7 @@ Route::prefix('/admin')->group(function () {
             Route::post('/', [AdminNotificationController::class, 'register']);
             Route::put('/', [AdminNotificationController::class, 'edit']);
             Route::delete('/', [AdminNotificationController::class, 'delete']);
+            Route::get('/{notificationId}', [AdminNotificationController::class, 'notification']);
         });
         Route::prefix('/works')->group(function () {
             Route::get('/', [AdminWorkController::class, 'works']);
