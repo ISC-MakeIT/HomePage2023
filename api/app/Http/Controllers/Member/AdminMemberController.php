@@ -9,6 +9,7 @@ use App\Http\Requests\Member\Admin\DeleteMemberRequest;
 use App\Http\Requests\Member\Admin\EditMemberRequest;
 use App\Http\Requests\Member\Admin\MemberLoginRequest;
 use App\Http\Requests\Member\Admin\RegisterMemberRequest;
+use App\Http\Resources\Member\Admin\MembersResource;
 use App\Models\Member\ActiveMember;
 use App\Models\Member\ArchiveMember;
 use App\Models\Member\Member;
@@ -207,5 +208,15 @@ class AdminMemberController extends Controller {
             }
             return response()->json(['message' => '予期しないエラーです。'], 500);
         });
+    }
+
+    public function members(): JsonResponse {
+        $this->authorize('members', Member::class);
+
+        $members = Member::doesntHave('archiveMember')
+            ->with(['activeMember', 'nonActiveMember', 'ability.role'])
+            ->get();
+
+        return MembersResource::collection($members)->response();
     }
 }
