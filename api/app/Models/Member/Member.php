@@ -37,7 +37,7 @@ class Member extends Authenticatable {
         return $this->hasOne(ArchiveMember::class, 'member_id', 'member_id');
     }
 
-    public function withAbility(): HasOne {
+    public function ability(): HasOne {
         return $this->hasOne(MemberAbility::class, 'member_id', 'member_id');
     }
 
@@ -55,15 +55,15 @@ class Member extends Authenticatable {
     }
 
     public function isAdmin(): bool {
-        return $this->withAbility()->first()->role_id === Role::where('name', RoleName::ADMIN)->first()->role_id;
+        return $this->ability()->first()->role_id === Role::where('name', RoleName::ADMIN)->first()->role_id;
     }
 
     public function isMember(): bool {
-        return $this->withAbility()->first()->role_id === Role::where('name', RoleName::MEMBER)->first()->role_id;
+        return $this->ability()->first()->role_id === Role::where('name', RoleName::MEMBER)->first()->role_id;
     }
 
     public function isTrial(): bool {
-        return $this->withAbility()->first()->role_id === Role::where('name', RoleName::TRIAL)->first()->role_id;
+        return $this->ability()->first()->role_id === Role::where('name', RoleName::TRIAL)->first()->role_id;
     }
 
     public function isAdminOrMore(): bool {

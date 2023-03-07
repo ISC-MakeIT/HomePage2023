@@ -195,7 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\DataBaseQueryServiceProvider::class,
-
+        App\Providers\SettingResourceServiceProvider::class,
     ],
 
     /*

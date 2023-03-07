@@ -27,4 +27,8 @@ class MemberPolicy {
     public function delete(Member $member): bool {
         return $member->isAdminOrMore();
     }
+
+    public function members(Member $member): bool {
+        return $member->isAdminOrMore();
+    }
 }
