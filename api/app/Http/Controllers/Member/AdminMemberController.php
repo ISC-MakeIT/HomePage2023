@@ -8,8 +8,10 @@ use App\Http\Requests\Member\Admin\ChangePasswordRequest;
 use App\Http\Requests\Member\Admin\DeleteMemberRequest;
 use App\Http\Requests\Member\Admin\EditMemberRequest;
 use App\Http\Requests\Member\Admin\MemberLoginRequest;
+use App\Http\Requests\Member\Admin\MemberRequest;
 use App\Http\Requests\Member\Admin\RegisterMemberRequest;
 use App\Http\Resources\Member\Admin\MembersResource;
+use App\Http\Resources\Member\Admin\RolesResource;
 use App\Models\Member\ActiveMember;
 use App\Models\Member\ArchiveMember;
 use App\Models\Member\Member;
@@ -60,9 +62,7 @@ class AdminMemberController extends Controller {
     public function roles(): JsonResponse {
         $this->authorize('roles', Member::class);
 
-        return response()->json(['roles' => Role::all()->map(function ($role) {
-            return $role->toLowerCamelCaseJson();
-        })]);
+        return RolesResource::collection(Role::all())->response();
     }
 
     public function changePassword(ChangePasswordRequest $request): JsonResponse {
@@ -218,5 +218,16 @@ class AdminMemberController extends Controller {
             ->get();
 
         return MembersResource::collection($members)->response();
+    }
+
+    public function member(MemberRequest $request): array {
+        $this->authorize('member', Member::class);
+
+        $validatedRequest = $request->validated();
+        $member           = Member::doesntHave('archiveMember')
+            ->with(['activeMember', 'nonActiveMember', 'ability.role'])
+            ->findOrFail($validatedRequest['memberId']);
+
+        return MembersResource::make($member)->toArray($request);
     }
 }
