@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Member\AdminMemberController;
+use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Notification\AdminNotificationController;
 use App\Http\Controllers\Work\AdminWorkController;
 use Illuminate\Support\Facades\Route;
@@ -36,4 +37,9 @@ Route::prefix('/admin')->group(function () {
     });
 
     Route::post('/login', [AdminMemberController::class, 'login'])->name('login');
+});
+
+
+Route::prefix('/members')->group(function () {
+    Route::get('/', [MemberController::class, 'members']);
 });
