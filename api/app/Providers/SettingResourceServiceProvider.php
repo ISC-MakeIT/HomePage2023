@@ -2,18 +2,22 @@
 
 namespace App\Providers;
 
-use App\Http\Resources\Member\Admin\MembersResource;
-use App\Http\Resources\Notification\Admin\NotificationsResource;
-use App\Http\Resources\Work\Admin\WorksResource;
+use App\Http\Resources\Member\Admin\MembersResource as AdminMembersResource;
+use App\Http\Resources\Notification\Admin\NotificationsResource as AdminNotificationsResource;
+use App\Http\Resources\Work\Admin\WorksResource as AdminWorksResource;
+use App\Http\Resources\Member\User\MembersResource as UserMembersResource;
+use App\Http\Resources\Work\User\WorksResource as UserWorksResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 
 class SettingResourceServiceProvider extends ServiceProvider {
     /** @var JsonResource[] */
     private array $withoutWrappingResources = [
-        NotificationsResource::class,
-        WorksResource::class,
-        MembersResource::class,
+        AdminNotificationsResource::class,
+        AdminWorksResource::class,
+        AdminMembersResource::class,
+        UserWorksResource::class,
+        UserMembersResource::class,
     ];
 
     public function register(): void {
