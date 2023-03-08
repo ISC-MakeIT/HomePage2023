@@ -3,6 +3,7 @@
 use App\Http\Controllers\Member\AdminMemberController;
 use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Notification\AdminNotificationController;
+use App\Http\Controllers\Notification\NotificationController;
 use App\Http\Controllers\Work\AdminWorkController;
 use App\Http\Controllers\Work\WorkController;
 use Illuminate\Support\Facades\Route;
@@ -46,4 +47,7 @@ Route::prefix('/members')->group(function () {
 });
 Route::prefix('/works')->group(function () {
     Route::get('/', [WorkController::class, 'works']);
+});
+Route::prefix('/notifications')->group(function () {
+    Route::get('/', [NotificationController::class, 'notifications']);
 });
