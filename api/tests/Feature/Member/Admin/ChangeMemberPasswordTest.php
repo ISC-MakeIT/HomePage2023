@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
 class ChangeMemberPasswordTest extends AlreadyLoggedInTestCase {
-    public function test_パスワードの変更を行えること(): void {
+    public function test_パスワードの変更を行うこと(): void {
         $request = new ChangePasswordRequest([
             'oldPassword' => 'password',
             'newPassword' => 'newPassword',

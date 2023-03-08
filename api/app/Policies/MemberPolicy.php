@@ -16,6 +16,10 @@ class MemberPolicy {
         return $member->isAdminOrMore();
     }
 
+    public function changeActive(Member $member): bool {
+        return $member->isAdminOrMore();
+    }
+
     public function changePassword(Member $member): bool {
         return $member->isTrialOrMore();
     }
