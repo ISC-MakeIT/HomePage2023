@@ -14,6 +14,7 @@ Route::prefix('/admin')->group(function () {
             Route::delete('/', [AdminMemberController::class, 'delete']);
             Route::get('/roles', [AdminMemberController::class, 'roles']);
             Route::put('/password', [AdminMemberController::class, 'changePassword']);
+            Route::put('/role', [AdminMemberController::class, 'changeRole']);
             Route::get('/{memberId}', [AdminMemberController::class, 'member']);
         });
         Route::prefix('/notifications')->group(function () {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Member;
 use App\Domain\Beans\Member\MemberWithAbility;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Member\Admin\ChangePasswordRequest;
+use App\Http\Requests\Member\Admin\ChangeRoleRequest;
 use App\Http\Requests\Member\Admin\DeleteMemberRequest;
 use App\Http\Requests\Member\Admin\EditMemberRequest;
 use App\Http\Requests\Member\Admin\MemberLoginRequest;
@@ -15,6 +16,7 @@ use App\Http\Resources\Member\Admin\RolesResource;
 use App\Models\Member\ActiveMember;
 use App\Models\Member\ArchiveMember;
 use App\Models\Member\Member;
+use App\Models\Member\MemberAbility;
 use App\Models\Member\NonActiveMember;
 use App\Models\Member\Role;
 use Illuminate\Http\JsonResponse;
@@ -63,6 +65,22 @@ class AdminMemberController extends Controller {
         $this->authorize('roles', Member::class);
 
         return RolesResource::collection(Role::all())->response();
+    }
+
+    public function changeRole(ChangeRoleRequest $request): JsonResponse {
+        $this->authorize('changeRole', Member::class);
+
+        $validatedRequest = $request->validated();
+
+        DB::transaction(function () use ($validatedRequest) {
+            $memberAbility = MemberAbility::where('member_id', $validatedRequest['memberId'])->first();
+            $memberAbility->update([
+                'role_id' => $validatedRequest['roleId'],
+                'updator' => auth()->id()
+            ]);
+        });
+
+        return response()->json(['message' => 'ロールの変更に成功しました。']);
     }
 
     public function changePassword(ChangePasswordRequest $request): JsonResponse {
