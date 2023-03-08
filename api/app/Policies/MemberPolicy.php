@@ -31,4 +31,8 @@ class MemberPolicy {
     public function members(Member $member): bool {
         return $member->isAdminOrMore();
     }
+
+    public function member(Member $member): bool {
+        return $member->isAdminOrMore();
+    }
 }
