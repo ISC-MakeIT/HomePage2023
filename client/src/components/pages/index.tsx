@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { Helmet } from 'react-helmet';
 
 export const Home = () => {
   return (
@@ -6,6 +7,10 @@ export const Home = () => {
       css={css`
         background-color: black;
       `}
-    ></div>
+    >
+      <Helmet>
+        <title>MakeITトップページ | MakeIT</title>
+      </Helmet>
+    </div>
   );
 };
