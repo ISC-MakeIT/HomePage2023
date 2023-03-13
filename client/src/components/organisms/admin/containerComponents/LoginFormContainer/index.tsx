@@ -1,11 +1,10 @@
+import { apiLogin, Response } from '@api/member/login';
 import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { Response } from '../../../../../api/homePage/api/admin/login';
-import { homePageClient } from '../../../../../apiClient/homePage';
-import { setToken } from '../../../../../redux/actions/user/userTokenReducer';
-import { useAppDispatch } from '../../../../../redux/hooks';
+import { setToken } from '@redux/actions/user/userTokenReducer';
+import { useAppDispatch } from '@redux/hooks';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from '../../../../../routes/routePath';
 import { LoginForm } from '../../presentationalComponents/LoginForm';
 import { LoginFormInput } from '../../types/LoginFormInput';
@@ -18,11 +17,7 @@ export const LoginFormContainer = () => {
 
   const handleLogin: SubmitHandler<LoginFormInput> = async (loginFormInput) => {
     try {
-      await homePageClient().sanctum.csrf_cookie.$get();
-      const response = await homePageClient().api.admin.login.$post({
-        body: loginFormInput,
-      });
-
+      const response = await apiLogin(loginFormInput);
       dispatch(setToken(response.token));
       navigation(ADMIN_ROUTE_FULL_PATH_MAP.TOP);
     } catch (err) {
