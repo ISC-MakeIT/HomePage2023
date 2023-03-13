@@ -4,12 +4,14 @@ export type Response = {
   errors?: { [key: string]: string };
 };
 
+export type Request = {
+  username: string;
+  password: string;
+};
+
 export type Methods = {
   post: {
-    reqBody: {
-      username: string;
-      password: string;
-    };
+    reqBody: Request;
     resBody: Response;
   };
 };

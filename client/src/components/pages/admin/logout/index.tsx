@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { setToken } from '../../../../redux/actions/user/userTokenReducer';
-import { useAppDispatch } from '../../../../redux/hooks';
+import { setToken } from '@redux/actions/user/userTokenReducer';
+import { useAppDispatch } from '@redux/hooks';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from '../../../../routes/routePath';
 
 export const Logout = () => {
