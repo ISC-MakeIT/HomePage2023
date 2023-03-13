@@ -7,7 +7,7 @@ services:
       context: ./client
     container_name: hp-client
     tty: true
-    # command: "yarn dev"
+    command: "yarn install && yarn start"
     environment:
       TZ: "Asia/Tokyo"
       HOST: "0.0.0.0"
