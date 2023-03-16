@@ -19,6 +19,7 @@ return new class () extends Migration {
             $table->string('description', 255);
             $table->string('username', 255);
             $table->string('password', 255);
+            $table->string('picture', 1024);
             $table->foreignId('creator');
             $table->timestamp('created_at')->useCurrent();
 

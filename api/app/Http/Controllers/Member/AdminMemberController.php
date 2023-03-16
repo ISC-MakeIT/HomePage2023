@@ -110,6 +110,7 @@ class AdminMemberController extends Controller {
                     'description' => $member->activeMember->description,
                     'username'    => $member->activeMember->username,
                     'password'    => $member->activeMember->password,
+                    'picture'     => $member->activeMember->picture,
                     'creator'     => auth()->id(),
                 ];
             }
@@ -124,6 +125,7 @@ class AdminMemberController extends Controller {
                     'description' => $member->nonActiveMember->description,
                     'username'    => $member->nonActiveMember->username,
                     'password'    => $member->nonActiveMember->password,
+                    'picture'     => $member->nonActiveMember->picture,
                     'creator'     => auth()->id(),
                 ];
             }
@@ -181,6 +183,7 @@ class AdminMemberController extends Controller {
                 $validatedRequest['description'],
                 $validatedRequest['username'],
                 $hashedPassword,
+                // $validatedRequest['picture'],
                 $validatedRequest['roleId'],
                 auth()->id(),
                 auth()->id(),
@@ -216,6 +219,7 @@ class AdminMemberController extends Controller {
                     'description' => $validatedRequest['description'],
                     'username'    => $member->activeMember->username,
                     'password'    => $member->activeMember->password,
+                    'picture'     => $member->activeMember->picture,
                     'creator'     => auth()->id(),
                 ]);
                 return response()->json(['message' => 'メンバーの編集に成功しました。']);
@@ -231,6 +235,7 @@ class AdminMemberController extends Controller {
                 'description' => $validatedRequest['description'],
                 'username'    => $member->activeMember->username,
                 'password'    => $member->activeMember->password,
+                'picture'     => $member->activeMember->picture,
                 'creator'     => auth()->id(),
             ]);
             return response()->json(['message' => 'メンバーの編集に成功しました。']);
@@ -260,6 +265,7 @@ class AdminMemberController extends Controller {
                     'description' => $member->activeMember->description,
                     'username'    => $member->activeMember->username,
                     'password'    => $member->activeMember->password,
+                    'picture'     => $member->activeMember->picture,
                     'creator'     => auth()->id()
                 ]);
                 return response()->json(['message' => 'メンバーの削除に成功しました。']);
@@ -275,6 +281,7 @@ class AdminMemberController extends Controller {
                     'description' => $member->nonActiveMember->description,
                     'username'    => $member->nonActiveMember->username,
                     'password'    => $member->nonActiveMember->password,
+                    'picture'     => $member->nonActiveMember->picture,
                     'creator'     => auth()->id()
                 ]);
                 return response()->json(['message' => 'メンバーの削除に成功しました。']);

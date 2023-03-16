@@ -13,6 +13,7 @@ class ActiveWork extends Model {
         'work_id',
         'title',
         'contents',
+        'picture',
         'creator',
     ];
 }

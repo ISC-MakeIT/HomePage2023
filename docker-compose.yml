@@ -17,7 +17,7 @@ services:
       - "3000:3000"
   
   hp-api:
-    build: ./api
+    build: ./api/docker/local
     tty: true
     container_name: hp-api
     volumes:

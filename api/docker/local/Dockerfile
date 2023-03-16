@@ -22,6 +22,8 @@ RUN apt-get -y update && apt-get --no-install-recommends install -y \
     libonig-dev \
     curl \
     gnupg \
+    wget \
+    gpg \
     && rm -rf /var/lib/apt/lists/*
 
 # PHP
@@ -38,6 +40,17 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install npm@latest -g
+
+# Terraform install
+RUN wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | tee /usr/share/keyrings/hashicorp-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list && \
+    apt update && apt install terraform
+
+# aws command install
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+unzip awscliv2.zip && \
+chmod 777 ./aws/install && \
+./aws/install
 
 WORKDIR /var/www/html/
 

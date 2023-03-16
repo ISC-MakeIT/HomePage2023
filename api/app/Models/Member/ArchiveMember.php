@@ -21,6 +21,7 @@ class ArchiveMember extends Model {
         'description',
         'username',
         'password',
+        'picture',
         'creator'
     ];
     protected $hidden = [

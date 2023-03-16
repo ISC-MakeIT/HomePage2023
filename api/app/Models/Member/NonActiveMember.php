@@ -23,6 +23,7 @@ class NonActiveMember extends Model {
         'description',
         'username',
         'password',
+        'picture',
         'creator',
     ];
 

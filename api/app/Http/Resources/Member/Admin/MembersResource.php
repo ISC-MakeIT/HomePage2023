@@ -19,6 +19,7 @@ class MembersResource extends JsonResource {
                 'github'      => $this->activeMember->github,
                 'description' => $this->activeMember->description,
                 'username'    => $this->activeMember->username,
+                'picture'     => $this->activeMember->picture,
                 'roleId'      => $this->ability->role->role_id,
                 'roleName'    => $this->ability->role->name,
                 'isActive'    => true
@@ -34,6 +35,7 @@ class MembersResource extends JsonResource {
             'github'      => $this->nonActiveMember->github,
             'description' => $this->nonActiveMember->description,
             'username'    => $this->nonActiveMember->username,
+            'picture'     => $this->nonActiveMember->picture,
             'roleId'      => $this->ability->role->role_id,
             'roleName'    => $this->ability->role->name,
             'isActive'    => false

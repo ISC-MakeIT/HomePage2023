@@ -30,6 +30,7 @@ class NotificationSeeder extends Seeder {
                     'notification_id'  => $notification->notification_id,
                     'title'            => Str::random(100),
                     'contents'         => Str::random(500),
+                    'picture'          => $this->faker->imageUrl(),
                     'creator'          => $creatorMember->member_id,
                 ]);
                 continue;
@@ -38,6 +39,7 @@ class NotificationSeeder extends Seeder {
                 'notification_id' => $notification->notification_id,
                 'title'           => Str::random(100),
                 'contents'        => Str::random(500),
+                'picture'         => $this->faker->imageUrl(),
                 'creator'         => $creatorMember->member_id,
             ]);
         }

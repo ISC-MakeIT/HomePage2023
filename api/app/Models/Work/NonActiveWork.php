@@ -13,6 +13,7 @@ class NonActiveWork extends Model {
         'work_id',
         'title',
         'contents',
+        'picture',
         'creator',
     ];
 }

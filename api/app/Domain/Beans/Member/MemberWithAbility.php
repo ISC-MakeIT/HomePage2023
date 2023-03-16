@@ -11,6 +11,7 @@ class MemberWithAbility {
     private string $description;
     private string $username;
     private string $password;
+    private string $picture;
     private int $roleId;
     private int $creator;
     private int $updator;
@@ -24,6 +25,7 @@ class MemberWithAbility {
         string $description,
         string $username,
         string $password,
+        string $picture,
         int $roleId,
         int $creator,
         int $updator,
@@ -36,6 +38,7 @@ class MemberWithAbility {
         $this->description = $description;
         $this->username    = $username;
         $this->password    = $password;
+        $this->picture     = $picture;
         $this->roleId      = $roleId;
         $this->creator     = $creator;
         $this->updator     = $updator;
@@ -94,6 +97,7 @@ class MemberWithAbility {
         string $description,
         string $username,
         string $password,
+        string $picture,
         int $roleId,
         int $creator,
         int $updator,
@@ -107,6 +111,7 @@ class MemberWithAbility {
             $description,
             $username,
             $password,
+            $picture,
             $roleId,
             $creator,
             $updator

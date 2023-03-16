@@ -13,6 +13,7 @@ return new class () extends Migration {
 
             $table->string('title', 255);
             $table->text('contents');
+            $table->string('picture', 1024);
             $table->foreignId('creator');
             $table->timestamps();
 

@@ -34,6 +34,7 @@ class MemberSeeder extends Seeder {
                     'description' => Str::random(100),
                     'username'    => Str::random(50),
                     'password'    => Hash::make('password'),
+                    'picture'     => $this->faker->imageUrl(),
                     'creator'     => $member->member_id,
                 ]);
                 MemberAbility::create([
@@ -56,6 +57,7 @@ class MemberSeeder extends Seeder {
                 'description' => Str::random(100),
                 'username'    => Str::random(50),
                 'password'    => Hash::make('password'),
+                'picture'     => $this->faker->imageUrl(),
                 'creator'     => $member->member_id,
             ]);
             MemberAbility::create([

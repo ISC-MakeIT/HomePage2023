@@ -22,6 +22,7 @@ class ActiveMember extends Model {
         'description',
         'username',
         'password',
+        'picture',
         'creator',
     ];
 
@@ -34,6 +35,7 @@ class ActiveMember extends Model {
             'twitter'     => $this->twitter,
             'github'      => $this->github,
             'description' => $this->description,
+            'picture'     => $this->picture,
         ];
     }
 
