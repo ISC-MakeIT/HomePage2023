@@ -7,7 +7,7 @@ services:
       context: ./client
     container_name: hp-client
     tty: true
-    command: "yarn start"
+    command: "yarn install && yarn start"
     environment:
       TZ: "Asia/Tokyo"
       HOST: "0.0.0.0"
@@ -26,7 +26,7 @@ services:
       TZ: Asia/Tokyo
     command: "sh -c 'bash /var/www/html/bin/init.sh && apache2-foreground'"
     ports:
-      - "8000:8000"
+      - "8000:80"
     depends_on:
       - hp-db
   

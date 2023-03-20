@@ -3,10 +3,14 @@ import { Github } from '../atoms/Button/Icon/Github';
 import { Background } from '../atoms/Background';
 import { css } from '@emotion/react';
 import { GithubButton } from '../molecules/Github';
+import { Helmet } from 'react-helmet';
 
 export const Home = () => {
   return (
     <div>
+      <Helmet>
+        <title>MakeITトップページ | MakeIT</title>
+      </Helmet>
       <div
         css={css`
           z-index: 20;
