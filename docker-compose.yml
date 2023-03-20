@@ -7,7 +7,7 @@ services:
       context: ./client
     container_name: hp-client
     tty: true
-    command: "yarn install && yarn start"
+    command: "sh -c 'bash /home/client/bin/init.sh'"
     environment:
       TZ: "Asia/Tokyo"
       HOST: "0.0.0.0"
