@@ -1,3 +1,6 @@
+import { MakeIT } from '../atoms/Logo/MakeIT';
+import { Github } from '../atoms/Button/Icon/Github';
+import { Background } from '../atoms/Background';
 import { css } from '@emotion/react';
 import { Helmet } from 'react-helmet-async';
 
