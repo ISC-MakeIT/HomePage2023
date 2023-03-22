@@ -21,6 +21,7 @@ class MemberLogoutTest extends BaseTestCase {
             'twitter'     => null,
             'github'      => null,
             'description' => 'test',
+            'thumbnail'   => $this->faker->imageUrl(),
             'username'    => $username,
             'password'    => Hash::make($password),
             'creator'     => $member->member_id,

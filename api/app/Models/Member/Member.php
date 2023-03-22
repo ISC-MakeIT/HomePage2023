@@ -95,6 +95,7 @@ class Member extends Authenticatable {
             'twitter'     => $memberWithAbility->twitter(),
             'github'      => $memberWithAbility->github(),
             'description' => $memberWithAbility->description(),
+            'thumbnail'   => $memberWithAbility->thumbnail(),
             'username'    => $memberWithAbility->username(),
             'password'    => $memberWithAbility->password(),
             'creator'     => $memberWithAbility->creator(),
@@ -105,7 +106,7 @@ class Member extends Authenticatable {
             'creator'   => $memberWithAbility->creator(),
             'updator'   => $memberWithAbility->updator(),
         ];
-        ActiveMember::create($memberContent);
+        NonActiveMember::create($memberContent);
         MemberAbility::create($memberAbilityContent);
 
         return $member;

@@ -28,6 +28,7 @@ class RandomAdminUser202302261107 extends Command {
             'twitter'     => null,
             'github'      => null,
             'description' => 'test',
+            'thumbnail'   => '',
             'username'    => $username,
             'password'    => Hash::make($password),
             'creator'     => $member->member_id,

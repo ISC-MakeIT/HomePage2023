@@ -8,6 +8,7 @@ use App\Http\Requests\Member\Admin\ChangeActiveRequest;
 use App\Http\Requests\Member\Admin\ChangePasswordRequest;
 use App\Http\Requests\Member\Admin\ChangeRoleRequest;
 use App\Http\Requests\Member\Admin\DeleteMemberRequest;
+use App\Http\Requests\Member\Admin\EditMemberIconRequest;
 use App\Http\Requests\Member\Admin\EditMemberRequest;
 use App\Http\Requests\Member\Admin\MemberLoginRequest;
 use App\Http\Requests\Member\Admin\MemberRequest;
@@ -20,11 +21,15 @@ use App\Models\Member\Member;
 use App\Models\Member\MemberAbility;
 use App\Models\Member\NonActiveMember;
 use App\Models\Member\Role;
+use Carbon\CarbonImmutable;
+use Illuminate\Http\File;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Intervention\Image\Facades\Image as InterventionImage;
 
 class AdminMemberController extends Controller {
     public function login(MemberLoginRequest $request): JsonResponse {
@@ -108,6 +113,7 @@ class AdminMemberController extends Controller {
                     'twitter'     => $member->activeMember->twitter,
                     'github'      => $member->activeMember->github,
                     'description' => $member->activeMember->description,
+                    'thumbnail'   => $member->activeMember->thumbnail,
                     'username'    => $member->activeMember->username,
                     'password'    => $member->activeMember->password,
                     'creator'     => auth()->id(),
@@ -122,6 +128,7 @@ class AdminMemberController extends Controller {
                     'twitter'     => $member->nonActiveMember->twitter,
                     'github'      => $member->nonActiveMember->github,
                     'description' => $member->nonActiveMember->description,
+                    'thumbnail'   => $member->nonActiveMember->thumbnail,
                     'username'    => $member->nonActiveMember->username,
                     'password'    => $member->nonActiveMember->password,
                     'creator'     => auth()->id(),
@@ -172,6 +179,22 @@ class AdminMemberController extends Controller {
             $validatedRequest = $request->validated();
             $hashedPassword   = Hash::make($validatedRequest['password']);
 
+            $now                     = date_format(CarbonImmutable::now(), 'YmdHis');
+            $name                    = $request->file('icon')->getClientOriginalName();
+            $tmpFileName             = "/tmp/{$now}_{$name}";
+            $tmpFileNameForThumbnail = $tmpFileName . '_thumbnail';
+
+            InterventionImage::make($request->file('icon'))->save($tmpFileNameForThumbnail, 20, 'jpg');
+            InterventionImage::make($request->file('icon'))->save($tmpFileName, 80, 'jpg');
+
+            /** @var \Illuminate\Filesystem\FilesystemAdapter */
+            $s3Storage = Storage::disk('s3');
+
+            $filePath         = $s3Storage->putFile('image/icons/thumbnail', new File($tmpFileNameForThumbnail), 'public');
+            $explodedFilePath = explode('/', $filePath);
+            $fileName         = $explodedFilePath[count($explodedFilePath) - 1];
+            $s3Storage->putFileAs('image/icons', new File($tmpFileName), $fileName, 'public');
+
             Member::createMemberWithAbility(MemberWithAbility::from(
                 $validatedRequest['name'],
                 $validatedRequest['jobTitle'],
@@ -179,6 +202,7 @@ class AdminMemberController extends Controller {
                 $validatedRequest['twitter'],
                 $validatedRequest['github'],
                 $validatedRequest['description'],
+                $s3Storage->url($fileName),
                 $validatedRequest['username'],
                 $hashedPassword,
                 $validatedRequest['roleId'],
@@ -205,6 +229,40 @@ class AdminMemberController extends Controller {
             $member->activeMember()->delete();
             $member->nonActiveMember()->delete();
 
+            if ($member->activeMember) {
+                if ($validatedRequest['isActive']) {
+                    ActiveMember::create([
+                        'member_id'   => $member->member_id,
+                        'name'        => $validatedRequest['name'],
+                        'job_title'   => $validatedRequest['jobTitle'],
+                        'discord'     => $validatedRequest['discord'],
+                        'twitter'     => $validatedRequest['twitter'],
+                        'github'      => $validatedRequest['github'],
+                        'description' => $validatedRequest['description'],
+                        'thumbnail'   => $member->activeMember->thumbnail,
+                        'username'    => $member->activeMember->username,
+                        'password'    => $member->activeMember->password,
+                        'creator'     => auth()->id(),
+                    ]);
+                    return response()->json(['message' => 'メンバーの編集に成功しました。']);
+                }
+
+                NonActiveMember::create([
+                    'member_id'   => $member->member_id,
+                    'name'        => $validatedRequest['name'],
+                    'job_title'   => $validatedRequest['jobTitle'],
+                    'discord'     => $validatedRequest['discord'],
+                    'twitter'     => $validatedRequest['twitter'],
+                    'github'      => $validatedRequest['github'],
+                    'description' => $validatedRequest['description'],
+                    'thumbnail'   => $member->activeMember->thumbnail,
+                    'username'    => $member->activeMember->username,
+                    'password'    => $member->activeMember->password,
+                    'creator'     => auth()->id(),
+                ]);
+                return response()->json(['message' => 'メンバーの編集に成功しました。']);
+            }
+
             if ($validatedRequest['isActive']) {
                 ActiveMember::create([
                     'member_id'   => $member->member_id,
@@ -214,8 +272,9 @@ class AdminMemberController extends Controller {
                     'twitter'     => $validatedRequest['twitter'],
                     'github'      => $validatedRequest['github'],
                     'description' => $validatedRequest['description'],
-                    'username'    => $member->activeMember->username,
-                    'password'    => $member->activeMember->password,
+                    'thumbnail'   => $member->nonActiveMember->thumbnail,
+                    'username'    => $member->nonActiveMember->username,
+                    'password'    => $member->nonActiveMember->password,
                     'creator'     => auth()->id(),
                 ]);
                 return response()->json(['message' => 'メンバーの編集に成功しました。']);
@@ -229,11 +288,76 @@ class AdminMemberController extends Controller {
                 'twitter'     => $validatedRequest['twitter'],
                 'github'      => $validatedRequest['github'],
                 'description' => $validatedRequest['description'],
-                'username'    => $member->activeMember->username,
-                'password'    => $member->activeMember->password,
+                'thumbnail'   => $member->nonActiveMember->thumbnail,
+                'username'    => $member->nonActiveMember->username,
+                'password'    => $member->nonActiveMember->password,
                 'creator'     => auth()->id(),
             ]);
             return response()->json(['message' => 'メンバーの編集に成功しました。']);
+        });
+    }
+
+    public function editIcon(EditMemberIconRequest $request): JsonResponse {
+        $this->authorize('editIcon', Member::class);
+
+        return DB::transaction(function () use ($request) {
+            $member = Member::doesntHave('archiveMember')
+                ->with(['activeMember', 'nonActiveMember'])
+                ->find(auth()->id());
+            $member->update([
+                'updator' => auth()->id()
+            ]);
+            $member->activeMember()->delete();
+            $member->nonActiveMember()->delete();
+
+            $now                     = date_format(CarbonImmutable::now(), 'YmdHis');
+            $name                    = $request->file('icon')->getClientOriginalName();
+            $tmpFileName             = "/tmp/{$now}_{$name}";
+            $tmpFileNameForThumbnail = $tmpFileName . '_thumbnail';
+
+            InterventionImage::make($request->file('icon'))->save($tmpFileNameForThumbnail, 20, 'jpg');
+            InterventionImage::make($request->file('icon'))->save($tmpFileName, 80, 'jpg');
+
+            /** @var \Illuminate\Filesystem\FilesystemAdapter */
+            $s3Storage = Storage::disk('s3');
+
+            $fileName = $s3Storage->putFile('image/icons/thumbnail', new File($tmpFileNameForThumbnail), 'public');
+            $s3Storage->putFileAs('image/icons', new File($tmpFileName), $fileName, 'public');
+
+            if ($member->activeMember) {
+                ActiveMember::create([
+                    'member_id'   => $member->activeMember->member_id,
+                    'name'        => $member->activeMember->name,
+                    'job_title'   => $member->activeMember->job_title,
+                    'discord'     => $member->activeMember->discord,
+                    'twitter'     => $member->activeMember->twitter,
+                    'github'      => $member->activeMember->github,
+                    'description' => $member->activeMember->description,
+                    'thumbnail'   => $s3Storage->url($fileName),
+                    'username'    => $member->activeMember->username,
+                    'password'    => $member->activeMember->password,
+                    'creator'     => auth()->id()
+                ]);
+                return response()->json(['message' => 'メンバーの編集に成功しました。']);
+            }
+            if ($member->nonActiveMember) {
+                NonActiveMember::create([
+                    'member_id'   => $member->nonActiveMember->member_id,
+                    'name'        => $member->nonActiveMember->name,
+                    'job_title'   => $member->nonActiveMember->job_title,
+                    'discord'     => $member->nonActiveMember->discord,
+                    'twitter'     => $member->nonActiveMember->twitter,
+                    'github'      => $member->nonActiveMember->github,
+                    'description' => $member->nonActiveMember->description,
+                    'thumbnail'   => $s3Storage->url($fileName),
+                    'username'    => $member->nonActiveMember->username,
+                    'password'    => $member->nonActiveMember->password,
+                    'creator'     => auth()->id()
+                ]);
+                return response()->json(['message' => 'メンバーの削除に成功しました。']);
+            }
+
+            return response()->json(['message' => '予期しないエラーです。'], 500);
         });
     }
 
@@ -258,6 +382,7 @@ class AdminMemberController extends Controller {
                     'twitter'     => $member->activeMember->twitter,
                     'github'      => $member->activeMember->github,
                     'description' => $member->activeMember->description,
+                    'thumbnail'   => $member->activeMember->thumbnail,
                     'username'    => $member->activeMember->username,
                     'password'    => $member->activeMember->password,
                     'creator'     => auth()->id()
@@ -273,6 +398,7 @@ class AdminMemberController extends Controller {
                     'twitter'     => $member->nonActiveMember->twitter,
                     'github'      => $member->nonActiveMember->github,
                     'description' => $member->nonActiveMember->description,
+                    'thumbnail'   => $member->nonActiveMember->thumbnail,
                     'username'    => $member->nonActiveMember->username,
                     'password'    => $member->nonActiveMember->password,
                     'creator'     => auth()->id()
