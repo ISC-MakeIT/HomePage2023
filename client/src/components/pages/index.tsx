@@ -1,9 +1,7 @@
-import { MakeIT } from '../atoms/Logo/MakeIT';
-import { Github } from '../atoms/Button/Icon/Github';
-import { Background } from '../atoms/Background';
 import { css } from '@emotion/react';
-import { GithubButton } from '../molecules/Github';
 import { Helmet } from 'react-helmet';
+import { Header } from '../organisms/Header';
+import { Top } from '../organisms/Top';
 
 export const Home = () => {
   return (
@@ -13,23 +11,13 @@ export const Home = () => {
       </Helmet>
       <div
         css={css`
-          z-index: 20;
+          z-index: 10;
           position: absolute;
         `}
       >
-        <MakeIT />
-        <div
-          css={css`
-            background-color: black;
-            width: 19px;
-            height: 19px;
-          `}
-        >
-          <Github />
-          <GithubButton/>
-        </div>
+        <Header />
+        <Top />
       </div>
-      <Background />
     </div>
   );
 };
