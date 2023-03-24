@@ -1,8 +1,7 @@
-import { MakeIT } from '../atoms/Logo/MakeIT';
-import { Github } from '../atoms/Button/Icon/Github';
-import { Background } from '../atoms/Background';
 import { css } from '@emotion/react';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
+import { Header } from '../organisms/Header';
+import { Top } from '../organisms/Top';
 
 export const Home = () => {
   return (
@@ -14,6 +13,15 @@ export const Home = () => {
       <Helmet>
         <title>MakeITトップページ | MakeIT</title>
       </Helmet>
+      <div
+        css={css`
+          z-index: 10;
+          position: absolute;
+        `}
+      >
+        <Header />
+        <Top />
+      </div>
     </div>
   );
 };
