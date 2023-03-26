@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { Helmet } from 'react-helmet';
 import { Header } from '../organisms/Header';
 import { Top } from '../organisms/Top';
-import { News } from '../organisms/user/presentationalComponents/News';
+import { Notification } from '../organisms/user/presentationalComponents/Notification';
 
 export const Home = () => {
   return (
@@ -18,7 +18,7 @@ export const Home = () => {
       >
         <Header />
         <Top />
-        <News />
+        <Notification />
       </div>
     </div>
   );

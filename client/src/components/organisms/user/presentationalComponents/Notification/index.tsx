@@ -2,7 +2,7 @@ import React from 'react';
 import { css } from '@emotion/react';
 import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
 
-export const News = () => {
+export const Notification = () => {
   return (
     <div>
       <div
