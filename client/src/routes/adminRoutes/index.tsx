@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import { MemberOfMembers } from 'src/components/pages/admin/members/memberId';
 import { Home } from '../../components/pages/admin';
 import { Login } from '../../components/pages/admin/login';
 import { Logout } from '../../components/pages/admin/logout';
@@ -19,6 +20,8 @@ export const AdminRoutes = () => {
       <Route path={ADMIN_ROUTE_PATH_MAP.NOTIFICATIONS} element={<Notifications />} />
 
       <Route path={ADMIN_ROUTE_PATH_MAP.MEMBERS} element={<Members />} />
+
+      <Route path={`${ADMIN_ROUTE_PATH_MAP.MEMBERS}/:memberId`} element={<MemberOfMembers />} />
     </Routes>
   );
 };

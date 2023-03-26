@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 export const Home = () => {
   return (
