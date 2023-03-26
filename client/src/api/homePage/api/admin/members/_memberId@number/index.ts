@@ -1,17 +1,15 @@
+import { Member } from '..';
+
 export type Response = {
   message?: string;
-  token?: string;
   errors?: { [key: string]: string }[];
-};
-
-export type Request = {
-  username: string;
-  password: string;
-};
+} & Member;
 
 export type Methods = {
-  post: {
-    reqBody: Request;
+  get: {
+    reqHeaders: {
+      Authorization: string;
+    };
     resBody: Response;
   };
 };
