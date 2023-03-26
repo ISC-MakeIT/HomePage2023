@@ -8,7 +8,7 @@ export const News = () => {
       <div
         css={css`
           background-color: #f8f9f9;
-          padding: 80px;
+          padding: 5rem;
         `}
       >
         <div
@@ -23,7 +23,7 @@ export const News = () => {
               css={css`
                 color: #5ba0f1;
                 font-size: 2rem;
-                margin-bottom: 24px;
+                margin-bottom: 1.5rem;
                 font-weight: 700;
               `}
             >
@@ -33,6 +33,7 @@ export const News = () => {
               css={css`
                 color: #333333;
                 font-size: 1rem;
+                font-weight: 400;
               `}
             >
               サークルの活動に関することや、ブログ,リリース情報のお知らせです。
@@ -55,6 +56,7 @@ export const News = () => {
                   font-size: 1rem;
                   color: #333333;
                   margin-right: 2rem;
+                  font-weight: 400;
                 `}
               >
                 2021.11.27
