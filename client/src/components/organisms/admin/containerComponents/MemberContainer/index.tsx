@@ -5,6 +5,7 @@ import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { Member } from '../../presentationalComponents/Member';
 
@@ -16,10 +17,15 @@ export const MemberContainer = ({ memberId }: MemberContainerProps) => {
   const [member, setMember] = useState<APIMember>();
   const [error, setError] = useState<string>('');
   const userToken = useAppSelector(selectUserToken);
+  const alert = useAlert();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (userToken === '') {
+      alert.show({
+        type: 'error',
+        content: 'ログインが必要です。',
+      });
       navigate(ADMIN_ROUTE_FULL_PATH_MAP.LOGIN);
       return;
     }

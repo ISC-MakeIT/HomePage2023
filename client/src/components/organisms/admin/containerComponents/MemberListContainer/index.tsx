@@ -3,18 +3,26 @@ import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { MemberList } from '../../presentationalComponents/MemberList';
 
 export const MemberListContainer = () => {
   const [memberList, setMemberList] = useState<Member[]>([]);
   const [error, setError] = useState<string>();
+  const state: { refresh?: boolean } = useLocation().state;
+
   const userToken = useAppSelector(selectUserToken);
+  const alert = useAlert();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (userToken === '') {
+      alert.show({
+        type: 'error',
+        content: 'ログインが必要です。',
+      });
       navigate(ADMIN_ROUTE_FULL_PATH_MAP.LOGIN);
       return;
     }
@@ -52,7 +60,7 @@ export const MemberListContainer = () => {
     };
 
     main();
-  }, []);
+  }, [state]);
 
   return <MemberList memberList={memberList} error={error} />;
 };

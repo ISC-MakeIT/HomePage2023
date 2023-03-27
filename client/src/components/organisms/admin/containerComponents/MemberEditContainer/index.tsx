@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { MemberEdit } from '../../presentationalComponents/MemberEdit';
 import { EditMemberFormInput } from '../../types/EditMemberFormInput';
@@ -22,10 +23,15 @@ export const MemberEditContainer = ({ memberId }: MemberEditContainerProps) => {
   const [roleList, setRoleList] = useState<Role[]>([]);
   const [error, setError] = useState<string>('');
   const userToken = useAppSelector(selectUserToken);
+  const alert = useAlert();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (userToken === '') {
+      alert.show({
+        type: 'error',
+        content: 'ログインが必要です。',
+      });
       navigate(ADMIN_ROUTE_FULL_PATH_MAP.LOGIN);
       return;
     }
@@ -73,8 +79,20 @@ export const MemberEditContainer = ({ memberId }: MemberEditContainerProps) => {
 
   const handleEditMember: SubmitHandler<EditMemberFormInput> = async (editMemberFormInput) => {
     try {
-      await apiChangeRole(userToken, memberId, editMemberFormInput.roleId);
-      await apiChangeActive(userToken, memberId, editMemberFormInput.activityState === 'active');
+      const changeRoleResponse = await apiChangeRole(userToken, memberId, editMemberFormInput.roleId);
+      const changeActivityResponse = await apiChangeActive(
+        userToken,
+        memberId,
+        editMemberFormInput.activityState === 'active',
+      );
+      alert.show({
+        type: 'success',
+        content: changeRoleResponse.message!,
+      });
+      alert.show({
+        type: 'success',
+        content: changeActivityResponse.message!,
+      });
 
       navigate(ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS);
     } catch (e) {
