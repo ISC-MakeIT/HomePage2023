@@ -3,9 +3,11 @@ import { userTokenReducer } from '../actions/user/userTokenReducer';
 import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 import storage from 'redux-persist/lib/storage';
+import { alertListReducer } from '@redux/actions/alert/alertListReducer';
 
 const reducers = combineReducers({
   userToken: userTokenReducer,
+  alertList: alertListReducer,
 });
 
 const persistConfig = {

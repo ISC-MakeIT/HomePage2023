@@ -8,17 +8,23 @@ import { useAppDispatch } from '@redux/hooks';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from '../../../../../routes/routePath';
 import { LoginForm } from '../../presentationalComponents/LoginForm';
 import { LoginFormInput } from '../../types/LoginFormInput';
+import { useAlert } from 'src/modules/hooks/useAlert';
 
 export const LoginFormContainer = () => {
   const { register, handleSubmit } = useForm<LoginFormInput>();
   const [error, setError] = useState<string>();
   const dispatch = useAppDispatch();
+  const alert = useAlert();
   const navigation = useNavigate();
 
   const handleLogin: SubmitHandler<LoginFormInput> = async (loginFormInput) => {
     try {
       const response = await apiLogin(loginFormInput);
       dispatch(setToken(response.token));
+      alert.show({
+        type: 'success',
+        content: response.message!,
+      });
       navigation(ADMIN_ROUTE_FULL_PATH_MAP.TOP);
     } catch (err) {
       const isNotAxiosError = () => !(err instanceof AxiosError);

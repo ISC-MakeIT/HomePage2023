@@ -1,9 +1,23 @@
 import { homePageClient } from '../../../apiClient/homePage';
-import { DeleteResponse, GetResponse, Member } from '../../../api/homePage/api/admin/members';
+import {
+  DeleteResponse,
+  GetResponse,
+  Member,
+  PostRequest,
+  PostResponse,
+} from '../../../api/homePage/api/admin/members';
 
 export const apiMembers = async (token: string): Promise<GetResponse> => {
   await homePageClient().sanctum.csrf_cookie.$get();
   return await homePageClient().api.admin.members.$get({ headers: { Authorization: `Bearer ${token}` } });
+};
+
+export const apiCreateMember = async (token: string, member: PostRequest): Promise<PostResponse> => {
+  await homePageClient().sanctum.csrf_cookie.$get();
+  return await homePageClient().api.admin.members.$post({
+    body: member,
+    headers: { Authorization: `Bearer ${token}` },
+  });
 };
 
 export const apiDeleteMember = async (token: string, memberId: number): Promise<DeleteResponse> => {
@@ -14,4 +28,4 @@ export const apiDeleteMember = async (token: string, memberId: number): Promise<
   });
 };
 
-export type { GetResponse, Member };
+export type { GetResponse, PostResponse, Member };

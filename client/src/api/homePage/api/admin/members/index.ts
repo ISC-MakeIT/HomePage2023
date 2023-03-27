@@ -1,3 +1,5 @@
+import { ReadStream } from 'fs';
+
 export type Member = {
   memberId: number;
   name: string;
@@ -18,6 +20,24 @@ export type GetResponse = {
   errors?: { [key: string]: string }[];
 } & Member[];
 
+export type PostRequest = {
+  name: string;
+  jobTitle: string;
+  roleId: number;
+  discord?: string;
+  twitter?: string;
+  github?: string;
+  description: string;
+  icon: File | ReadStream;
+  username: string;
+  password: string;
+};
+
+export type PostResponse = {
+  message?: string;
+  errors?: { [key: string]: string }[];
+};
+
 export type DeleteRequest = {
   memberId: number;
 };
@@ -33,6 +53,16 @@ export type Methods = {
       Authorization: string;
     };
     resBody: GetResponse;
+  };
+
+  post: {
+    reqFormat: FormData;
+
+    reqHeaders: {
+      Authorization: string;
+    };
+    reqBody: PostRequest;
+    resBody: PostResponse;
   };
 
   delete: {

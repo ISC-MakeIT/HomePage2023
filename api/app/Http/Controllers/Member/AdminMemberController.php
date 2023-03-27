@@ -137,11 +137,11 @@ class AdminMemberController extends Controller {
 
             if ($validatedRequest['isActive']) {
                 ActiveMember::create($memberContent);
-                return response()->json(['message' => '削除に成功しました。']);
+                return response()->json(['message' => '表示状態の変更に成功しました。']);
             }
 
             NonActiveMember::create($memberContent);
-            return response()->json(['message' => '削除に成功しました。']);
+            return response()->json(['message' => '表示状態の変更に成功しました。']);
         });
     }
 
@@ -202,7 +202,7 @@ class AdminMemberController extends Controller {
                 $validatedRequest['twitter'],
                 $validatedRequest['github'],
                 $validatedRequest['description'],
-                $s3Storage->url($fileName),
+                $s3Storage->url($filePath),
                 $validatedRequest['username'],
                 $hashedPassword,
                 $validatedRequest['roleId'],
@@ -315,13 +315,12 @@ class AdminMemberController extends Controller {
             $tmpFileName             = "/tmp/{$now}_{$name}";
             $tmpFileNameForThumbnail = $tmpFileName . '_thumbnail';
 
-            InterventionImage::make($request->file('icon'))->save($tmpFileNameForThumbnail, 20, 'jpg');
-            InterventionImage::make($request->file('icon'))->save($tmpFileName, 80, 'jpg');
-
             /** @var \Illuminate\Filesystem\FilesystemAdapter */
             $s3Storage = Storage::disk('s3');
 
-            $fileName = $s3Storage->putFile('image/icons/thumbnail', new File($tmpFileNameForThumbnail), 'public');
+            $filePath         = $s3Storage->putFile('image/icons/thumbnail', new File($tmpFileNameForThumbnail), 'public');
+            $explodedFilePath = explode('/', $filePath);
+            $fileName         = $explodedFilePath[count($explodedFilePath) - 1];
             $s3Storage->putFileAs('image/icons', new File($tmpFileName), $fileName, 'public');
 
             if ($member->activeMember) {
@@ -333,7 +332,7 @@ class AdminMemberController extends Controller {
                     'twitter'     => $member->activeMember->twitter,
                     'github'      => $member->activeMember->github,
                     'description' => $member->activeMember->description,
-                    'thumbnail'   => $s3Storage->url($fileName),
+                    'thumbnail'   => $s3Storage->url($filePath),
                     'username'    => $member->activeMember->username,
                     'password'    => $member->activeMember->password,
                     'creator'     => auth()->id()
@@ -349,7 +348,7 @@ class AdminMemberController extends Controller {
                     'twitter'     => $member->nonActiveMember->twitter,
                     'github'      => $member->nonActiveMember->github,
                     'description' => $member->nonActiveMember->description,
-                    'thumbnail'   => $s3Storage->url($fileName),
+                    'thumbnail'   => $s3Storage->url($filePath),
                     'username'    => $member->nonActiveMember->username,
                     'password'    => $member->nonActiveMember->password,
                     'creator'     => auth()->id()
