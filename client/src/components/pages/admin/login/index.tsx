@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { LoginFormContainer } from '../../../organisms/admin/containerComponents/LoginFormContainer';
 import { NavigationWithHeader } from '../../../templates/admin/NavigraitonWithHeader';
 

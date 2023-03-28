@@ -19,6 +19,7 @@ class ArchiveMember extends Model {
         'twitter',
         'github',
         'description',
+        'thumbnail',
         'username',
         'password',
         'creator'

@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Stack } from '@mui/material';
 import { ReactNode } from 'react';
 import { MenuContainer } from '../../organisms/admin/containerComponents/MenuContainer';
 
@@ -8,20 +8,17 @@ type NavigationWithHeaderProps = {
 
 export const NavigationWithHeader = ({ children }: NavigationWithHeaderProps) => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        columnGap: '2rem',
-      }}
-    >
+    <Stack flexDirection='row' columnGap='2rem'>
       <MenuContainer />
-      <Box
+      <Stack
         sx={{
           width: '100%',
+          padding: '1rem 2rem 0 0',
         }}
+        rowGap={2}
       >
         {children}
-      </Box>
-    </Box>
+      </Stack>
+    </Stack>
   );
 };

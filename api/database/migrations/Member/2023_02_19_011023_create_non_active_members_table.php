@@ -17,6 +17,7 @@ return new class () extends Migration {
             $table->string('twitter', 255)->nullable();
             $table->string('github', 255)->nullable();
             $table->string('description', 255);
+            $table->string('thumbnail', 2048);
             $table->string('username', 255);
             $table->string('password', 255);
             $table->foreignId('creator');
