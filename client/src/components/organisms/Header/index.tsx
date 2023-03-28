@@ -8,12 +8,15 @@ export const Header = () => {
   return (
     <header
       css={css`
-        width: 100%;
+        width: 100vw;
         z-index: 20;
-        position: fixed;
-        padding: 32px;
+        position: absolute;
+        text-align: center;
+        padding-top: 32px;
         display: flex;
         justify-content: space-around;
+        margin: auto;
+        overflow-x: hidden;
       `}
     >
       <div
@@ -46,7 +49,9 @@ export const Header = () => {
         `}
       >
         <GradientRadiusButton purpose={'experience'} text={'体験入部'} />
-        <GradientRadiusButton purpose={'project'} text={'案件の依頼'} />
+        <span css={css`margin-left: 16px;`}>
+          <GradientRadiusButton purpose={'project'} text={'案件の依頼'} />
+        </span>
       </div>
     </header>
   );
