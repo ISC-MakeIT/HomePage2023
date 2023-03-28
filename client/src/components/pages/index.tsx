@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { Helmet } from 'react-helmet';
-import { Top } from '../organisms/Top';
+import { Top } from '../organisms/user/presentationalComponents/Top';
 
 export const Home = () => {
   return (
