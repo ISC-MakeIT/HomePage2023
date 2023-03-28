@@ -22,11 +22,11 @@ export const Top = () => {
           height: 0;
           background: url(/index_top_background.jpg) left top no-repeat;
           background-size: contain;
-          padding-top: 66.64%; /* (img-height / img-width * container-width) */
+          padding-top: 63%; /* (img-height / img-width * container-width) */
           /* (853 / 1280 * 100) */
           overflow-x: hidden;
           z-index: 10;
-          position: absolute;
+          position: relative;
           filter: brightness(65%);
         `}
       ></div>
