@@ -7,9 +7,9 @@ use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder {
     public function run(): void {
         $this->call([
+            MemberSeeder::class,
             WorkSeeder::class,
             NotificationSeeder::class,
-            MemberSeeder::class
         ]);
     }
 }

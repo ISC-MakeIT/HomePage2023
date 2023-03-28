@@ -9,6 +9,7 @@ class MemberWithAbility {
     private ?string $twitter;
     private ?string $github;
     private string $description;
+    private string $thumbnail;
     private string $username;
     private string $password;
     private int $roleId;
@@ -22,6 +23,7 @@ class MemberWithAbility {
         ?string $twitter,
         ?string $github,
         string $description,
+        string $thumbnail,
         string $username,
         string $password,
         int $roleId,
@@ -34,6 +36,7 @@ class MemberWithAbility {
         $this->twitter     = $twitter;
         $this->github      = $github;
         $this->description = $description;
+        $this->thumbnail   = $thumbnail;
         $this->username    = $username;
         $this->password    = $password;
         $this->roleId      = $roleId;
@@ -65,6 +68,10 @@ class MemberWithAbility {
         return $this->description;
     }
 
+    public function thumbnail(): string {
+        return $this->thumbnail;
+    }
+
     public function username(): string {
         return $this->username;
     }
@@ -92,6 +99,7 @@ class MemberWithAbility {
         ?string $twitter,
         ?string $github,
         string $description,
+        string $thumbnail,
         string $username,
         string $password,
         int $roleId,
@@ -105,6 +113,7 @@ class MemberWithAbility {
             $twitter,
             $github,
             $description,
+            $thumbnail,
             $username,
             $password,
             $roleId,

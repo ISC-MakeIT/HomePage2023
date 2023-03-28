@@ -5,12 +5,11 @@ namespace Tests\Feature\Member\Admin;
 use App\Http\Requests\Member\Admin\ChangeActiveRequest;
 use App\Models\Member\Member;
 use Database\Seeders\MemberSeeder;
-use Faker\Generator;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
 class ChangeMemberActiveTest extends AlreadyLoggedInTestCase {
     public function test_メンバーの活性化の変更を行うこと(): void {
-        (new MemberSeeder(new Generator()))->run();
+        (new MemberSeeder($this->faker))->run();
         $preMember = Member::orderBy('member_id', 'DESC')
             ->first();
 

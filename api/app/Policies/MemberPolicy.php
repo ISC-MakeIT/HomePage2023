@@ -32,6 +32,10 @@ class MemberPolicy {
         return $member->isTrialOrMore();
     }
 
+    public function editIcon(Member $member): bool {
+        return $member->isTrialOrMore();
+    }
+
     public function delete(Member $member): bool {
         return $member->isAdminOrMore();
     }

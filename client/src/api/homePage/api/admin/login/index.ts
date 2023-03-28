@@ -1,7 +1,7 @@
 export type Response = {
   message?: string;
   token?: string;
-  errors?: { [key: string]: string };
+  errors?: { [key: string]: string }[];
 };
 
 export type Request = {
