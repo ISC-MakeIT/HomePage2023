@@ -1,6 +1,10 @@
 import { css } from '@emotion/react';
 
-export const Arrow = () => {
+interface Props {
+  color?: undefined | string;
+}
+
+export const Arrow = ({ color }: Props) => {
   return (
     <div
       css={css`
@@ -8,35 +12,12 @@ export const Arrow = () => {
         height: 22px;
       `}
     >
-      <svg
-        css={css`
-          width: 100%;
-          height: 100%;
-        `}
-        viewBox='0 0 22 22'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
-      >
-        <circle cx='11' cy='11' r='10' stroke='white' stroke-width='2' />
-      </svg>
-
-      <svg
-        css={css`
-          display: block;
-          width: 50%;
-          height: auto;
-          margin: auto;
-          position: relative;
-          top: -69%;
-        `}
-        viewBox='0 0 10 8'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
-      >
+      <svg width='22' height='22' viewBox='0 0 22 22' fill='none' xmlns='http://www.w3.org/2000/svg'>
         <path
-          d='M6.59099 0.80974L5.95459 1.44614L8.05152 3.54306L0.675689 3.54306L0.675688 4.44038L8.05152 4.44038L5.95459 6.5373L6.59099 7.1737L9.77297 3.99172L6.59099 0.80974Z'
-          fill='white'
+          d='M12.591 7.80974L11.9546 8.44614L14.0515 10.5431L6.67569 10.5431L6.67569 11.4404L14.0515 11.4404L11.9546 13.5373L12.591 14.1737L15.773 10.9917L12.591 7.80974Z'
+          fill={color || 'white'}
         />
+        <circle cx='11' cy='11' r='10' stroke={color || 'white'} stroke-width='2' />
       </svg>
     </div>
   );
