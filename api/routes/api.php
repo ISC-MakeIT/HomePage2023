@@ -16,6 +16,7 @@ Route::prefix('/admin')->group(function () {
             Route::put('/', [AdminMemberController::class, 'edit']);
             Route::delete('/', [AdminMemberController::class, 'delete']);
             Route::get('/roles', [AdminMemberController::class, 'roles']);
+            Route::put('/icon', [AdminMemberController::class, 'editIcon']);
             Route::put('/password', [AdminMemberController::class, 'changePassword']);
             Route::put('/role', [AdminMemberController::class, 'changeRole']);
             Route::put('/active', [AdminMemberController::class, 'changeActive']);
