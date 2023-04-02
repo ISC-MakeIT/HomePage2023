@@ -3,10 +3,7 @@ import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAlert } from 'src/modules/hooks/useAlert';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
-import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { Notification } from '../../presentationalComponents/Notification';
 
 type NotificationContainerProps = {
@@ -16,21 +13,10 @@ type NotificationContainerProps = {
 export const NotificationContainer = ({ notificationId }: NotificationContainerProps) => {
   const [notification, setNotification] = useState<APINotification>();
   const [error, setError] = useState<string>();
-  const alert = useAlert();
   const userToken = useAppSelector(selectUserToken);
-  const navigate = useNavigate();
   const proccessingLine = useProcessingLine();
 
   useEffect(() => {
-    if (userToken === '') {
-      alert.show({
-        type: 'error',
-        content: 'ログインが必要です。',
-      });
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.LOGIN);
-      return;
-    }
-
     const main = async () => {
       try {
         proccessingLine.show();
@@ -43,25 +29,29 @@ export const NotificationContainer = ({ notificationId }: NotificationContainerP
         proccessingLine.hide();
 
         if (axios.isAxiosError(e)) {
-          const response = e.response!;
+          const status = e.response!.status;
           const responseData: GetResponse = e.request!.data;
 
-          if (response.status === 400 && responseData.message) {
+          if (status === 400 && responseData.message) {
             setError(responseData.message);
             return;
           }
 
-          if (response.status === 400) {
+          if (status === 400) {
             setError(Object.values(responseData.errors!).join('\n'));
             return;
           }
 
-          if (response.status === 403) {
+          if (status === 401) {
+            return;
+          }
+
+          if (status === 403) {
             setError('このページにアクセスするためには、MEMBER以上の権限がなければなりません。');
             return;
           }
 
-          if (response.status === 404) {
+          if (status === 404) {
             setError('お知らせは存在しません。');
             return;
           }

@@ -1,5 +1,5 @@
-import { apiCreateMember } from '@api/member';
-import { apiRoles, Role } from '@api/member/roles';
+import { apiCreateMember } from '@api/members';
+import { apiRoles, Role } from '@api/members/roles';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -39,6 +39,10 @@ export const CreateMemberModalContainer = () => {
 
           if (status === 400) {
             alert.show({ type: 'error', content: Object.values(responseData.errors!).join('\n') });
+            return;
+          }
+
+          if (status === 401) {
             return;
           }
 

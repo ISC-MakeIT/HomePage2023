@@ -3,10 +3,9 @@ import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { GetResponse, Notification } from 'src/api/homePage/api/admin/notifications';
 import { useAlert } from 'src/modules/hooks/useAlert';
-import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { NotificationList } from '../../presentationalComponents/NotificationList';
 
 export const NotificationListContainer = () => {
@@ -14,32 +13,26 @@ export const NotificationListContainer = () => {
 
   const alert = useAlert();
   const userToken = useAppSelector(selectUserToken);
-  const navigate = useNavigate();
   const state: { refresh?: boolean } = useLocation().state;
 
   useEffect(() => {
-    if (userToken === '') {
-      alert.show({
-        type: 'error',
-        content: 'ログインが必要です。',
-      });
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.LOGIN);
-      return;
-    }
-
     const main = async () => {
       try {
         const response = await apiNotifications(userToken);
         setNotificationList(response);
       } catch (e) {
         if (axios.isAxiosError(e)) {
-          const response = e.response!;
+          const status = e.response!.status;
           const responseData: GetResponse = e.response!.data;
 
-          if (response.status === 403) {
+          if (status === 401) {
+            return;
+          }
+
+          if (status === 403) {
             alert.show({
               type: 'error',
-              content: responseData.message!,
+              content: 'このページにアクセスするためには、MEMBER以上の権限がなければなりません。',
             });
             return;
           }

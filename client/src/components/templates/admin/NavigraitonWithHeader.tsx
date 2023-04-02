@@ -13,14 +13,13 @@ export const NavigationWithHeader = ({ children }: NavigationWithHeaderProps) =>
         display: 'grid',
         columnGap: '2rem',
         gridTemplateColumns: '320px 1fr',
-        width: '100vw',
       }}
     >
       <MenuContainer />
       <Stack
         sx={{
-          width: '100%',
-          padding: '1rem 2rem 0 0',
+          width: 'calc(100% - 2rem)',
+          padding: '1rem 0 0 0',
         }}
         rowGap={2}
       >

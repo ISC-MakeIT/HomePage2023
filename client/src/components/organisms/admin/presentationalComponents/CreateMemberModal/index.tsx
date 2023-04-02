@@ -1,4 +1,4 @@
-import { Role } from '@api/member/roles';
+import { Role } from '@api/members/roles';
 import { faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Textarea } from '@mui/joy';

@@ -7,7 +7,7 @@ export const Notifications = () => {
   return (
     <NavigationWithHeader>
       <Helmet>
-        <title>お知らせ | MakeIT</title>
+        <title>お知らせ一覧 | MakeIT</title>
       </Helmet>
 
       <CreateNotificationModalContainer />

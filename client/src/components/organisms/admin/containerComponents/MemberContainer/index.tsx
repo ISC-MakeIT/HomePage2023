@@ -1,13 +1,10 @@
-import { Member as APIMember } from '@api/member';
-import { apiMember } from '@api/member/member';
+import { Member as APIMember } from '@api/members';
+import { apiMember } from '@api/members/member';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAlert } from 'src/modules/hooks/useAlert';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
-import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { Member } from '../../presentationalComponents/Member';
 
 type MemberContainerProps = {
@@ -18,20 +15,9 @@ export const MemberContainer = ({ memberId }: MemberContainerProps) => {
   const [member, setMember] = useState<APIMember>();
   const [error, setError] = useState<string>('');
   const userToken = useAppSelector(selectUserToken);
-  const alert = useAlert();
   const proccessingLine = useProcessingLine();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (userToken === '') {
-      alert.show({
-        type: 'error',
-        content: 'ログインが必要です。',
-      });
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.LOGIN);
-      return;
-    }
-
     const main = async () => {
       try {
         proccessingLine.show();
@@ -49,6 +35,10 @@ export const MemberContainer = ({ memberId }: MemberContainerProps) => {
 
           if (status === 400) {
             setError(Object.values(responseData.errors!).join('\n'));
+            return;
+          }
+
+          if (status === 401) {
             return;
           }
 

@@ -20,8 +20,8 @@ export const Notification = () => {
       </Helmet>
 
       <Stack flexDirection='row' columnGap={2}>
-        <DeleteNotificationModalContainer notificationId={Number(notificationId)} />
         <EditNotificationModalContainer notificationId={Number(notificationId)} />
+        <DeleteNotificationModalContainer notificationId={Number(notificationId)} />
       </Stack>
 
       <NotificationContainer notificationId={Number(notificationId)} />
