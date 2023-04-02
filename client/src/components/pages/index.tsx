@@ -8,7 +8,11 @@ import { Work } from '../organisms/user/presentationalComponents/Work/Index';
 
 export const Home = () => {
   return (
-    <>
+    <div
+      css={css`
+        width: 100vw;
+      `}
+    >
       <Helmet>
         <title>MakeITトップページ | MakeIT</title>
       </Helmet>
@@ -17,6 +21,6 @@ export const Home = () => {
       <Work />
       <Contact />
       <Footer />
-    </>
+    </div>
   );
 };
