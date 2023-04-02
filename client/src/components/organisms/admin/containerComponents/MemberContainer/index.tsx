@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'src/modules/hooks/useAlert';
+import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { Member } from '../../presentationalComponents/Member';
 
@@ -18,6 +19,7 @@ export const MemberContainer = ({ memberId }: MemberContainerProps) => {
   const [error, setError] = useState<string>('');
   const userToken = useAppSelector(selectUserToken);
   const alert = useAlert();
+  const proccessingLine = useProcessingLine();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,9 +34,15 @@ export const MemberContainer = ({ memberId }: MemberContainerProps) => {
 
     const main = async () => {
       try {
+        proccessingLine.show();
+
         const membersResponse = await apiMember(userToken, memberId);
         setMember(membersResponse);
+
+        proccessingLine.hide();
       } catch (e) {
+        proccessingLine.hide();
+
         if (axios.isAxiosError(e)) {
           const responseData = e.response!.data;
           const status = e.response!.status;
@@ -69,7 +77,7 @@ export const MemberContainer = ({ memberId }: MemberContainerProps) => {
     main();
   }, []);
 
-  const getMember = () => {
+  const processMemberFrom = (preMember: APIMember) => {
     const elseDefaultDisplayUnExist = (memberElement?: string) => {
       if (!memberElement || memberElement === '') {
         return '存在しません';
@@ -77,17 +85,17 @@ export const MemberContainer = ({ memberId }: MemberContainerProps) => {
       return memberElement;
     };
 
-    if (!member) {
-      return undefined;
-    }
-
     return {
-      ...member,
-      discord: elseDefaultDisplayUnExist(member.discord),
-      twitter: elseDefaultDisplayUnExist(member.twitter),
-      github: elseDefaultDisplayUnExist(member.github),
+      ...preMember,
+      discord: elseDefaultDisplayUnExist(preMember.discord),
+      twitter: elseDefaultDisplayUnExist(preMember.twitter),
+      github: elseDefaultDisplayUnExist(preMember.github),
     };
   };
 
-  return <Member member={getMember()} error={error} />;
+  if (!member) {
+    return <></>;
+  }
+
+  return <Member member={processMemberFrom(member)} error={error} />;
 };

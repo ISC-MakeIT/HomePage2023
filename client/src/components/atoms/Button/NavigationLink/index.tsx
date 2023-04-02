@@ -8,7 +8,7 @@ type LinkProps = {
 export const NavigationLink: React.FC<LinkProps> = ({ href_classname, name }) => {
   return (
     <a
-      href={`#${ href_classname }`}
+      href={`#${href_classname}`}
       css={css`
         display: block;
         text-decoration: none;
@@ -20,7 +20,7 @@ export const NavigationLink: React.FC<LinkProps> = ({ href_classname, name }) =>
         font-family: 'Hiragino Kaku Gothic Pro';
       `}
     >
-        {name}
+      {name}
     </a>
   );
 };

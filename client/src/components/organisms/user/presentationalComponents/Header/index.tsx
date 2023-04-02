@@ -49,7 +49,11 @@ export const Header = () => {
         `}
       >
         <GradientRadiusButton purpose={'experience'} text={'体験入部'} />
-        <span css={css`margin-left: 16px;`}>
+        <span
+          css={css`
+            margin-left: 16px;
+          `}
+        >
           <GradientRadiusButton purpose={'project'} text={'案件の依頼'} />
         </span>
       </div>

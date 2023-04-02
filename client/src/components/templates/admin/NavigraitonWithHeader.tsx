@@ -8,7 +8,14 @@ type NavigationWithHeaderProps = {
 
 export const NavigationWithHeader = ({ children }: NavigationWithHeaderProps) => {
   return (
-    <Stack flexDirection='row' columnGap='2rem'>
+    <Stack
+      sx={{
+        display: 'grid',
+        columnGap: '2rem',
+        gridTemplateColumns: '320px 1fr',
+        width: '100vw',
+      }}
+    >
       <MenuContainer />
       <Stack
         sx={{

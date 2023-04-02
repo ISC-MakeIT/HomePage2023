@@ -2,13 +2,18 @@ import { css } from '@emotion/react';
 import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
 
 type ButtonProps = {
-  purpose: "experience" | "project"; //体験入部: experience & 案件: project
+  purpose: 'experience' | 'project'; //体験入部: experience & 案件: project
   text: string;
 };
 
 export const GradientRadiusButton: React.FC<ButtonProps> = ({ purpose, text }) => {
   return (
-    <a href={purpose === 'experience' ? '#' : '#'} css={css`text-decoration: none;`}>
+    <a
+      href={purpose === 'experience' ? '#' : '#'}
+      css={css`
+        text-decoration: none;
+      `}
+    >
       <button
         type='button'
         css={
@@ -40,7 +45,11 @@ export const GradientRadiusButton: React.FC<ButtonProps> = ({ purpose, text }) =
         }
       >
         {text}
-        <span css={css`margin-left: 8px;`}>
+        <span
+          css={css`
+            margin-left: 8px;
+          `}
+        >
           <Arrow />
         </span>
       </button>
