@@ -50,7 +50,7 @@ class Handler extends ExceptionHandler {
             return response(['message' => '既に編集されている活動実績です。'], 500);
         }
         if ($e instanceof ValidationException) {
-            return response($e->errors(), 400);
+            return response(['errors' => $e->errors()], 400);
         }
 
         return parent::render($request, $e);

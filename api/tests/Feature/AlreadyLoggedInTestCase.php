@@ -8,10 +8,12 @@ use App\Models\Member\Member;
 use App\Models\Member\MemberAbility;
 use App\Models\Member\Role;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
 
 class AlreadyLoggedInTestCase extends BaseTestCase {
     use DatabaseTransactions;
+    use WithFaker;
 
     protected function setUp(): void {
         parent::setUp();
@@ -25,6 +27,7 @@ class AlreadyLoggedInTestCase extends BaseTestCase {
             'twitter'     => null,
             'github'      => null,
             'description' => 'test',
+            'thumbnail'   => $this->faker->imageUrl(),
             'username'    => 'admin',
             'password'    => Hash::make('password'),
             'creator'     => $member->member_id,

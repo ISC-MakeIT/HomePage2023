@@ -18,6 +18,7 @@ class RegisterMemberRequest extends FormRequest {
             'twitter'     => ['max:255'],
             'github'      => ['max:255'],
             'description' => ['required', 'string', 'max:255'],
+            'icon'        => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:4096'],
             'username'    => ['required', 'string', 'max:255'],
             'password'    => ['required', 'string', 'max:255'],
         ];
