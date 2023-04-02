@@ -4,7 +4,12 @@ import { GithubButtonContent } from '../Content/Github';
 
 export const GithubButton = () => {
   return (
-    <a href='https://github.com/ISC-MakeIT' css={css`text-decoration: none;`}>
+    <a
+      href='https://github.com/ISC-MakeIT'
+      css={css`
+        text-decoration: none;
+      `}
+    >
       <WhiteRadiusButton content={<GithubButtonContent />} />
     </a>
   );

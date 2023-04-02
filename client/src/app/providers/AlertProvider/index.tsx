@@ -1,3 +1,4 @@
+import { colors } from '@mui/material';
 import { Stack } from '@mui/system';
 import { initAlertList, selectAlertList } from '@redux/actions/alert/alertListReducer';
 import { useEffect } from 'react';
@@ -30,10 +31,10 @@ export const AlertProvider = ({ children }: AlertProviderProps) => {
       >
         {alertList.map((alert, index) => {
           if (alert.type === 'error') {
-            return <AlertForError key={index} error={alert.content} />;
+            return <AlertForError key={index} error={alert.content} sx={{ boxShadow: 24 }} />;
           }
           if (alert.type === 'success') {
-            return <AlertForSuccess key={index} content={alert.content} />;
+            return <AlertForSuccess key={index} content={alert.content} sx={{ boxShadow: 24 }} />;
           }
           throw Error('まだ、そのデザインのAlertに対応してないよ。\n実装してね♡');
         })}

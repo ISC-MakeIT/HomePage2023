@@ -56,16 +56,24 @@ export const MemberList = ({ memberList, error }: MemberListProps) => {
             `}
             hover
           >
-            <TableCell>{getMemberActivityStateBy(member.isActive)}</TableCell>
+            <TableCell sx={{ maxWidth: '15rem' }}>{getMemberActivityStateBy(member.isActive)}</TableCell>
             <TableCell>{member.roleName}</TableCell>
-            <TableCell>{member.name}</TableCell>
+            <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
+              {member.name}
+            </TableCell>
             <TableCell>{member.memberId}</TableCell>
-            <TableCell>{member.username}</TableCell>
-            <TableCell>{member.jobTitle}</TableCell>
+            <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
+              {member.username}
+            </TableCell>
+            <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
+              {member.jobTitle}
+            </TableCell>
             <TableCell>{elseDefaultDisplayUnExist(member.discord)}</TableCell>
             <TableCell>{elseDefaultDisplayUnExist(member.twitter)}</TableCell>
             <TableCell>{elseDefaultDisplayUnExist(member.github)}</TableCell>
-            <TableCell>{member.description}</TableCell>
+            <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '15rem' }}>
+              {member.description}
+            </TableCell>
           </TableRow>
         ))}
       </>
@@ -80,6 +88,7 @@ export const MemberList = ({ memberList, error }: MemberListProps) => {
       `}
     >
       <AlertForError error={error} />
+
       <TableContainer sx={{ minHeight: '95vh' }}>
         <Table>
           <TableHead>

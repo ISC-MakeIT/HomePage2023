@@ -7,7 +7,7 @@ export const LoggedInMenu = () => {
   const location = useLocation();
 
   return (
-    <MenuItemWrapper width={320} height={'100vh'}>
+    <MenuItemWrapper width={'100%'} height={'100vh'}>
       <MenuItem
         selected={location.pathname === ADMIN_ROUTE_FULL_PATH_MAP.TOP}
         component={Link}

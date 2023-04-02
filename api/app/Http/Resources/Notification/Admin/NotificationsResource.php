@@ -15,8 +15,10 @@ class NotificationsResource extends JsonResource {
                 'notificationId' => $this->notification_id,
                 'title'          => $this->activeNotification->title,
                 'contents'       => $this->activeNotification->contents,
-                'createdAt'      => (new Carbon($this->created_at))->toIsoString(),
+                'createdAt'      => (new Carbon($this->created_at))->toISOString(),
                 'updatedAt'      => (new Carbon($this->activeNotification->created_at))->toISOString(),
+                'isActive'       => true,
+                'currentVersion' => $this->version,
             ];
         }
 
@@ -26,6 +28,8 @@ class NotificationsResource extends JsonResource {
             'contents'       => $this->nonActiveNotification->contents,
             'createdAt'      => (new Carbon($this->created_at))->toISOString(),
             'updatedAt'      => (new Carbon($this->nonActiveNotification->created_at))->toISOString(),
+            'isActive'       => false,
+            'currentVersion' => $this->version,
         ];
     }
 }

@@ -4,10 +4,12 @@ import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 import storage from 'redux-persist/lib/storage';
 import { alertListReducer } from '@redux/actions/alert/alertListReducer';
+import { proccessingLineReducer } from '@redux/actions/processingLine';
 
 const reducers = combineReducers({
   userToken: userTokenReducer,
   alertList: alertListReducer,
+  processingLine: proccessingLineReducer,
 });
 
 const persistConfig = {
