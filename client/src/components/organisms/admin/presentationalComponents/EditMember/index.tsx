@@ -16,8 +16,8 @@ import { SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { ACTIVITY_STATE_CONSTANT, EditMemberFormInput } from '../../types/EditMemberFormInput';
 
-type MemberEditProps = {
-  member: APIMember | undefined;
+type EditMemberProps = {
+  member?: APIMember;
   roleList: Role[];
   error?: string;
   register: UseFormRegister<EditMemberFormInput>;
@@ -25,7 +25,7 @@ type MemberEditProps = {
   handleEditMember: SubmitHandler<EditMemberFormInput>;
 };
 
-export const MemberEdit = ({ member, roleList, error, register, handleSubmit, handleEditMember }: MemberEditProps) => {
+export const EditMember = ({ member, roleList, error, register, handleSubmit, handleEditMember }: EditMemberProps) => {
   const isFindingMember = () => !member && !error;
   const isFailedFindMember = () => !member && error;
 

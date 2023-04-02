@@ -24,7 +24,11 @@ export const Contact = () => {
         サークルへの連絡はこちら
       </p>
 
-      <div css={css`margin-left: 32px;`}>
+      <div
+        css={css`
+          margin-left: 32px;
+        `}
+      >
         <GradientRadiusButton purpose='experience' text='体験入部' />
       </div>
 
@@ -34,9 +38,14 @@ export const Contact = () => {
           height: 24px;
           background: #333333;
           margin-left: 24px;
-        `}></div>
+        `}
+      ></div>
 
-      <div css={css`margin-left: 32px;`}>
+      <div
+        css={css`
+          margin-left: 32px;
+        `}
+      >
         <GradientRadiusButton purpose='project' text='案件の依頼' />
       </div>
     </div>

@@ -12,8 +12,15 @@ import { CreateMemberModal } from '../../presentationalComponents/CreateMemberMo
 import { CreateMemberFormInput } from '../../types/CreateMemberFormInput';
 
 export const CreateMemberModalContainer = () => {
-  const { register, handleSubmit, setValue, reset } = useForm<CreateMemberFormInput>();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm<CreateMemberFormInput>();
   const [iconForDisplay, setIconForDisplay] = useState<string>();
+  const [error, setError] = useState<string>();
   const [isActive, setIsActive] = useState(false);
   const [roleList, setRoleList] = useState<Role[]>([]);
 
@@ -75,29 +82,31 @@ export const CreateMemberModalContainer = () => {
       });
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        const response = e.response!;
+        const status = e.response!.status;
         const responseData = e.response!.data;
 
-        if (response.status === 400) {
-          alert.show({
-            type: 'error',
-            content: Object.values(responseData.errors!).join('\n'),
-          });
+        if (status === 400 && responseData.message) {
+          setError(responseData.message!);
           return;
         }
 
-        alert.show({
-          type: 'error',
-          content: responseData.message!,
-        });
+        if (status === 400) {
+          setError(Object.values(responseData.errors!).join('\n'));
+          return;
+        }
+
+        if (status === 403) {
+          setError('メンバーを作成する権限がありません。');
+          return;
+        }
+
+        setError(responseData.message!);
         return;
       }
 
-      alert.show({
-        type: 'error',
-        content:
-          '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
-      });
+      setError(
+        '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
+      );
     }
   };
 
@@ -123,6 +132,8 @@ export const CreateMemberModalContainer = () => {
       handleSubmit={handleSubmit}
       register={register}
       handleIconUpload={handleIconUpload}
+      errors={errors}
+      error={error}
     />
   );
 };

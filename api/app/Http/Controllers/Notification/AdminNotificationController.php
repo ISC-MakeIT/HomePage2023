@@ -70,7 +70,7 @@ class AdminNotificationController extends Controller {
                     'contents'        => $validatedRequest['contents'],
                     'creator'         => auth()->id(),
                 ]);
-                return response()->json(['message' => 'お知らせ実装の更新に成功しました。']);
+                return response()->json(['message' => 'お知らせの更新に成功しました。']);
             }
             NonActiveNotification::create([
                 'notification_id' => $validatedRequest['notificationId'],
@@ -78,7 +78,7 @@ class AdminNotificationController extends Controller {
                 'contents'        => $validatedRequest['contents'],
                 'creator'         => auth()->id(),
             ]);
-            return response()->json(['message' => 'お知らせ実装の更新に成功しました。']);
+            return response()->json(['message' => 'お知らせの更新に成功しました。']);
         });
     }
 
@@ -120,6 +120,7 @@ class AdminNotificationController extends Controller {
     public function notifications(): JsonResponse {
         $notifications = Notification::doesntHave('archiveNotification')
             ->with(['activeNotification', 'nonActiveNotification'])
+            ->orderBy('notification_id', 'ASC')
             ->get();
 
         return NotificationsResource::collection($notifications)->response();

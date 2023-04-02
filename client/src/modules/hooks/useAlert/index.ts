@@ -5,12 +5,12 @@ export const useAlert = () => {
   const dispatch = useAppDispatch();
 
   return {
-    show: (alert: Alert) => {
+    show: (alert: Alert, milliSecondCountsToHide: number = 5000) => {
       dispatch(addAlertToAlertList(alert));
 
       setTimeout(() => {
         dispatch(popFromAlertList());
-      }, 5000);
+      }, milliSecondCountsToHide);
     },
   };
 };

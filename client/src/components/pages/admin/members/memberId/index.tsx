@@ -1,17 +1,15 @@
-import { css } from '@emotion/react';
-import { Stack } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { DeleteMemberModelContainer } from 'src/components/organisms/admin/containerComponents/DeleteMemberModelContainer';
+import { EditMemberContainer } from 'src/components/organisms/admin/containerComponents/EditMemberContainer';
 import { MemberContainer } from 'src/components/organisms/admin/containerComponents/MemberContainer';
-import { MemberEditContainer } from 'src/components/organisms/admin/containerComponents/MemberEditContainer';
 import { NavigationWithHeader } from '../../../../templates/admin/NavigraitonWithHeader';
 
 type RouterParams = {
   memberId: string;
 };
 
-export const MemberOfMembers = () => {
+export const Member = () => {
   const { memberId } = useParams<RouterParams>();
 
   return (
@@ -22,7 +20,7 @@ export const MemberOfMembers = () => {
 
       <DeleteMemberModelContainer memberId={Number(memberId)} />
       <MemberContainer memberId={Number(memberId)} />
-      <MemberEditContainer memberId={Number(memberId)} />
+      <EditMemberContainer memberId={Number(memberId)} />
     </NavigationWithHeader>
   );
 };
