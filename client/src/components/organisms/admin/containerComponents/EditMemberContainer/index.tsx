@@ -1,7 +1,7 @@
-import { Member } from '@api/member';
-import { apiChangeActive } from '@api/member/active';
-import { apiMember } from '@api/member/member';
-import { apiChangeRole, apiRoles, Role } from '@api/member/roles';
+import { Member } from '@api/members';
+import { apiChangeActive } from '@api/members/active';
+import { apiMember } from '@api/members/member';
+import { apiChangeRole, apiRoles, Role } from '@api/members/roles';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
@@ -27,15 +27,6 @@ export const EditMemberContainer = ({ memberId }: EditMemberContainerProps) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userToken === '') {
-      alert.show({
-        type: 'error',
-        content: 'ログインが必要です。',
-      });
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.LOGIN);
-      return;
-    }
-
     const main = async () => {
       try {
         const memberResponse = await apiMember(userToken, memberId);
@@ -49,6 +40,10 @@ export const EditMemberContainer = ({ memberId }: EditMemberContainerProps) => {
 
           if (status === 400) {
             setError(Object.values(responseData.errors!).join('\n'));
+            return;
+          }
+
+          if (status === 401) {
             return;
           }
 

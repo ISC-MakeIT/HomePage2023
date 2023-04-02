@@ -1,11 +1,8 @@
 import { apiDeleteNotification, DeleteResponse } from '@api/notifications';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from '@mui/material';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
@@ -22,17 +19,6 @@ export const DeleteNotificationModalContainer = ({ notificationId }: DeleteNotif
   const alert = useAlert();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (userToken === '') {
-      alert.show({
-        type: 'error',
-        content: 'ログインが必要です。',
-      });
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.LOGIN);
-      return;
-    }
-  }, []);
-
   const handleDeleteNotification = async () => {
     try {
       const response = await apiDeleteNotification(userToken, notificationId);
@@ -43,14 +29,19 @@ export const DeleteNotificationModalContainer = ({ notificationId }: DeleteNotif
       navigate(ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS);
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        const response = e.response!;
+        const status = e.response!.status;
         const responseData: DeleteResponse = e.response!.data;
 
-        if (response.status === 400) {
+        if (status === 400) {
           setError(Object.values(responseData.errors!).join('\n'));
           return;
         }
-        if (response.status === 404) {
+
+        if (status === 401) {
+          return;
+        }
+
+        if (status === 404) {
           setError('既にお知らせが削除されています。');
           return;
         }

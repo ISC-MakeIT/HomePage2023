@@ -52,6 +52,10 @@ export const CreateNotificationModalContainer = () => {
           return;
         }
 
+        if (status === 401) {
+          return;
+        }
+
         if (status === 403) {
           setError('お知らせを作成する権限がありません。');
           return;

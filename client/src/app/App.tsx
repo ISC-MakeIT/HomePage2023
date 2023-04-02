@@ -7,7 +7,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { AlertProvider } from './providers/AlertProvider';
 import { ProcessingLineProvider } from './providers/ProcessingLineProvider';
 
-let persistor = persistStore(store);
+const persistor = persistStore(store);
 
 function App() {
   return (

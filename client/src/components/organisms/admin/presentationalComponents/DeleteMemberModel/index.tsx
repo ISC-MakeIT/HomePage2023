@@ -21,12 +21,7 @@ export const DeleteMemberModel = ({
 }: DeleteMemberModelProps) => {
   return (
     <Stack>
-      <Button
-        onClick={handleOpen}
-        sx={{ display: 'flex', columnGap: 1, width: '6rem' }}
-        color='error'
-        variant='outlined'
-      >
+      <Button onClick={handleOpen} sx={{ display: 'flex', columnGap: 1, width: '6rem' }} color='error' variant='text'>
         <FontAwesomeIcon icon={faTrash} />
         削除
       </Button>

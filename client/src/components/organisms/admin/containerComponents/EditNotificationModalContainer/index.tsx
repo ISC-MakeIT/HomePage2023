@@ -31,15 +31,6 @@ export const EditNotificationModalContainer = ({ notificationId }: EditNotificat
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userToken === '') {
-      alert.show({
-        type: 'error',
-        content: 'ログインが必要です。',
-      });
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.LOGIN);
-      return;
-    }
-
     const main = async () => {
       try {
         processingLine.show();
@@ -65,6 +56,10 @@ export const EditNotificationModalContainer = ({ notificationId }: EditNotificat
               },
               MILLI_SECOND_COUNTS_TO_HIDE_FOR_ALERT,
             );
+            return;
+          }
+
+          if (status === 401) {
             return;
           }
 

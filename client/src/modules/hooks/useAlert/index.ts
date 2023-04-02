@@ -4,13 +4,22 @@ import { useAppDispatch } from '@redux/hooks';
 export const useAlert = () => {
   const dispatch = useAppDispatch();
 
-  return {
-    show: (alert: Alert, milliSecondCountsToHide: number = 5000) => {
-      dispatch(addAlertToAlertList(alert));
+  const show = (alert: Alert, milliSecondCountsToHide: number = 5000) => {
+    dispatch(addAlertToAlertList(alert));
 
-      setTimeout(() => {
-        dispatch(popFromAlertList());
-      }, milliSecondCountsToHide);
-    },
+    setTimeout(() => {
+      dispatch(popFromAlertList());
+    }, milliSecondCountsToHide);
+  };
+
+  const delayShow = (alert: Alert, milliSecondCountsToHide: number = 5000, delayMilliSecondCounts: number = 1000) => {
+    setTimeout(() => {
+      show(alert, milliSecondCountsToHide);
+    }, delayMilliSecondCounts);
+  };
+
+  return {
+    show,
+    delayShow,
   };
 };

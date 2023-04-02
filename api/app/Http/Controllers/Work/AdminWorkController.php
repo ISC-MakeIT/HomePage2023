@@ -118,6 +118,7 @@ class AdminWorkController extends Controller {
 
         $works = Work::doesntHave('archiveWork')
             ->with(['activeWork', 'nonActiveWork'])
+            ->orderBy('work_id', 'ASC')
             ->get();
 
         return WorksResource::collection($works)->response();

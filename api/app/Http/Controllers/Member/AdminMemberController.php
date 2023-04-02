@@ -413,6 +413,7 @@ class AdminMemberController extends Controller {
 
         $members = Member::doesntHave('archiveMember')
             ->with(['activeMember', 'nonActiveMember', 'ability.role'])
+            ->orderBy('member_id', 'ASC')
             ->get();
 
         return MembersResource::collection($members)->response();

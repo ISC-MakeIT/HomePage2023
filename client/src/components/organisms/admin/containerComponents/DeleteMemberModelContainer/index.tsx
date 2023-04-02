@@ -1,8 +1,8 @@
-import { apiDeleteMember } from '@api/member';
+import { apiDeleteMember } from '@api/members';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DeleteResponse } from 'src/api/homePage/api/admin/members';
 import { useAlert } from 'src/modules/hooks/useAlert';
@@ -20,17 +20,6 @@ export const DeleteMemberModelContainer = ({ memberId }: DeleteMemberModelContai
   const alert = useAlert();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (userToken === '') {
-      alert.show({
-        type: 'error',
-        content: 'ログインが必要です。',
-      });
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.LOGIN);
-      return;
-    }
-  }, []);
-
   const handleDeleteMember = async () => {
     try {
       const response = await apiDeleteMember(userToken, memberId);
@@ -41,14 +30,19 @@ export const DeleteMemberModelContainer = ({ memberId }: DeleteMemberModelContai
       navigate(ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS);
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        const response = e.response!;
+        const status = e.response!.status;
         const responseData: DeleteResponse = e.response!.data;
 
-        if (response.status === 400) {
+        if (status === 400) {
           setError(Object.values(responseData.errors!).join('\n'));
           return;
         }
-        if (response.status === 404) {
+
+        if (status === 401) {
+          return;
+        }
+
+        if (status === 404) {
           setError('既にメンバーが削除されています。');
           return;
         }

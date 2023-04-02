@@ -12,24 +12,24 @@ class WorksResource extends JsonResource {
 
         if ($this->activeWork) {
             return [
-                'workId'    => $this->activeWork->work_id,
-                'title'     => $this->activeWork->title,
-                'contents'  => $this->activeWork->contents,
-                'version'   => $this->version,
-                'createdAt' => (new CarbonImmutable($this->created_at))->toIsoString(),
-                'updatedAt' => (new CarbonImmutable($this->activeWork->created_at))->toIsoString(),
-                'isActive'  => true,
+                'workId'           => $this->activeWork->work_id,
+                'title'            => $this->activeWork->title,
+                'contents'         => $this->activeWork->contents,
+                'currentVersion'   => $this->version,
+                'createdAt'        => (new CarbonImmutable($this->created_at))->toIsoString(),
+                'updatedAt'        => (new CarbonImmutable($this->activeWork->created_at))->toIsoString(),
+                'isActive'         => true,
             ];
         }
 
         return [
-            'workId'    => $this->nonActiveWork->work_id,
-            'title'     => $this->nonActiveWork->title,
-            'contents'  => $this->nonActiveWork->contents,
-            'version'   => $this->version,
-            'createdAt' => (new CarbonImmutable($this->created_at))->toIsoString(),
-            'updatedAt' => (new CarbonImmutable($this->nonActiveWork->created_at))->toIsoString(),
-            'isActive'  => false,
+            'workId'           => $this->nonActiveWork->work_id,
+            'title'            => $this->nonActiveWork->title,
+            'contents'         => $this->nonActiveWork->contents,
+            'currentVersion'   => $this->version,
+            'createdAt'        => (new CarbonImmutable($this->created_at))->toIsoString(),
+            'updatedAt'        => (new CarbonImmutable($this->nonActiveWork->created_at))->toIsoString(),
+            'isActive'         => false,
         ];
     }
 }

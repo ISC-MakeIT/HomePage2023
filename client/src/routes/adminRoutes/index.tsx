@@ -8,21 +8,27 @@ import { Members } from 'src/components/pages/admin/members';
 import { Notifications } from 'src/components/pages/admin/notifications';
 import { Works } from 'src/components/pages/admin/works';
 import { ADMIN_ROUTE_PATH_MAP } from '../routePath';
+import { OnlyLoggedInMemberMiddleware } from 'src/app/middlewares/OnlyLoggedInMemberMiddleware';
+import { Work } from 'src/components/pages/admin/works/workId';
 
 export const AdminRoutes = () => {
   return (
     <Routes>
       <Route path={ADMIN_ROUTE_PATH_MAP.TOP} element={<Home />} />
       <Route path={ADMIN_ROUTE_PATH_MAP.LOGIN} element={<Login />} />
-      <Route path={ADMIN_ROUTE_PATH_MAP.LOGOUT} element={<Logout />} />
 
-      <Route path={ADMIN_ROUTE_PATH_MAP.WORKS} element={<Works />} />
+      <Route path='/' element={<OnlyLoggedInMemberMiddleware />}>
+        <Route path={ADMIN_ROUTE_PATH_MAP.LOGOUT} element={<Logout />} />
 
-      <Route path={ADMIN_ROUTE_PATH_MAP.NOTIFICATIONS} element={<Notifications />} />
-      <Route path={`${ADMIN_ROUTE_PATH_MAP.NOTIFICATIONS}/:notificationId`} element={<Notification />} />
+        <Route path={ADMIN_ROUTE_PATH_MAP.WORKS} element={<Works />} />
+        <Route path={`${ADMIN_ROUTE_PATH_MAP.WORKS}/:workId`} element={<Work />} />
 
-      <Route path={ADMIN_ROUTE_PATH_MAP.MEMBERS} element={<Members />} />
-      <Route path={`${ADMIN_ROUTE_PATH_MAP.MEMBERS}/:memberId`} element={<Member />} />
+        <Route path={ADMIN_ROUTE_PATH_MAP.NOTIFICATIONS} element={<Notifications />} />
+        <Route path={`${ADMIN_ROUTE_PATH_MAP.NOTIFICATIONS}/:notificationId`} element={<Notification />} />
+
+        <Route path={ADMIN_ROUTE_PATH_MAP.MEMBERS} element={<Members />} />
+        <Route path={`${ADMIN_ROUTE_PATH_MAP.MEMBERS}/:memberId`} element={<Member />} />
+      </Route>
     </Routes>
   );
 };
