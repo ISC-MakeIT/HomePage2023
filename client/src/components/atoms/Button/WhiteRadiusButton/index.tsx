@@ -3,11 +3,11 @@ import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 
 type buttonProps = {
-  content: EmotionJSX.Element
-}
+  content: EmotionJSX.Element;
+};
 
 export const WhiteRadiusButton: React.FC<buttonProps> = (buttonContent) => {
-  const {content} = buttonContent;
+  const { content } = buttonContent;
   return (
     <button
       css={css`

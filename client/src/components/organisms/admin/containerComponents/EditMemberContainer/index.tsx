@@ -10,14 +10,14 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
-import { MemberEdit } from '../../presentationalComponents/MemberEdit';
+import { EditMember } from '../../presentationalComponents/EditMember';
 import { EditMemberFormInput } from '../../types/EditMemberFormInput';
 
-type MemberEditContainerProps = {
+type EditMemberContainerProps = {
   memberId: number;
 };
 
-export const MemberEditContainer = ({ memberId }: MemberEditContainerProps) => {
+export const EditMemberContainer = ({ memberId }: EditMemberContainerProps) => {
   const [member, setMember] = useState<Member>();
   const { register, handleSubmit } = useForm<EditMemberFormInput>();
   const [roleList, setRoleList] = useState<Role[]>([]);
@@ -103,7 +103,7 @@ export const MemberEditContainer = ({ memberId }: MemberEditContainerProps) => {
   };
 
   return (
-    <MemberEdit
+    <EditMember
       member={member}
       roleList={roleList}
       error={error}

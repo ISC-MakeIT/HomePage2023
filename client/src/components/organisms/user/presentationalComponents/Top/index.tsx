@@ -44,13 +44,25 @@ export const Top = () => {
           left: 14vw;
         `}
       >
-        <div css={css`width: 42vw;`}>
+        <div
+          css={css`
+            width: 42vw;
+          `}
+        >
           <MakeIT />
-          <div css={css`margin-top: 24px;`}>
+          <div
+            css={css`
+              margin-top: 24px;
+            `}
+          >
             <CatchFrase />
           </div>
         </div>
-        <div css={css`text-align: center;`}>
+        <div
+          css={css`
+            text-align: center;
+          `}
+        >
           <p
             css={css`
               color: #ffffff;
@@ -58,10 +70,22 @@ export const Top = () => {
               font-weight: 700;
             `}
           >
-            私達は、横浜でアプリ・サービス開発をメインに行う<span css={css`font-size: 2.1vw;`}>「ものづくり」</span>サークルです。
+            私達は、横浜でアプリ・サービス開発をメインに行う
+            <span
+              css={css`
+                font-size: 2.1vw;
+              `}
+            >
+              「ものづくり」
+            </span>
+            サークルです。
           </p>
         </div>
-        <div css={css`margin-top: 64px;`}>
+        <div
+          css={css`
+            margin-top: 64px;
+          `}
+        >
           <Contact />
         </div>
       </div>

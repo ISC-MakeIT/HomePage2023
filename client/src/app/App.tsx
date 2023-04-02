@@ -4,7 +4,8 @@ import { store } from '../redux/store';
 import { persistStore } from 'redux-persist';
 import { RouterConfig } from '../routes';
 import { HelmetProvider } from 'react-helmet-async';
-import { AlertProvider } from 'src/components/organisms/admin/containerComponents/AlertProvider';
+import { AlertProvider } from './providers/AlertProvider';
+import { ProcessingLineProvider } from './providers/ProcessingLineProvider';
 
 let persistor = persistStore(store);
 
@@ -14,7 +15,9 @@ function App() {
       <HelmetProvider>
         <PersistGate loading={null} persistor={persistor}>
           <AlertProvider>
-            <RouterConfig />
+            <ProcessingLineProvider>
+              <RouterConfig />
+            </ProcessingLineProvider>
           </AlertProvider>
         </PersistGate>
       </HelmetProvider>

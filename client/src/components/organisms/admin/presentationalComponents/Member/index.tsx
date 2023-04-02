@@ -7,26 +7,17 @@ import { grey } from '@mui/material/colors';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 
 type MemberProps = {
-  member: APIMember | undefined;
+  member: APIMember;
   error?: string;
 };
 
 export const Member = ({ member, error }: MemberProps) => {
-  const isFindingMember = () => !member && !error;
-  const isFailedFindMember = () => !member && error;
+  const isFailedFindMember = () => Boolean(error);
 
   if (isFailedFindMember()) {
     return (
       <>
         <AlertForError error={error} />
-      </>
-    );
-  }
-
-  if (isFindingMember()) {
-    return (
-      <>
-        <LinearProgress color='primary' size='md' sx={{ position: 'fixed', top: 2, left: 0, width: '100vw' }} />
       </>
     );
   }
@@ -47,10 +38,14 @@ export const Member = ({ member, error }: MemberProps) => {
                 <Typography component='p' variant='h5' color={grey.A700}>
                   {member!.jobTitle}
                 </Typography>
-                <Typography sx={{ fontWeight: 'bold' }} component='h1' variant='h3'>
+                <Typography
+                  sx={{ fontWeight: 'bold', overflowWrap: 'break-word', maxWidth: '50rem' }}
+                  component='h1'
+                  variant='h3'
+                >
                   {member!.name}
                 </Typography>
-                <Typography component='p' color={grey.A700}>
+                <Typography component='p' color={grey.A700} sx={{ overflowWrap: 'break-word', maxWidth: '80rem' }}>
                   @{member!.username}
                 </Typography>
               </Box>

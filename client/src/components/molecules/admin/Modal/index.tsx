@@ -17,6 +17,8 @@ export const Modal = ({ isActive, width = 400, handleClose, children }: ModalPro
           left: '50%',
           transform: 'translate(-50%, -50%)',
           width: width,
+          maxHeight: '90vh',
+          overflow: 'auto',
           bgcolor: 'background.paper',
           boxShadow: 24,
           p: 4,

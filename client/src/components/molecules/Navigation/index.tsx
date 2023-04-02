@@ -15,7 +15,9 @@ export const Navigation = () => {
         width: max-content;
       `}
     >
-      {Object.keys(link).map((key) => <NavigationLink href_classname={key} name={link[key]} />)}
+      {Object.keys(link).map((key) => (
+        <NavigationLink href_classname={key} name={link[key]} />
+      ))}
     </nav>
   );
 };
