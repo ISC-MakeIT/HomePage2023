@@ -5,6 +5,10 @@ import { Notification } from '../organisms/user/presentationalComponents/Notific
 import { Footer } from '../organisms/user/presentationalComponents/Footer/Index';
 import { Top } from '../organisms/user/presentationalComponents/Top';
 import { Work } from '../organisms/user/presentationalComponents/Work/Index';
+import { DiscordLogo } from '../atoms/Logo/Discord';
+import { TwitterLogo } from '../atoms/Logo/Twitter';
+import { GithubLogo } from '../atoms/Logo/Github';
+import { Members } from '../organisms/Members';
 
 export const Home = () => {
   return (
@@ -15,6 +19,7 @@ export const Home = () => {
       <Top />
       <Notification />
       <Work />
+      <Members />
       <Contact />
       <Footer />
     </>
