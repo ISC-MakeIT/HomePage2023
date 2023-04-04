@@ -8,16 +8,16 @@ files:
 
 hooks:
   Install:
-    - location: scripts/install.sh
+    - location: scripts_for_deploy/install.sh
       timeout: 120
       runas: root
 
   AfterInstall:
-    - location: scripts/after_install.sh
+    - location: scripts_for_deploy/after_install.sh
       timeout: 10
       runas: root
       
   ApplicationStart:
-    - location: scripts/application_start.sh
+    - location: scripts_for_deploy/application_start.sh
       timeout: 10
       runas: root
