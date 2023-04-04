@@ -6,6 +6,12 @@ files:
   - source: /
     destination: /var/www/html
 
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ec2-user
+    group: ec2-user
+    
 hooks:
   Install:
     - location: scripts_for_deploy/install.sh
