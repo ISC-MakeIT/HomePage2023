@@ -1,7 +1,9 @@
 #!/bin/bash
 
 main() {
-    cd api && composer install
+    cd api &&
+    chmod 777 -R ./* &&
+    composer install
 }
 
 main
