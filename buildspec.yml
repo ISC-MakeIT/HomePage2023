@@ -20,4 +20,4 @@ phases:
       
 artifacts:
   files:
-    - api/.env
+    - '**/*'
