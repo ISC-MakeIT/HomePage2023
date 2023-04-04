@@ -7,8 +7,8 @@ files:
     destination: /var/www/html
 
 hooks:
-  Install:
-    - location: scripts_for_deploy/install.sh
+  BeforeInstall:
+    - location: scripts_for_deploy/before_install.sh
       runas: root
 
   AfterInstall:
