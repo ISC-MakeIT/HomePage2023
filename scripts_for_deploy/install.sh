@@ -1,7 +1,7 @@
 #!/bin/bash
 
 main() {
-    composer install
+    cd api && composer install
 }
 
 main
