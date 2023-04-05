@@ -1,11 +1,11 @@
 #!/bin/bash
 
 main() {
-    sudo find /var/www/html/api -type d -exec chmod 755 {} +
-    sudo find /var/www/html/api -type f -exec chmod 644 {} +
-    sudo chmod -R 777 /var/www/html/api/storage
+    sudo find ./api -type d -exec chmod 755 {} +
+    sudo find ./api -type f -exec chmod 644 {} +
+    sudo chmod -R 777 ./api/storage
 
-    composer install --working-dir=/var/www/html/api
+    composer install --working-dir=./api
 }
 
 main
