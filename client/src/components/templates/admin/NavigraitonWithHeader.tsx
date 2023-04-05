@@ -4,9 +4,10 @@ import { MenuContainer } from '../../organisms/admin/containerComponents/MenuCon
 
 type NavigationWithHeaderProps = {
   children?: ReactNode;
+  spacing?: number;
 };
 
-export const NavigationWithHeader = ({ children }: NavigationWithHeaderProps) => {
+export const NavigationWithHeader = ({ children, spacing = 2 }: NavigationWithHeaderProps) => {
   return (
     <Stack
       sx={{
@@ -21,7 +22,7 @@ export const NavigationWithHeader = ({ children }: NavigationWithHeaderProps) =>
           width: 'calc(100% - 2rem)',
           padding: '1rem 0 0 0',
         }}
-        rowGap={2}
+        rowGap={spacing}
       >
         {children}
       </Stack>

@@ -26,7 +26,9 @@ export const GithubLogo = () => {
           font-size: 18px;
           font-weight: 700;
         `}
-      >Github</p>
+      >
+        Github
+      </p>
     </div>
   );
 };

@@ -39,16 +39,18 @@ class AdminMemberController extends Controller {
             $activeMember = ActiveMember::getActiveMemberIfCanLogin($validatedRequest['username'], $validatedRequest['password']);
             if ($activeMember) {
                 return response()->json([
-                    'token'   => Member::find($activeMember->member_id)->createToken(config('app.key'))->plainTextToken,
-                    'message' => 'ログインに成功しました。',
+                    'token'    => Member::find($activeMember->member_id)->createToken(config('app.key'))->plainTextToken,
+                    'memberId' => $activeMember->member_id,
+                    'message'  => 'ログインに成功しました。',
                 ]);
             }
 
             $nonActiveMember = NonActiveMember::getNonActiveMemberIfCanLogin($validatedRequest['username'], $validatedRequest['password']);
             if ($nonActiveMember) {
                 return response()->json([
-                    'token'   => Member::find($nonActiveMember->member_id)->createToken(config('app.key'))->plainTextToken,
-                    'message' => 'ログインに成功しました。',
+                    'token'    => Member::find($nonActiveMember->member_id)->createToken(config('app.key'))->plainTextToken,
+                    'memberId' => $nonActiveMember->member_id,
+                    'message'  => 'ログインに成功しました。',
                 ]);
             }
 
@@ -180,7 +182,7 @@ class AdminMemberController extends Controller {
             $hashedPassword   = Hash::make($validatedRequest['password']);
 
             $now                     = date_format(CarbonImmutable::now(), 'YmdHis');
-            $name                    = $request->file('icon')->getClientOriginalName();
+            $name                    = str_replace(' ', '_', $request->file('icon')->getClientOriginalName());
             $tmpFileName             = "/tmp/{$now}_{$name}";
             $tmpFileNameForThumbnail = $tmpFileName . '_thumbnail';
 
@@ -311,9 +313,12 @@ class AdminMemberController extends Controller {
             $member->nonActiveMember()->delete();
 
             $now                     = date_format(CarbonImmutable::now(), 'YmdHis');
-            $name                    = $request->file('icon')->getClientOriginalName();
+            $name                    = str_replace(' ', '_', $request->file('icon')->getClientOriginalName());
             $tmpFileName             = "/tmp/{$now}_{$name}";
             $tmpFileNameForThumbnail = $tmpFileName . '_thumbnail';
+
+            InterventionImage::make($request->file('icon'))->save($tmpFileNameForThumbnail, 20, 'jpg');
+            InterventionImage::make($request->file('icon'))->save($tmpFileName, 80, 'jpg');
 
             /** @var \Illuminate\Filesystem\FilesystemAdapter */
             $s3Storage = Storage::disk('s3');

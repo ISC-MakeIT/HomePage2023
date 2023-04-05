@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
-import { Github } from '../../../../atoms/Button/Icon/Github';
-import { GithubText } from '../../../../atoms/Button/Text/Github';
+import { Github } from '../../../../../atoms/Button/Icon/Github';
+import { GithubText } from '../../../../../atoms/Button/Text/Github';
 
 export const GithubButtonContent = () => {
   return (
