@@ -7,19 +7,27 @@ files:
     destination: /var/www/html
 
 permissions:
-  - object: ./api
+  - object: /var/www/html/api
     pattern: "**"
-    owner: fuga
-    group: fuga
+    owner: ec2-user
+    group: ec2-user
     mode: 777
     type:
       - directory
 
+  - object: /var/www/html/scripts_for_deploy
+    pattern: "**"
+    owner: ec2-user
+    group: ec2-user
+    mode: 777
+    type:
+      - file
+
 hooks:
   AfterInstall:
-    - location: ./scripts_for_deploy/after_install.sh
-      runas: ec2-user
+    - location: scripts_for_deploy/after_install.sh
+      runas: root
       
   ApplicationStart:
-    - location: ./scripts_for_deploy/application_start.sh
+    - location: scripts_for_deploy/application_start.sh
       runas: root
