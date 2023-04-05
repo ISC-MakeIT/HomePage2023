@@ -26,8 +26,6 @@ permissions:
 hooks:
   AfterInstall:
     - location: scripts_for_deploy/after_install.sh
-      runas: root
       
   ApplicationStart:
     - location: scripts_for_deploy/application_start.sh
-      runas: root
