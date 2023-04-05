@@ -43,8 +43,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "WATCHPACK_POLLING=true craco start",
-    "build": "craco build",
+    "start": "aspida && WATCHPACK_POLLING=true craco start",
+    "build": "aspida && craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json}'",
