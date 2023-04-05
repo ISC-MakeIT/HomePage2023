@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { Member } from 'src/components/molecules/Member';
+import { Member } from 'src/components/molecules/user/Member';
 
 const members = [
   {

@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { MakeIT } from 'src/components/atoms/Logo/MakeIT';
 import { CatchFrase } from 'src/components/atoms/TextCSV/CatchFrase';
-import { Contact } from 'src/components/molecules/Contact';
+import { Contact } from 'src/components/molecules/user/Contact';
 import { Header } from '../Header';
 
 export const Top = () => {

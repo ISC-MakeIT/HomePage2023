@@ -64,7 +64,7 @@ export const Member: React.FC<MemberProps> = ({ background_color, name, skill, i
           backface-visibility: hidden;
           z-index: 2;
         `}
-        style={sideToggle ? {opacity: 1} : {opacity: 0}}
+        style={sideToggle ? { opacity: 1 } : { opacity: 0 }}
       >
         <h1
           css={css`

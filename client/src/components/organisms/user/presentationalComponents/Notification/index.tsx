@@ -1,4 +1,3 @@
-import React from 'react';
 import { css } from '@emotion/react';
 import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
 

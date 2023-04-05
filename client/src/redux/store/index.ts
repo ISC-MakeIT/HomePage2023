@@ -5,9 +5,11 @@ import thunk from 'redux-thunk';
 import storage from 'redux-persist/lib/storage';
 import { alertListReducer } from '@redux/actions/alert/alertListReducer';
 import { proccessingLineReducer } from '@redux/actions/processingLine';
+import { userIdReducer } from '@redux/actions/user/userIdReducer';
 
 const reducers = combineReducers({
   userToken: userTokenReducer,
+  userId: userIdReducer,
   alertList: alertListReducer,
   processingLine: proccessingLineReducer,
 });

@@ -17,6 +17,14 @@ export const LoggedInMenu = () => {
       </MenuItem>
 
       <MenuItem
+        selected={location.pathname === ADMIN_ROUTE_FULL_PATH_MAP.MYPAGE}
+        component={Link}
+        to={ADMIN_ROUTE_FULL_PATH_MAP.MYPAGE}
+      >
+        <ListItemText>マイページ</ListItemText>
+      </MenuItem>
+
+      <MenuItem
         selected={location.pathname === ADMIN_ROUTE_FULL_PATH_MAP.WORKS}
         component={Link}
         to={ADMIN_ROUTE_FULL_PATH_MAP.WORKS}

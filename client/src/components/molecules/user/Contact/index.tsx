@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { GradientRadiusButton } from 'src/components/molecules/Button/GradientRadiusButton';
+import { GradientRadiusButton } from 'src/components/molecules/user/Button/GradientRadiusButton';
 
 export const Contact = () => {
   return (

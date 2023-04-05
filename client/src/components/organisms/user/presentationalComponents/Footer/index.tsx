@@ -1,7 +1,5 @@
 import { css } from '@emotion/react';
-import React from 'react';
 import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
-import { Github } from 'src/components/atoms/Button/Icon/Github';
 
 export const Footer = () => {
   const links = [

@@ -10,6 +10,7 @@ import { Works } from 'src/components/pages/admin/works';
 import { ADMIN_ROUTE_PATH_MAP } from '../routePath';
 import { OnlyLoggedInMemberMiddleware } from 'src/app/middlewares/OnlyLoggedInMemberMiddleware';
 import { Work } from 'src/components/pages/admin/works/workId';
+import { MyPage } from 'src/components/pages/admin/mypage';
 
 export const AdminRoutes = () => {
   return (
@@ -28,6 +29,8 @@ export const AdminRoutes = () => {
 
         <Route path={ADMIN_ROUTE_PATH_MAP.MEMBERS} element={<Members />} />
         <Route path={`${ADMIN_ROUTE_PATH_MAP.MEMBERS}/:memberId`} element={<Member />} />
+
+        <Route path={`${ADMIN_ROUTE_PATH_MAP.MYPAGE}`} element={<MyPage />} />
       </Route>
     </Routes>
   );
