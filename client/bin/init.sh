@@ -2,7 +2,7 @@
 
 main() {
     yarn
-    yarn api:build
+    cp .env.example .env
     yarn start
 }
 

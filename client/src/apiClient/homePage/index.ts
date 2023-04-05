@@ -8,7 +8,7 @@ export const homePageClient = (config?: AxiosRequestConfig<any> | undefined) => 
       axios.create(),
       Object.assign(
         {
-          baseURL: 'http://localhost:8000',
+          baseURL: process.env.REACT_APP_API_URL,
           paramsSerializer: {
             indexes: false,
           },
