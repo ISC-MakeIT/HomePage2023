@@ -6,20 +6,11 @@ files:
   - source: /
     destination: /var/www/html
 
-permissions:
-  - object: ./scripts_for_deploy
-    pattern: "**"
-    owner: ec2-user
-    group: root
-    mode: 777
-    type:
-      - directory
-
 hooks:
   AfterInstall:
     - location: ./scripts_for_deploy/after_install.sh
-      runas: ec2-user
+      runas: root
       
   ApplicationStart:
     - location: ./scripts_for_deploy/application_start.sh
-      runas: ec2-user
+      runas: root
