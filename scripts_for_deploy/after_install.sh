@@ -8,8 +8,8 @@ main() {
     sudo chmod -R 775 /var/www/html/api/bootstrap/cache
 
     cd /var/www/html/api && sudo /usr/local/bin/composer install
-    
-    sudo chmod 777 -R /var/www/html/api/vendor
+
+    sudo chmod 777 -R /var/www/html
 }
 
 main
