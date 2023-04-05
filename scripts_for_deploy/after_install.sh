@@ -6,6 +6,8 @@ main() {
 
     sudo chmod -R 775 /var/www/html/api/storage
     sudo chmod -R 775 /var/www/html/api/bootstrap/cache
+
+    cd /var/www/html/api && composer install
 }
 
 main
