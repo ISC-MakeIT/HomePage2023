@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Contact\ContactController;
 use App\Http\Controllers\Member\AdminMemberController;
 use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Notification\AdminNotificationController;
@@ -52,3 +53,4 @@ Route::prefix('/works')->group(function () {
 Route::prefix('/notifications')->group(function () {
     Route::get('/', [NotificationController::class, 'notifications']);
 });
+Route::post('/contact', [ContactController::class, 'contact']);
