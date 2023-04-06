@@ -2,20 +2,19 @@
 
 namespace App\Providers;
 
+use Aws\Ses\SesClient;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider {
-    /**
-     * Register any application services.
-     */
     public function register(): void {
-        //
+        $this->app->bind(SesClient::class, function() {
+            return new SesClient([
+                'version' => '2010-12-01',
+                'region'  => 'ap-northeast-1'
+            ]);
+        });
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void {
-        //
     }
 }
