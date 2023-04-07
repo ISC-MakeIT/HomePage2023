@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import axios from 'axios';
 import { cdate } from 'cdate';
 import { useEffect, useState } from 'react';
 import { homePageClient } from 'src/apiClient/homePage';
@@ -7,11 +6,11 @@ import { OrangeRadiusBox } from 'src/components/atoms/Box/OrangeRadius';
 import { WhiteRadiusBox } from 'src/components/atoms/Box/WhiteRadius';
 
 interface Notification {
-  notification_id: number;
+  notificationId: number;
   title: string;
   contents: string;
   creator: number;
-  created_at: string;
+  createdAt: string;
 }
 
 const isFullWidth = (src: string) => {
@@ -91,6 +90,7 @@ export const Notifications = () => {
             `}
           >
             {notifications.map((notification) => {
+              const formattedTitle = substrByte(notification.title, 0, 48);
               return (
                 <WhiteRadiusBox>
                   <div
@@ -101,7 +101,7 @@ export const Notifications = () => {
                       font-weight: 400;
                     `}
                   >
-                    {cdate(notification.created_at).format('YYYY.MM.DD')}
+                    {cdate(notification.createdAt).format('YYYY.MM.DD')}
                   </div>
                   <OrangeRadiusBox>
                     <div
@@ -122,11 +122,10 @@ export const Notifications = () => {
                       line-height: 1.5rem;
                       font-weight: 700;
                       color: #ff8567;
+                      overflow-wrap: anywhere;
                     `}
                   >
-                    {substrByte(notification.title, 0, 40) === notification.title
-                      ? notification.title
-                      : substrByte(notification.title, 0, 40) + '...'}
+                    {formattedTitle === notification.title ? notification.title : formattedTitle + '...'}
                   </div>
                 </WhiteRadiusBox>
               );
