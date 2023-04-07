@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import axios from 'axios';
 import { cdate } from 'cdate';
 import { useEffect, useState } from 'react';
+import { homePageClient } from 'src/apiClient/homePage';
 import { OrangeRadiusBox } from 'src/components/atoms/Box/OrangeRadius';
 import { WhiteRadiusBox } from 'src/components/atoms/Box/WhiteRadius';
 
@@ -43,7 +44,7 @@ export const Notifications = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get<Notification[]>('http://localhost:8000/api/notifications');
+      const data = await homePageClient().api.notifications.$get();
       setNotifications(data);
     })();
   }, []);
