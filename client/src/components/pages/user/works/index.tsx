@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { homePageClient } from 'src/apiClient/homePage';
 
 interface Work {
   workId: number;
@@ -13,7 +13,7 @@ export const Works = () => {
   const [works, setWorks] = useState<Work[]>([]);
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get<Work[]>('http://localhost:8000/api/works');
+      const data = await homePageClient().api.works.$get();
       setWorks(data);
     })();
   }, []);
@@ -26,6 +26,7 @@ export const Works = () => {
       {works.map((work) => {
         return (
           <div
+            key={work.workId}
             css={css`
               background-image: url(/work_background.png);
             `}
