@@ -1,6 +1,7 @@
 export const USER_ROUTE_PATH_MAP = {
   OTHER: '*',
   TOP: '/',
+  WORKS: '/works',
 } as const;
 
 const ADMIN_ROUTE_TOP = '/admin';

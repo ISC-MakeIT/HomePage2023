@@ -7,7 +7,7 @@ export const RouterConfig = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={`${USER_ROUTE_PATH_MAP.TOP}/*`} element={<UserRoutes />} />
+        <Route path={`/*`} element={<UserRoutes />} />
 
         <Route path={`${ADMIN_ROUTE_FULL_PATH_MAP.TOP}/*`} element={<AdminRoutes />} />
       </Routes>
