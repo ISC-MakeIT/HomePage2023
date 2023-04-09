@@ -1,7 +1,60 @@
+import { apiNotifications } from '@api/user/notifications';
 import { css } from '@emotion/react';
+import { cdate } from 'cdate';
+import { useEffect, useState } from 'react';
 import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
 
+interface Notification {
+  notificationId: number;
+  title: string;
+  contents: string;
+  creator: number;
+  createdAt: string;
+}
+
+const isFullWidth = (src: string) => {
+  return String(src).match(/[\x01-\x7E\uFF65-\uFF9F]/) ? false : true;
+};
+const substrByte = (src: string, start: number, size: number) => {
+  let result = '';
+  let count1 = 0;
+  let count2 = 0;
+
+  for (let i = 0; i < src.length; i++) {
+    const c = src.charAt(i);
+    const char_size = isFullWidth(c) ? 2 : 1;
+
+    if (count1 >= start) {
+      count2 += char_size;
+      if (count2 <= size) {
+        result += c;
+      } else {
+        break;
+      }
+    }
+    count1 += char_size;
+  }
+
+  return result;
+};
+
 export const Notification = () => {
+  const [notifications, setNotifications] = useState<Notification[]>([
+    {
+      notificationId: 0,
+      title: 'サークルホームページを開設しました',
+      contents: '',
+      createdAt: '2023-04-10',
+      creator: 0,
+    },
+  ]);
+  useEffect(() => {
+    (async () => {
+      const data = await apiNotifications();
+      setNotifications(data);
+    })();
+  }, []);
+  const formattedTitle = substrByte(notifications[0].title, 0, 48);
   return (
     <div>
       <div
@@ -58,7 +111,7 @@ export const Notification = () => {
                   font-weight: 400;
                 `}
               >
-                2021.11.27
+                {cdate(notifications[0].createdAt).format('YYYY.MM.DD')}
               </div>
               <div
                 css={css`
@@ -89,9 +142,10 @@ export const Notification = () => {
                   line-height: 1.5rem;
                   font-weight: 700;
                   color: #ff8567;
+                  overflow-wrap: anywhere;
                 `}
               >
-                サークルホームページを開設しましたaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                {formattedTitle === notifications[0].title ? notifications[0].title : formattedTitle + '...'}
               </div>
             </div>
             <div
@@ -101,7 +155,7 @@ export const Notification = () => {
               `}
             >
               <a
-                href='#temp'
+                href='/notifications'
                 css={css`
                   font-size: 1rem;
                   line-height: 1.5rem;
