@@ -1,7 +1,6 @@
+import { apiWork } from '@api/user/works';
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import { homePageClient } from 'src/apiClient/homePage';
-
 interface Work {
   workId: number;
   title: string;
@@ -13,7 +12,7 @@ export const Works = () => {
   const [works, setWorks] = useState<Work[]>([]);
   useEffect(() => {
     (async () => {
-      const data = await homePageClient().api.works.$get();
+      const data = await apiWork();
       setWorks(data);
     })();
   }, []);
