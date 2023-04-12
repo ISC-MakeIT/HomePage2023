@@ -10,10 +10,10 @@ type MemberProps = {
   skill: string;
   icon: string;
   content: {
-    discord: string;
-    twitter: string;
-    github: string;
-    description: string;
+    discord?: string;
+    twitter?: string;
+    github?: string;
+    description?: string;
   };
 };
 

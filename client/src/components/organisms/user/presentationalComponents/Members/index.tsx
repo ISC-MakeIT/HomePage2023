@@ -1,110 +1,37 @@
+import { apiMembers } from '@api/user/members';
 import { css } from '@emotion/react';
-import { Member } from 'src/components/molecules/user/Member';
+import { useEffect, useState } from 'react';
+import { Member as MemberComponent } from 'src/components/molecules/user/Member';
 
-const members = [
-  {
-    backgroundColor: '#F15B5B',
-    skill: 'プログラマー',
-    name: '八尋　諒',
-    icon: '/images/index_top_background.jpg',
-    content: {
-      discord: 'yappi #3461',
-      twitter: 'Yappisec',
-      github: 'YahiroRyo',
-      description:
-        '自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文',
-    },
-  },
-  {
-    backgroundColor: '#F15B88',
-    skill: 'プログラマー',
-    name: '八尋　諒',
-    icon: '/images/index_top_background.jpg',
-    content: {
-      discord: 'yappi #3461',
-      twitter: 'Yappisec',
-      github: 'YahiroRyo',
-      description:
-        '自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文',
-    },
-  },
-  {
-    backgroundColor: '#F1915B',
-    skill: 'プログラマー',
-    name: '八尋　諒',
-    icon: '/images/index_top_background.jpg',
-    content: {
-      discord: 'yappi #3461',
-      twitter: 'Yappisec',
-      github: 'YahiroRyo',
-      description:
-        '自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文',
-    },
-  },
-  {
-    backgroundColor: '#C1F15B',
-    skill: 'プログラマー',
-    name: '八尋　諒',
-    icon: '/images/index_top_background.jpg',
-    content: {
-      discord: 'yappi #3461',
-      twitter: 'Yappisec',
-      github: 'YahiroRyo',
-      description:
-        '自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文',
-    },
-  },
-  {
-    backgroundColor: '#70F15B',
-    skill: 'プログラマー',
-    name: '八尋　諒',
-    icon: '/images/index_top_background.jpg',
-    content: {
-      discord: 'yappi #3461',
-      twitter: 'Yappisec',
-      github: 'YahiroRyo',
-      description:
-        '自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文',
-    },
-  },
-  {
-    backgroundColor: '#5BA0F1',
-    skill: 'プログラマー',
-    name: '八尋　諒',
-    icon: '/images/index_top_background.jpg',
-    content: {
-      discord: 'yappi #3461',
-      twitter: 'Yappisec',
-      github: 'YahiroRyo',
-      description:
-        '自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文',
-    },
-  },
-  {
-    backgroundColor: '#F15B5B',
-    skill: 'プログラマー',
-    name: '八尋　諒',
-    icon: '/images/index_top_background.jpg',
-    content: {
-      discord: 'yappi #3461',
-      twitter: 'Yappisec',
-      github: 'YahiroRyo',
-      description:
-        '自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文自己紹介文',
-    },
-  },
-];
+interface Member {
+  memberId: number;
+  name: string;
+  jobTitle: string;
+  discord?: string;
+  twitter?: string;
+  github?: string;
+  description: string;
+}
 
 export const Members = () => {
+  const [members, setMembers] = useState<Member[]>([]);
+  useEffect(() => {
+    (async () => {
+      const data = await apiMembers();
+      setMembers(data);
+    })();
+  }, []);
   const memberList = members.map((data, index) => {
     return (
-      <Member
+      <MemberComponent
         key={index}
         name={data.name}
-        skill={data.skill}
-        icon={data.icon}
-        content={data.content}
-        background_color={data.backgroundColor}
+        skill={data.jobTitle}
+        // icon={data.icon}
+        icon='/images/index_top_background.jpg'
+        content={{ discord: data.discord, twitter: data.twitter, github: data.github, description: data.description }}
+        // background_color={data.backgroundColor}
+        background_color='#F15B88'
       />
     );
   });
