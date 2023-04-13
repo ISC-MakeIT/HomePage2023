@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { WorkList } from '../../presentationalComponents/WorkList';
+import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 
 export const WorkListContainer = () => {
   const [workList, setWorkList] = useState<Work[]>([]);
@@ -12,14 +13,21 @@ export const WorkListContainer = () => {
 
   const userToken = useAppSelector(selectUserToken);
   const state: { refresh?: boolean } = useLocation().state;
+  const proccessingLine = useProcessingLine();
 
   useEffect(() => {
     const main = async () => {
       try {
+        proccessingLine.show();
+
         const response = await apiWorks(userToken);
         setWorkList(response);
         setError(undefined);
+
+        proccessingLine.hide();
       } catch (e) {
+        proccessingLine.hide();
+
         if (axios.isAxiosError(e)) {
           const status = e.response!.status;
           const responseData: GetResponse = e.response!.data;
