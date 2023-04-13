@@ -35,7 +35,7 @@ class NonActiveMember extends Model {
         return NonActiveMember::where('username', $username)->exists();
     }
 
-    public static function getNonActiveMemberIfCanLogin(string $username, string $password): ?ActiveMember {
+    public static function getNonActiveMemberIfCanLogin(string $username, string $password): ?NonActiveMember {
         if (NonActiveMember::isExistsUserNameBy($username)) {
             $member = NonActiveMember::where('username', $username)->first();
             if (Hash::check($password, $member->password)) {
