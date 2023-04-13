@@ -15,6 +15,7 @@ class EditWorkRequest extends FormRequest {
             'currentVersion' => ['required', 'integer'],
             'title'          => ['required', 'max:255'],
             'contents'       => ['required', 'max:20000'],
+            'picture'        => ['image', 'mimes:png,jpg,jpeg', 'max:4096'],
             'isActive'       => ['required', 'boolean'],
         ];
     }
