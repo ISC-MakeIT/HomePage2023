@@ -1,4 +1,4 @@
-import { Notification } from '@api/notifications/notification';
+import { Notification } from '@api/admin/notifications/notification';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Box, Button, FormHelperText, FormLabel, Radio, RadioGroup, Stack, TextField, Typography } from '@mui/material';

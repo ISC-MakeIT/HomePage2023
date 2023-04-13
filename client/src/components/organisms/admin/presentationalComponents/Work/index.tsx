@@ -1,4 +1,4 @@
-import { Work as APIWork } from '@api/works/work';
+import { Work as APIWork } from '@api/admin/works/work';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors, Stack, Typography } from '@mui/material';

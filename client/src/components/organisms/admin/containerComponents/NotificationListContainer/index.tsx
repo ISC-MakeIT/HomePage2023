@@ -1,4 +1,4 @@
-import { apiNotifications } from '@api/notifications';
+import { apiNotifications } from '@api/admin/notifications';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';

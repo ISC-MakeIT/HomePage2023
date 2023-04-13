@@ -6,11 +6,11 @@ import { useAlert } from 'src/modules/hooks/useAlert';
 import { useAppSelector } from '@redux/hooks';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useNavigate } from 'react-router-dom';
-import { apiMember } from '@api/members/member';
-import { Member, apiEditMe } from '@api/members';
+import { apiMember } from '@api/admin/members/member';
+import { Member, apiEditMe } from '@api/admin/members';
 import axios from 'axios';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
-import { apiChangeIcon } from '@api/members/icon';
+import { apiChangeIcon } from '@api/admin/members/icon';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 
 type EditMeModalContainerProps = {

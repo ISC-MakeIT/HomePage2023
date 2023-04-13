@@ -2,16 +2,19 @@
 
 namespace App\Http\Resources\Notification\User;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class NotificationsResource extends JsonResource {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array {
-        return parent::toArray($request);
+        unset($request);
+
+        return [
+            'notificationId' => $this->notification_id,
+            'title'          => $this->title,
+            'contents'       => $this->contents,
+            'createdAt'      => (new Carbon($this->created_at))->toISOString(),
+        ];
     }
 }

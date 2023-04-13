@@ -1,44 +1,36 @@
-import { apiMembers } from '@api/user/members';
+import { Member } from '@api/user/members';
 import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
 import { Member as MemberComponent } from 'src/components/molecules/user/Member';
 
-interface Member {
-  memberId: number;
-  name: string;
-  jobTitle: string;
-  discord?: string;
-  twitter?: string;
-  github?: string;
-  description: string;
-}
+type MembersProps = {
+  members: Member[];
+};
 
-export const Members = () => {
-  const [members, setMembers] = useState<Member[]>([]);
-  useEffect(() => {
-    (async () => {
-      const data = await apiMembers();
-      setMembers(data);
-    })();
-  }, []);
-  const memberList = members.map((data, index) => {
+export const Members = ({ members }: MembersProps) => {
+  const memberList = members.map((member) => {
     return (
       <MemberComponent
-        key={index}
-        name={data.name}
-        skill={data.jobTitle}
-        // icon={data.icon}
-        icon='/images/index_top_background.jpg'
-        content={{ discord: data.discord, twitter: data.twitter, github: data.github, description: data.description }}
-        // background_color={data.backgroundColor}
-        background_color='#F15B88'
+        key={member.memberId}
+        name={member.name}
+        skill={member.jobTitle}
+        icon={member.thumbnail}
+        content={{
+          discord: member.discord,
+          twitter: member.twitter,
+          github: member.github,
+          description: member.description,
+        }}
+        backgroundColor='#F15B88'
       />
     );
   });
+
   return (
     <div
       css={css`
-        padding-top: 80px;
+        padding: 80px 0;
+        width: 84%;
+        margin: 0 auto;
       `}
     >
       <h1
@@ -53,12 +45,10 @@ export const Members = () => {
       </h1>
       <div
         css={css`
-          width: 84%;
-          margin: 0 auto;
           display: flex;
           flex-wrap: wrap;
+          row-gap: 40px;
           justify-content: space-around;
-          align-items: flex-start;
         `}
       >
         {memberList}

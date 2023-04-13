@@ -1,11 +1,16 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
-import { DiscordLogo } from 'src/components/atoms/Logo/Discord';
-import { GithubLogo } from 'src/components/atoms/Logo/Github';
-import { TwitterLogo } from 'src/components/atoms/Logo/Twitter';
+import { useEffect, useRef, useState } from 'react';
+import { IntroduceDiscordAccount } from '../../../atoms/Account/IntroduceDiscordAccount';
+import { IntroduceTwitterAccount } from '../../../atoms/Account/IntroduceTwitterAccount';
+import { IntroduceGithubAccount } from '../../../atoms/Account/IntroduceGithubAccount';
+import { GreyMediumBoldText } from 'src/components/atoms/Text/GreyMediumBoldText';
+import { BlackSmallBoldTitle } from 'src/components/atoms/Title/BlackSmallBoldTitle';
+import { WhiteMediumText } from 'src/components/atoms/Text/WhiteMediumText';
+import { BackGroundImage } from 'src/components/atoms/Image/BackGroundImage';
+import { Stack } from 'src/components/atoms/Layout/Stack';
 
 type MemberProps = {
-  background_color: string;
+  backgroundColor: string;
   name: string;
   skill: string;
   icon: string;
@@ -17,125 +22,114 @@ type MemberProps = {
   };
 };
 
-export const Member: React.FC<MemberProps> = ({ background_color, name, skill, icon, content }) => {
-  const [sideToggle, setSideToggle] = useState(true);
+export const Member = ({ backgroundColor, name, skill, icon, content }: MemberProps) => {
+  const [isReversed, setIsReversed] = useState<boolean>(false);
+  const [height, setHeight] = useState<number>();
+
+  const frontMemberElement = useRef<HTMLDivElement>(null);
+  const rearMemberElement = useRef<HTMLDivElement>(null);
+
   const reverse = () => {
-    setSideToggle(!sideToggle);
+    setIsReversed(!isReversed);
   };
+
+  const memberCardHeight = (): string | undefined => {
+    if (height) {
+      return `height: ${height}px;`;
+    }
+
+    return undefined;
+  };
+
   const front = css`
-    width: 362px;
-    height: 362px;
-    margin-bottom: 84px;
     background-color: #ffffff;
-    transform-style: preserve-3d;
-    transition: 0.5s;
-    box-shadow: 0px 2px 5px #919191;
   `;
   const rear = css`
-    background-color: ${background_color};
-    display: block;
-    width: 362px;
-    height: 362px;
-    margin-bottom: 84px;
+    background-color: ${backgroundColor};
     transform: rotateY(180deg);
-    transform-style: preserve-3d;
-    transition: 0.5s;
-    box-shadow: 0px 2px 5px #919191;
   `;
-  const member_content_side_account_line = css`
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  `;
+
+  useEffect(() => {
+    if (frontMemberElement.current && rearMemberElement.current) {
+      if (frontMemberElement.current.clientHeight < 402 && rearMemberElement.current.clientHeight < 402) {
+        return;
+      }
+
+      if (frontMemberElement.current.clientHeight > rearMemberElement.current.clientHeight) {
+        setHeight(frontMemberElement.current.clientHeight);
+        return;
+      }
+
+      setHeight(rearMemberElement.current.clientHeight);
+      return;
+    }
+  }, [frontMemberElement, rearMemberElement]);
+
   return (
-    <article
-      css={sideToggle ? front : rear}
-      onClick={() => {
-        reverse();
-      }}
+    <div
+      css={css`
+        width: 22.6rem;
+        transition: 0.5s;
+        box-shadow: 0px 2px 5px #919191;
+        transform-style: preserve-3d;
+        line-height: 1.5;
+        white-space: pre-wrap;
+        &:hover {
+          cursor: pointer;
+        }
+
+        ${isReversed ? rear : front}
+      `}
+      onClick={reverse}
     >
       <div
         css={css`
           background-color: #ffffff;
-          position: absolute;
-          width: 100%;
-          height: 100%;
+          width: 90%;
           backface-visibility: hidden;
           z-index: 2;
+          margin: 1.5rem auto;
+          word-break: break-all;
+
+          ${memberCardHeight()}
+          ${isReversed ? { opacity: 0 } : { opacity: 1 }}
         `}
-        style={sideToggle ? { opacity: 1 } : { opacity: 0 }}
+        ref={frontMemberElement}
       >
-        <h1
-          css={css`
-            width: fit-content;
-            margin: 20px auto;
-          `}
-        >
-          <img src={icon} width={326} height={235} />
-        </h1>
-        <h3
-          css={css`
-            width: fit-content;
-            margin: 20px auto;
-            font-size: 24px;
-            font-weight: 700;
-          `}
-        >
-          {name}
-        </h3>
-        <p
-          css={css`
-            width: fit-content;
-            margin: 7px auto;
-            color: #333333;
-            font-size: 16px;
-            font-weight: 700;
-          `}
-        >
-          {skill}
-        </p>
+        <BackGroundImage width='100%' height='235px' image={icon} />
+        <BlackSmallBoldTitle>{name}</BlackSmallBoldTitle>
+        <GreyMediumBoldText>{skill}</GreyMediumBoldText>
       </div>
+
       <div
         css={css`
           color: #ffffff;
           position: absolute;
+          top: 0;
+          left: 0;
           width: 100%;
-          height: 100%;
+          margin: 1.5rem auto;
+          word-break: break-all;
           backface-visibility: hidden;
           transform: rotateY(180deg);
+
+          ${memberCardHeight()}
         `}
+        ref={rearMemberElement}
       >
-        <div
-          css={css`
-            width: 326px;
-            margin: 19px auto;
+        <Stack
+          spacing='1.25rem'
+          style={css`
+            width: 90%;
+            margin: auto;
           `}
         >
-          <div css={member_content_side_account_line}>
-            <DiscordLogo />
-            <p>{content.discord}</p>
-          </div>
-          <div css={member_content_side_account_line}>
-            <TwitterLogo />
-            <p>{content.twitter}</p>
-          </div>
-          <div css={member_content_side_account_line}>
-            <GithubLogo />
-            <p>{content.github}</p>
-          </div>
-        </div>
-        <p
-          css={css`
-            width: 326px;
-            margin: 0 18px 32px 18px;
-            position: absolute;
-            bottom: 0;
-          `}
-        >
-          {content.description}
-        </p>
+          <IntroduceDiscordAccount>{content.discord}</IntroduceDiscordAccount>
+          <IntroduceTwitterAccount>{content.twitter}</IntroduceTwitterAccount>
+          <IntroduceGithubAccount>{content.github}</IntroduceGithubAccount>
+          <WhiteMediumText>{content.description}</WhiteMediumText>
+        </Stack>
       </div>
-    </article>
+    </div>
   );
 };

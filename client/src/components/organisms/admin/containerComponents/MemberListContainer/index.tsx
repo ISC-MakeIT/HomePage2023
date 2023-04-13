@@ -1,4 +1,4 @@
-import { apiMembers, Member, GetResponse } from '@api/members';
+import { apiMembers, Member, GetResponse } from '@api/admin/members';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';

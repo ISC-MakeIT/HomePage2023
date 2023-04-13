@@ -1,5 +1,5 @@
-import { Request, Response } from '../../../../api/homePage/api/admin/login';
-import { homePageClient } from '../../../../apiClient/homePage';
+import { Request, Response } from '../../../../../api/homePage/api/admin/login';
+import { homePageClient } from 'src/apiClient/homePage';
 
 export const apiLogin = async ({ username, password }: Request): Promise<Response> => {
   await homePageClient().sanctum.csrf_cookie.$get();

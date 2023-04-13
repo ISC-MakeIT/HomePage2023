@@ -2,12 +2,13 @@ import { css } from '@emotion/react';
 import { NavigationLink } from 'src/components/atoms/Button/NavigationLink';
 
 export const Navigation = () => {
-  const link: { [key: string]: string } = {
+  const linkList: { [key: string]: string } = {
     about: 'Make ITについて',
     new: '新着情報',
     achivement: '実績',
     member: 'メンバー',
   };
+
   return (
     <nav
       css={css`
@@ -15,8 +16,8 @@ export const Navigation = () => {
         width: max-content;
       `}
     >
-      {Object.keys(link).map((key) => (
-        <NavigationLink href_classname={key} name={link[key]} />
+      {Object.keys(linkList).map((id) => (
+        <NavigationLink hrefId={id} name={linkList[id]} />
       ))}
     </nav>
   );

@@ -5,7 +5,7 @@ import { Box, Button, FormHelperText, FormLabel, Radio, RadioGroup, Stack, TextF
 import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { Modal } from 'src/components/molecules/admin/Modal';
-import { Work } from '@api/works/work';
+import { Work } from '@api/admin/works/work';
 
 type EditWorkModalProps = {
   isActive: boolean;

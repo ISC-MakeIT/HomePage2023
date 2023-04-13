@@ -1,14 +1,14 @@
 import { css } from '@emotion/react';
 
 type LinkProps = {
-  href_classname: string;
+  hrefId: string;
   name: string;
 };
 
-export const NavigationLink: React.FC<LinkProps> = ({ href_classname, name }) => {
+export const NavigationLink: React.FC<LinkProps> = ({ hrefId, name }) => {
   return (
     <a
-      href={`#${href_classname}`}
+      href={`#${hrefId}`}
       css={css`
         display: block;
         text-decoration: none;

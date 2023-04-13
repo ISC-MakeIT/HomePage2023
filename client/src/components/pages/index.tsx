@@ -3,8 +3,8 @@ import { Contact } from '../organisms/user/presentationalComponents/Contact';
 import { Notification } from '../organisms/user/presentationalComponents/Notification';
 import { Footer } from '../organisms/user/presentationalComponents/Footer';
 import { Top } from '../organisms/user/presentationalComponents/Top';
-import { Work } from '../organisms/user/presentationalComponents/Work';
-import { Members } from '../organisms/user/presentationalComponents/Members';
+import { MembersContainer } from '../organisms/user/containerComponents/MembersContainer';
+import { WorkContainer } from '../organisms/user/containerComponents/WorkContainer';
 
 export const Home = () => {
   return (
@@ -14,8 +14,8 @@ export const Home = () => {
       </Helmet>
       <Top />
       <Notification />
-      <Work />
-      <Members />
+      <WorkContainer />
+      <MembersContainer />
       <Contact />
       <Footer />
     </>

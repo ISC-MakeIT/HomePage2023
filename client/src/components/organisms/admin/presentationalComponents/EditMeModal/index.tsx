@@ -1,4 +1,4 @@
-import { Member } from '@api/members';
+import { Member } from '@api/admin/members';
 import { faUpload, faUserEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {

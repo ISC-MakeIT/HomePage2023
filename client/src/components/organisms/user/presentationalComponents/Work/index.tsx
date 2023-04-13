@@ -1,28 +1,12 @@
-import { apiWork } from '@api/user/works';
+import { Work as APIWork } from '@api/user/works';
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
-interface Work {
-  workId: number;
-  title: string;
-  contents: string;
-  createdAt: string;
-}
-export const Work = () => {
-  const [works, setWorks] = useState<Work[]>([
-    {
-      workId: 0,
-      title: '学生ITコンテスト2021 最優秀賞',
-      contents:
-        '新入部員達がグループを組んで初めて作成したサービス\n「CoreQue」でアイデアソン・ハッカソンで最優秀賞を取りました。 現在はビジネス化に向けて奮闘中です。',
-      createdAt: '2023-04-10',
-    },
-  ]);
-  useEffect(() => {
-    (async () => {
-      const data = await apiWork();
-      setWorks(data);
-    })();
-  }, []);
+
+type WorkProps = {
+  work: APIWork;
+};
+
+export const Work = ({ work }: WorkProps) => {
   return (
     <div
       css={css`
@@ -58,7 +42,7 @@ export const Work = () => {
                 overflow-wrap: anywhere;
               `}
             >
-              {works[0].title}
+              {work.title}
             </div>
             {/* <div
               css={css`
@@ -79,7 +63,7 @@ export const Work = () => {
                 overflow-wrap: anywhere;
               `}
             >
-              {works[0].contents}
+              {work.contents}
             </div>
           </div>
           <img

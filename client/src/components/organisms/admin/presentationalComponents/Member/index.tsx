@@ -1,4 +1,4 @@
-import { Member as APIMember } from '@api/members';
+import { Member as APIMember } from '@api/admin/members';
 import { faDiscord, faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, LinearProgress, Stack } from '@mui/joy';

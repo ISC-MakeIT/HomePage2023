@@ -15,6 +15,7 @@ interface Notification {
 const isFullWidth = (src: string) => {
   return String(src).match(/[\x01-\x7E\uFF65-\uFF9F]/) ? false : true;
 };
+
 const substrByte = (src: string, start: number, size: number) => {
   let result = '';
   let count1 = 0;

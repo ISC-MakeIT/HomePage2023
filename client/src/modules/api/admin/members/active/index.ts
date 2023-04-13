@@ -1,5 +1,5 @@
 import { PutResponse } from 'src/api/homePage/api/admin/members/active';
-import { homePageClient } from '../../../../apiClient/homePage';
+import { homePageClient } from 'src/apiClient/homePage';
 
 export const apiChangeActive = async (token: string, memberId: number, isActive: boolean): Promise<PutResponse> => {
   await homePageClient().sanctum.csrf_cookie.$get();

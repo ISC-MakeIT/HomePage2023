@@ -1,6 +1,7 @@
-import { apiWork } from '@api/user/works';
+import { apiWorks } from '@api/user/works';
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
+
 interface Work {
   workId: number;
   title: string;
@@ -10,12 +11,14 @@ interface Work {
 
 export const Works = () => {
   const [works, setWorks] = useState<Work[]>([]);
+
   useEffect(() => {
     (async () => {
-      const data = await apiWork();
+      const data = await apiWorks();
       setWorks(data);
     })();
   }, []);
+
   return (
     <div
       css={css`

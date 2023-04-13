@@ -1,4 +1,4 @@
-import { homePageClient } from '../../../apiClient/homePage';
+import { homePageClient } from 'src/apiClient/homePage';
 import {
   DeleteResponse,
   GetResponse,
@@ -7,7 +7,7 @@ import {
   PostResponse,
   PutRequest,
   PutResponse,
-} from '../../../api/homePage/api/admin/members';
+} from '../../../../api/homePage/api/admin/members';
 
 export const apiMembers = async (token: string): Promise<GetResponse> => {
   await homePageClient().sanctum.csrf_cookie.$get();

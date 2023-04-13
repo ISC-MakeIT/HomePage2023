@@ -1,6 +1,6 @@
 import { GetResponse, Role } from 'src/api/homePage/api/admin/members/roles';
 import { PutResponse } from 'src/api/homePage/api/admin/members/role';
-import { homePageClient } from '../../../../apiClient/homePage';
+import { homePageClient } from 'src/apiClient/homePage';
 
 export const apiRoles = async (token: string): Promise<GetResponse> => {
   await homePageClient().sanctum.csrf_cookie.$get();
