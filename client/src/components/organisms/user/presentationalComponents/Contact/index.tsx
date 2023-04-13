@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import React from 'react';
-import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
+import { Woman } from 'src/components/atoms/Button/Icon/Woman';
+import { GradientButtonWithIconAndArrow } from 'src/components/molecules/user/Button/GradientButtonWithIconAndArrow';
 
 export const Contact = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -9,7 +10,8 @@ export const Contact = () => {
   };
 
   return (
-    <div
+    <section
+      id='contact'
       css={css`
         background-color: #f15b5b;
         padding: 40px 100px 80px;
@@ -146,33 +148,16 @@ export const Contact = () => {
               justify-content: center;
             `}
           >
-            <button
-              type='submit'
-              css={css`
-                padding: 9px;
-                background: linear-gradient(93.95deg, #fa5d36 0%, #ffdf3f 100%);
-                display: flex;
-                align-items: center;
-                color: #ffffff;
-                border: none;
-                border-radius: 20px;
-                font-size: 16px;
-                font-weight: 700;
-                line-height: 0;
-              `}
+            <GradientButtonWithIconAndArrow
+              buttonType='submit'
+              icon={<Woman width='1.5rem' height='1.5rem' />}
+              gradientType='redToOrange'
             >
-              お問い合わせはこちら
-              <span
-                css={css`
-                  margin-left: 8px;
-                `}
-              >
-                <Arrow />
-              </span>
-            </button>
+              お問い合わせを行う
+            </GradientButtonWithIconAndArrow>
           </div>
         </form>
       </div>
-    </div>
+    </section>
   );
 };

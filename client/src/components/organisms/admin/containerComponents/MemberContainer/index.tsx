@@ -1,5 +1,5 @@
-import { Member as APIMember } from '@api/members';
-import { apiMember } from '@api/members/member';
+import { Member as APIMember } from '@api/admin/members';
+import { apiMember } from '@api/admin/members/member';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';

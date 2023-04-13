@@ -1,4 +1,4 @@
-import { apiWorks, GetResponse, Work } from '@api/works';
+import { apiWorks, GetResponse, Work } from '@api/admin/works';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';

@@ -1,5 +1,5 @@
-import { apiCreateMember } from '@api/members';
-import { apiRoles, Role } from '@api/members/roles';
+import { apiCreateMember } from '@api/admin/members';
+import { apiRoles, Role } from '@api/admin/members/roles';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import axios from 'axios';
 import { useEffect, useState } from 'react';

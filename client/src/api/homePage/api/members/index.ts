@@ -6,6 +6,7 @@ export type Member = {
   twitter?: string;
   github?: string;
   description: string;
+  thumbnail: string;
 };
 
 export type GetResponse = Member[];

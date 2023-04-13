@@ -1,68 +1,62 @@
-import { apiMembers } from '@api/user/members';
+import { Member } from '@api/user/members';
 import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
+import { BlackBoldTitle } from 'src/components/atoms/Title/BlackBoldTitle';
 import { Member as MemberComponent } from 'src/components/molecules/user/Member';
 
-interface Member {
-  memberId: number;
-  name: string;
-  jobTitle: string;
-  discord?: string;
-  twitter?: string;
-  github?: string;
-  description: string;
-}
+type MembersProps = {
+  members: Member[];
+};
 
-export const Members = () => {
-  const [members, setMembers] = useState<Member[]>([]);
-  useEffect(() => {
-    (async () => {
-      const data = await apiMembers();
-      setMembers(data);
-    })();
-  }, []);
-  const memberList = members.map((data, index) => {
-    return (
-      <MemberComponent
-        key={index}
-        name={data.name}
-        skill={data.jobTitle}
-        // icon={data.icon}
-        icon='/images/index_top_background.jpg'
-        content={{ discord: data.discord, twitter: data.twitter, github: data.github, description: data.description }}
-        // background_color={data.backgroundColor}
-        background_color='#F15B88'
-      />
-    );
-  });
+export const Members = ({ members }: MembersProps) => {
+  const MemberList = () => (
+    <>
+      {members.map((member) => (
+        <MemberComponent
+          key={member.memberId}
+          name={member.name}
+          skill={member.jobTitle}
+          icon={member.thumbnail}
+          content={{
+            discord: member.discord,
+            twitter: member.twitter,
+            github: member.github,
+            description: member.description,
+          }}
+          backgroundColor='#F15B88'
+        />
+      ))}
+    </>
+  );
+
   return (
-    <div
+    <section
+      id='members'
       css={css`
-        padding-top: 80px;
+        padding: 5rem 0;
+        width: 84%;
+        margin: 0 auto;
       `}
     >
-      <h1
-        css={css`
-          text-align: center;
-          font-size: 32px;
-          font-weight: 700;
-          margin: 100px;
-        `}
-      >
-        メンバー紹介
-      </h1>
       <div
         css={css`
-          width: 84%;
-          margin: 0 auto;
           display: flex;
-          flex-wrap: wrap;
-          justify-content: space-around;
-          align-items: flex-start;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 6.25rem auto;
         `}
       >
-        {memberList}
+        <BlackBoldTitle>メンバー紹介</BlackBoldTitle>
       </div>
-    </div>
+      <div
+        css={css`
+          display: flex;
+          flex-wrap: wrap;
+          row-gap: 40px;
+          justify-content: space-around;
+        `}
+      >
+        <MemberList />
+      </div>
+    </section>
   );
 };

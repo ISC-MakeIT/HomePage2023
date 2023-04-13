@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ChangePasswordModal } from '../../presentationalComponents/ChangePasswordModal';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ChangePasswordFormInput } from '../../types/ChangePasswordFormInput';
-import { apiChangePassword } from '@api/members/password';
+import { apiChangePassword } from '@api/admin/members/password';
 import { useAppSelector } from '@redux/hooks';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import axios from 'axios';

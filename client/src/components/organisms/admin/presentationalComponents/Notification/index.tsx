@@ -1,4 +1,4 @@
-import { Notification as APINotification } from '@api/notifications/notification';
+import { Notification as APINotification } from '@api/admin/notifications/notification';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors, Stack, Typography } from '@mui/material';
