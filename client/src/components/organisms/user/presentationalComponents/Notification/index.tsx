@@ -57,7 +57,7 @@ export const Notification = () => {
   }, []);
   const formattedTitle = substrByte(notifications[0].title, 0, 48);
   return (
-    <div>
+    <div id='notification'>
       <div
         css={css`
           background-color: #f8f9f9;

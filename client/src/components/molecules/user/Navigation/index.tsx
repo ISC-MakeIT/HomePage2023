@@ -4,8 +4,8 @@ import { NavigationLink } from 'src/components/atoms/Button/NavigationLink';
 export const Navigation = () => {
   const linkList: { [key: string]: string } = {
     about: 'Make ITについて',
-    new: '新着情報',
-    achivement: '実績',
+    notification: '新着情報',
+    work: '実績',
     member: 'メンバー',
   };
 
