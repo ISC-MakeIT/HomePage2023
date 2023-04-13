@@ -15,6 +15,7 @@ class MembersResource extends JsonResource {
             'twitter'     => $this->twitter,
             'github'      => $this->github,
             'description' => $this->description,
+            'thumbnail'   => $this->thumbnail,
         ];
     }
 }

@@ -1,25 +1,33 @@
-import { apiMembers, Member, GetResponse } from '@api/members';
+import { apiMembers, Member, GetResponse } from '@api/admin/members';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { MemberList } from '../../presentationalComponents/MemberList';
+import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 
 export const MemberListContainer = () => {
   const [memberList, setMemberList] = useState<Member[]>([]);
   const [error, setError] = useState<string>();
   const state: { refresh?: boolean } = useLocation().state;
+  const proccessingLine = useProcessingLine();
 
   const userToken = useAppSelector(selectUserToken);
 
   useEffect(() => {
     const main = async () => {
       try {
+        proccessingLine.show();
+
         const response = await apiMembers(userToken);
         setError(undefined);
         setMemberList(response);
+
+        proccessingLine.hide();
       } catch (e) {
+        proccessingLine.hide();
+
         if (axios.isAxiosError(e)) {
           const responseData: GetResponse = e.response!.data!;
           const status = e.response!.status;

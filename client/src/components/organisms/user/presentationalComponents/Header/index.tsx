@@ -1,62 +1,143 @@
 import { css } from '@emotion/react';
-import { Navigation } from 'src/components/molecules/user/Navigation';
-import { MakeIT } from 'src/components/atoms/Logo/MakeIT';
-import { GithubButton } from 'src/components/molecules/user/Button/Github';
-import { GradientRadiusButton } from 'src/components/molecules/user/Button/GradientRadiusButton';
+import { WhiteMakeIT } from 'src/components/atoms/Logo/WhiteMakeIT';
+import { GradientButtonWithIconAndArrow } from 'src/components/molecules/user/Button/GradientButtonWithIconAndArrow';
+import { Flex } from 'src/components/atoms/Layout/Flex';
+import { Man } from 'src/components/atoms/Button/Icon/Man';
+import { Woman } from 'src/components/atoms/Button/Icon/Woman';
+import { DarkMakeIT } from 'src/components/atoms/Logo/DarkMakeIT';
+import { WhiteNavigation } from 'src/components/molecules/user/WhiteNavigation';
+import { BlackNavigation } from 'src/components/molecules/user/BlackNavigation';
+import { WhiteGithubButton } from 'src/components/molecules/user/Button/WhiteGithubButton';
+import { BlackGithubButton } from 'src/components/molecules/user/Button/BlackGithubButton';
+import { Link } from 'react-router-dom';
+import { USER_ROUTE_PATH_MAP } from 'src/routes/routePath';
 
-export const Header = () => {
+type HeaderProps = {
+  isStartingLocationInThisPage: boolean;
+};
+
+export const Header = ({ isStartingLocationInThisPage }: HeaderProps) => {
+  const forStartingLocation = css``;
+  const forStartedLocation = css`
+    background-color: #fff;
+    box-shadow: 0 4px 4px rgba(51, 51, 51, 0.1);
+  `;
+
+  const HeaderContentsForStartingLocation = () => {
+    return (
+      <>
+        <Flex
+          spacing='1.5rem'
+          style={css`
+            align-items: center;
+          `}
+        >
+          <Link
+            to={USER_ROUTE_PATH_MAP.TOP}
+            css={css`
+              width: 7.18rem;
+              &:hover {
+                cursor: pointer;
+              }
+            `}
+          >
+            <WhiteMakeIT />
+          </Link>
+          <WhiteNavigation />
+          <WhiteGithubButton />
+        </Flex>
+
+        <Flex
+          spacing='1rem'
+          style={css`
+            align-items: center;
+          `}
+        >
+          <GradientButtonWithIconAndArrow
+            to={`${USER_ROUTE_PATH_MAP.TOP}#contact`}
+            icon={<Man width='1.5rem' height='1.5rem' />}
+            gradientType='greenToBlue'
+          >
+            体験入部
+          </GradientButtonWithIconAndArrow>
+          <GradientButtonWithIconAndArrow
+            to={`${USER_ROUTE_PATH_MAP.TOP}#contact`}
+            icon={<Woman width='1.5rem' height='1.5rem' />}
+            gradientType='redToOrange'
+          >
+            案件の依頼
+          </GradientButtonWithIconAndArrow>
+        </Flex>
+      </>
+    );
+  };
+
+  const HeaderContentsForStartedLocation = () => {
+    return (
+      <>
+        <Flex
+          spacing='1.5rem'
+          style={css`
+            align-items: center;
+          `}
+        >
+          <Link
+            to={USER_ROUTE_PATH_MAP.TOP}
+            css={css`
+              width: 7.18rem;
+              &:hover {
+                cursor: pointer;
+              }
+            `}
+          >
+            <DarkMakeIT />
+          </Link>
+          <BlackNavigation />
+          <BlackGithubButton />
+        </Flex>
+
+        <Flex
+          spacing='1rem'
+          style={css`
+            align-items: center;
+          `}
+        >
+          <GradientButtonWithIconAndArrow
+            to={`${USER_ROUTE_PATH_MAP.TOP}#contact`}
+            icon={<Man width='1.5rem' height='1.5rem' />}
+            gradientType='greenToBlue'
+          >
+            体験入部
+          </GradientButtonWithIconAndArrow>
+          <GradientButtonWithIconAndArrow
+            to={`${USER_ROUTE_PATH_MAP.TOP}#contact`}
+            icon={<Woman width='1.5rem' height='1.5rem' />}
+            gradientType='redToOrange'
+          >
+            案件の依頼
+          </GradientButtonWithIconAndArrow>
+        </Flex>
+      </>
+    );
+  };
+
   return (
     <header
       css={css`
-        width: 100vw;
-        z-index: 20;
-        position: absolute;
-        text-align: center;
-        padding-top: 32px;
+        width: 100%;
+        z-index: 100;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 1.25rem 0;
         display: flex;
         justify-content: space-around;
-        margin: auto;
-        overflow-x: hidden;
+        transition: 0.3s;
+
+        ${isStartingLocationInThisPage ? forStartingLocation : forStartedLocation}
       `}
     >
-      <div
-        css={css`
-          display: flex;
-          align-items: center;
-        `}
-      >
-        <div
-          css={css`
-            width: 113px;
-            margin-right: 24px;
-          `}
-        >
-          <MakeIT />
-        </div>
-        <Navigation />
-        <div
-          css={css`
-            margin-left: 24px;
-          `}
-        >
-          <GithubButton />
-        </div>
-      </div>
-      <div
-        css={css`
-          display: flex;
-          align-items: center;
-        `}
-      >
-        <GradientRadiusButton purpose={'experience'} text={'体験入部'} />
-        <span
-          css={css`
-            margin-left: 16px;
-          `}
-        >
-          <GradientRadiusButton purpose={'project'} text={'案件の依頼'} />
-        </span>
-      </div>
+      {isStartingLocationInThisPage ? <HeaderContentsForStartingLocation /> : <HeaderContentsForStartedLocation />}
     </header>
   );
 };

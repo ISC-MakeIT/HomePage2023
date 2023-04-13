@@ -100,12 +100,13 @@ export const Footer = () => {
                     gap: 36px 0;
                   `}
                 >
-                  {links.map((link) => {
+                  {links.map((link, index) => {
                     return (
                       <div
                         css={css`
                           width: 50%;
                         `}
+                        key={index}
                       >
                         <div
                           css={

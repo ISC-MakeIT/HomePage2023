@@ -1,4 +1,4 @@
-import { apiNotifications } from '@api/notifications';
+import { apiNotifications } from '@api/admin/notifications';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { GetResponse, Notification } from 'src/api/homePage/api/admin/notifications';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { NotificationList } from '../../presentationalComponents/NotificationList';
+import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 
 export const NotificationListContainer = () => {
   const [notificationList, setNotificationList] = useState<Notification[]>([]);
@@ -14,13 +15,20 @@ export const NotificationListContainer = () => {
   const alert = useAlert();
   const userToken = useAppSelector(selectUserToken);
   const state: { refresh?: boolean } = useLocation().state;
+  const proccessingLine = useProcessingLine();
 
   useEffect(() => {
     const main = async () => {
       try {
+        proccessingLine.show();
+
         const response = await apiNotifications(userToken);
         setNotificationList(response);
+
+        proccessingLine.hide();
       } catch (e) {
+        proccessingLine.hide();
+
         if (axios.isAxiosError(e)) {
           const status = e.response!.status;
           const responseData: GetResponse = e.response!.data;

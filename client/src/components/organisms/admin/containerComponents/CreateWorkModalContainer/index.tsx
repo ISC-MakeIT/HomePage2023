@@ -1,4 +1,4 @@
-import { apiCreateWork } from '@api/works';
+import { apiCreateWork } from '@api/admin/works';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import axios from 'axios';
 import { useState } from 'react';

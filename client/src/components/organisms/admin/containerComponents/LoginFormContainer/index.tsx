@@ -1,4 +1,4 @@
-import { apiLogin, Response } from '@api/members/login';
+import { apiLogin, Response } from '@api/admin/members/login';
 import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';

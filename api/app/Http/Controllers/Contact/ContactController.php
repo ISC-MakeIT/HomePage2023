@@ -45,8 +45,8 @@ class ContactController extends Controller {
                     'ToAddresses' => $recipientEmails,
                 ],
                 'ReplyToAddresses' => [$senderEmail],
-                'Source' => $senderEmail,
-                'Message' => [
+                'Source'           => $senderEmail,
+                'Message'          => [
                   'Body' => [
                       'Html' => [
                           'Charset' => $charSet,

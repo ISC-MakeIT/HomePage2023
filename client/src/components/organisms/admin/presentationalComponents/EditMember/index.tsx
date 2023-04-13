@@ -1,5 +1,5 @@
-import { Member as APIMember } from '@api/members';
-import { Role } from '@api/members/roles';
+import { Member as APIMember } from '@api/admin/members';
+import { Role } from '@api/admin/members/roles';
 import { LinearProgress, Stack } from '@mui/joy';
 import {
   Box,

@@ -1,7 +1,7 @@
-import { Member } from '@api/members';
-import { apiChangeActive } from '@api/members/active';
-import { apiMember } from '@api/members/member';
-import { apiChangeRole, apiRoles, Role } from '@api/members/roles';
+import { Member } from '@api/admin/members';
+import { apiChangeActive } from '@api/admin/members/active';
+import { apiMember } from '@api/admin/members/member';
+import { apiChangeRole, apiRoles, Role } from '@api/admin/members/roles';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
