@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import { IntroduceDiscordAccount } from '../../../atoms/Account/IntroduceDiscordAccount';
 import { IntroduceTwitterAccount } from '../../../atoms/Account/IntroduceTwitterAccount';
 import { IntroduceGithubAccount } from '../../../atoms/Account/IntroduceGithubAccount';
-import { GreyMediumBoldText } from 'src/components/atoms/Text/GreyMediumBoldText';
-import { BlackSmallBoldTitle } from 'src/components/atoms/Title/BlackSmallBoldTitle';
+import { GreyBoldText } from 'src/components/atoms/Text/GreyBoldText';
+import { BlackSmallTitle } from 'src/components/atoms/Title/BlackSmallTitle';
 import { WhiteMediumText } from 'src/components/atoms/Text/WhiteMediumText';
 import { BackGroundImage } from 'src/components/atoms/Image/BackGroundImage';
 import { Stack } from 'src/components/atoms/Layout/Stack';
@@ -97,8 +97,8 @@ export const Member = ({ backgroundColor, name, skill, icon, content }: MemberPr
         ref={frontMemberElement}
       >
         <BackGroundImage width='100%' height='235px' image={icon} />
-        <BlackSmallBoldTitle>{name}</BlackSmallBoldTitle>
-        <GreyMediumBoldText>{skill}</GreyMediumBoldText>
+        <BlackSmallTitle>{name}</BlackSmallTitle>
+        <GreyBoldText>{skill}</GreyBoldText>
       </div>
 
       <div
@@ -118,15 +118,18 @@ export const Member = ({ backgroundColor, name, skill, icon, content }: MemberPr
         ref={rearMemberElement}
       >
         <Stack
-          spacing='1.25rem'
+          spacing='1.5rem'
           style={css`
             width: 90%;
             margin: auto;
           `}
         >
-          <IntroduceDiscordAccount>{content.discord}</IntroduceDiscordAccount>
-          <IntroduceTwitterAccount>{content.twitter}</IntroduceTwitterAccount>
-          <IntroduceGithubAccount>{content.github}</IntroduceGithubAccount>
+          <div>
+            <IntroduceDiscordAccount>{content.discord}</IntroduceDiscordAccount>
+            <IntroduceTwitterAccount>{content.twitter}</IntroduceTwitterAccount>
+            <IntroduceGithubAccount>{content.github}</IntroduceGithubAccount>
+          </div>
+
           <WhiteMediumText>{content.description}</WhiteMediumText>
         </Stack>
       </div>

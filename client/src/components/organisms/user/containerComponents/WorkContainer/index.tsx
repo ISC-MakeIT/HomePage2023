@@ -26,5 +26,5 @@ export const WorkContainer = () => {
     return <></>;
   }
 
-  return <WorkComponent work={work} />;
+  return <WorkComponent {...work} />;
 };

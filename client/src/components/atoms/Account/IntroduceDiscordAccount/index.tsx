@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { DiscordLogo } from 'src/components/atoms/Logo/Discord';
+import { DiscordLogo } from 'src/components/atoms/IconWithTitle/Discord';
 import { WhiteMediumText } from '../../Text/WhiteMediumText';
 
 type IntroduceDiscordAccountProps = {

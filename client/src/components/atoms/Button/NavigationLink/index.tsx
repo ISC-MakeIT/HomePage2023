@@ -1,26 +1,25 @@
 import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
 
 type LinkProps = {
-  hrefId: string;
+  elementId: string;
   name: string;
 };
 
-export const NavigationLink: React.FC<LinkProps> = ({ hrefId, name }) => {
+export const NavigationLink: React.FC<LinkProps> = ({ elementId, name }) => {
   return (
-    <a
-      href={`#${hrefId}`}
+    <Link
+      to={`#${elementId}`}
       css={css`
         display: block;
         text-decoration: none;
-        width: max-content;
-        margin-right: 24px;
-        color: #ffffff;
-        font-size: 18px;
+        color: #fff;
+        font-size: 1.125rem;
         font-weight: 550;
         font-family: 'Hiragino Kaku Gothic Pro';
       `}
     >
       {name}
-    </a>
+    </Link>
   );
 };

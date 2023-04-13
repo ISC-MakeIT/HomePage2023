@@ -1,5 +1,6 @@
 import { Member } from '@api/user/members';
 import { css } from '@emotion/react';
+import { BlackBoldTitle } from 'src/components/atoms/Title/BlackBoldTitle';
 import { Member as MemberComponent } from 'src/components/molecules/user/Member';
 
 type MembersProps = {
@@ -7,42 +8,45 @@ type MembersProps = {
 };
 
 export const Members = ({ members }: MembersProps) => {
-  const memberList = members.map((member) => {
-    return (
-      <MemberComponent
-        key={member.memberId}
-        name={member.name}
-        skill={member.jobTitle}
-        icon={member.thumbnail}
-        content={{
-          discord: member.discord,
-          twitter: member.twitter,
-          github: member.github,
-          description: member.description,
-        }}
-        backgroundColor='#F15B88'
-      />
-    );
-  });
+  const MemberList = () => (
+    <>
+      {members.map((member) => (
+        <MemberComponent
+          key={member.memberId}
+          name={member.name}
+          skill={member.jobTitle}
+          icon={member.thumbnail}
+          content={{
+            discord: member.discord,
+            twitter: member.twitter,
+            github: member.github,
+            description: member.description,
+          }}
+          backgroundColor='#F15B88'
+        />
+      ))}
+    </>
+  );
 
   return (
-    <div
+    <section
+      id='members'
       css={css`
-        padding: 80px 0;
+        padding: 5rem 0;
         width: 84%;
         margin: 0 auto;
       `}
     >
-      <h1
+      <div
         css={css`
-          text-align: center;
-          font-size: 32px;
-          font-weight: 700;
-          margin: 100px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 6.25rem auto;
         `}
       >
-        メンバー紹介
-      </h1>
+        <BlackBoldTitle>メンバー紹介</BlackBoldTitle>
+      </div>
       <div
         css={css`
           display: flex;
@@ -51,8 +55,8 @@ export const Members = ({ members }: MembersProps) => {
           justify-content: space-around;
         `}
       >
-        {memberList}
+        <MemberList />
       </div>
-    </div>
+    </section>
   );
 };

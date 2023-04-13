@@ -1,22 +1,13 @@
 import { css } from '@emotion/react';
-import { MakeIT } from 'src/components/atoms/Logo/MakeIT';
+import { WhiteMakeIT } from 'src/components/atoms/Logo/WhiteMakeIT';
 import { CatchFrase } from 'src/components/atoms/TextCSV/CatchFrase';
 import { Contact } from 'src/components/molecules/user/Contact';
-import { Header } from '../Header';
 
 export const Top = () => {
   return (
     <>
       <div
-        css={css`
-          z-index: 30;
-          position: absolute;
-          width: 100vw;
-        `}
-      >
-        <Header />
-      </div>
-      <div
+        id='about'
         css={css`
           width: 100vw;
           height: 0;
@@ -30,7 +21,7 @@ export const Top = () => {
           filter: brightness(65%);
         `}
       ></div>
-      <div
+      <section
         css={css`
           z-index: 20;
           position: absolute;
@@ -49,7 +40,7 @@ export const Top = () => {
             width: 42vw;
           `}
         >
-          <MakeIT />
+          <WhiteMakeIT />
           <div
             css={css`
               margin-top: 24px;
@@ -88,7 +79,7 @@ export const Top = () => {
         >
           <Contact />
         </div>
-      </div>
+      </section>
     </>
   );
 };

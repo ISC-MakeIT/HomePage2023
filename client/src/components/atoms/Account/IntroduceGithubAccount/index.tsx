@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { GithubLogo } from 'src/components/atoms/Logo/Github';
+import { GithubLogo } from 'src/components/atoms/IconWithTitle/Github';
 import { WhiteMediumText } from '../../Text/WhiteMediumText';
 
 type IntroduceGithubAccountProps = {

@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { TwitterLogo } from 'src/components/atoms/Logo/Twitter';
+import { TwitterLogo } from 'src/components/atoms/IconWithTitle/Twitter';
 import { WhiteMediumText } from '../../Text/WhiteMediumText';
 
 type IntroduceTwitterAccountProps = {

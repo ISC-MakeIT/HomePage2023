@@ -1,5 +1,7 @@
 import { css } from '@emotion/react';
-import { GradientRadiusButton } from 'src/components/molecules/user/Button/GradientRadiusButton';
+import { Man } from 'src/components/atoms/Button/Icon/Man';
+import { Woman } from 'src/components/atoms/Button/Icon/Woman';
+import { GradientButtonWithIconAndArrow } from 'src/components/molecules/user/Button/GradientButtonWithIconAndArrow';
 
 export const Contact = () => {
   return (
@@ -29,7 +31,13 @@ export const Contact = () => {
           margin-left: 32px;
         `}
       >
-        <GradientRadiusButton purpose='experience' text='体験入部' />
+        <GradientButtonWithIconAndArrow
+          to='#contact'
+          icon={<Man width='1.5rem' height='1.5rem' />}
+          gradientType='greenToBlue'
+        >
+          体験入部
+        </GradientButtonWithIconAndArrow>
       </div>
 
       <div
@@ -46,7 +54,13 @@ export const Contact = () => {
           margin-left: 32px;
         `}
       >
-        <GradientRadiusButton purpose='project' text='案件の依頼' />
+        <GradientButtonWithIconAndArrow
+          to='#contact'
+          icon={<Woman width='1.5rem' height='1.5rem' />}
+          gradientType='redToOrange'
+        >
+          案件の依頼
+        </GradientButtonWithIconAndArrow>
       </div>
     </div>
   );
