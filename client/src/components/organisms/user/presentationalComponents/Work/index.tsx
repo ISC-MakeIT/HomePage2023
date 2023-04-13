@@ -1,6 +1,28 @@
+import { apiWork } from '@api/user/works';
 import { css } from '@emotion/react';
-
+import { useEffect, useState } from 'react';
+interface Work {
+  workId: number;
+  title: string;
+  contents: string;
+  createdAt: string;
+}
 export const Work = () => {
+  const [works, setWorks] = useState<Work[]>([
+    {
+      workId: 0,
+      title: '学生ITコンテスト2021 最優秀賞',
+      contents:
+        '新入部員達がグループを組んで初めて作成したサービス\n「CoreQue」でアイデアソン・ハッカソンで最優秀賞を取りました。 現在はビジネス化に向けて奮闘中です。',
+      createdAt: '2023-04-10',
+    },
+  ]);
+  useEffect(() => {
+    (async () => {
+      const data = await apiWork();
+      setWorks(data);
+    })();
+  }, []);
   return (
     <div
       css={css`
@@ -24,6 +46,7 @@ export const Work = () => {
           <div
             css={css`
               z-index: 2;
+              max-width: 700px;
             `}
           >
             <div
@@ -32,29 +55,31 @@ export const Work = () => {
                 font-weight: 700;
                 color: #333333;
                 margin-bottom: 12px;
+                overflow-wrap: anywhere;
               `}
             >
-              学生ITコンテスト2021 最優秀賞
+              {works[0].title}
             </div>
-            <div
+            {/* <div
               css={css`
                 font-size: 1rem;
                 font-weight: 700;
                 color: #333333;
                 margin-bottom: 64px;
+                         overflow-wrap: anywhere;
               `}
             >
               神奈川情報サービス産業協会 学生ITコンテスト2021で最優秀賞を取りました。
-            </div>
+            </div> */}
             <div
               css={css`
                 font-size: 1rem;
                 font-weight: 400;
                 color: #333333;
+                overflow-wrap: anywhere;
               `}
             >
-              新入部員達がグループを組んで初めて作成したサービス
-              「CoreQue」でアイデアソン・ハッカソンで最優秀賞を取りました。 現在はビジネス化に向けて奮闘中です。
+              {works[0].contents}
             </div>
           </div>
           <img

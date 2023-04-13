@@ -1,6 +1,8 @@
 export const USER_ROUTE_PATH_MAP = {
   OTHER: '*',
   TOP: '/',
+  WORKS: '/works',
+  NOTIFICATIONS: '/notifications',
 } as const;
 
 const ADMIN_ROUTE_TOP = '/admin';
@@ -13,6 +15,7 @@ export const ADMIN_ROUTE_PATH_MAP = {
   WORKS: '/works',
   NOTIFICATIONS: '/notifications',
   MEMBERS: '/members',
+  MYPAGE: '/mypage',
 } as const;
 
 export const ADMIN_ROUTE_FULL_PATH_MAP = {
@@ -22,4 +25,5 @@ export const ADMIN_ROUTE_FULL_PATH_MAP = {
   WORKS: `${ADMIN_ROUTE_TOP}${ADMIN_ROUTE_PATH_MAP.WORKS}`,
   NOTIFICATIONS: `${ADMIN_ROUTE_TOP}${ADMIN_ROUTE_PATH_MAP.NOTIFICATIONS}`,
   MEMBERS: `${ADMIN_ROUTE_TOP}${ADMIN_ROUTE_PATH_MAP.MEMBERS}`,
+  MYPAGE: `${ADMIN_ROUTE_TOP}${ADMIN_ROUTE_PATH_MAP.MYPAGE}`,
 } as const;

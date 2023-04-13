@@ -9,6 +9,7 @@ import { ADMIN_ROUTE_FULL_PATH_MAP } from '../../../../../routes/routePath';
 import { LoginForm } from '../../presentationalComponents/LoginForm';
 import { LoginFormInput } from '../../types/LoginFormInput';
 import { useAlert } from 'src/modules/hooks/useAlert';
+import { setUserId } from '@redux/actions/user/userIdReducer';
 
 export const LoginFormContainer = () => {
   const { register, handleSubmit } = useForm<LoginFormInput>();
@@ -21,6 +22,7 @@ export const LoginFormContainer = () => {
     try {
       const response = await apiLogin(loginFormInput);
       dispatch(setToken(response.token));
+      dispatch(setUserId(response.memberId));
       alert.show({
         type: 'success',
         content: response.message!,

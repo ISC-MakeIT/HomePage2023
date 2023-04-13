@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
-import { Navigation } from 'src/components/molecules/Navigation';
+import { Navigation } from 'src/components/molecules/user/Navigation';
 import { MakeIT } from 'src/components/atoms/Logo/MakeIT';
-import { GithubButton } from 'src/components/molecules/Button/Github';
-import { GradientRadiusButton } from 'src/components/molecules/Button/GradientRadiusButton';
+import { GithubButton } from 'src/components/molecules/user/Button/Github';
+import { GradientRadiusButton } from 'src/components/molecules/user/Button/GradientRadiusButton';
 
 export const Header = () => {
   return (

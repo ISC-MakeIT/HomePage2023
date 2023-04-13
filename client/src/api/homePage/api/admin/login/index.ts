@@ -1,6 +1,7 @@
 export type Response = {
   message?: string;
   token?: string;
+  memberId?: number;
   errors?: { [key: string]: string }[];
 };
 

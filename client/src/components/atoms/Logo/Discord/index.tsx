@@ -26,7 +26,9 @@ export const DiscordLogo = () => {
           font-size: 18px;
           font-weight: 700;
         `}
-      >Discord</p>
+      >
+        Discord
+      </p>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { WhiteRadiusButton } from '../../../atoms/Button/WhiteRadiusButton';
+import { WhiteRadiusButton } from '../../../../atoms/Button/WhiteRadiusButton';
 import { GithubButtonContent } from '../Content/Github';
 
 export const GithubButton = () => {

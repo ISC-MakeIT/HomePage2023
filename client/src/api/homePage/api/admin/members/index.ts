@@ -38,6 +38,21 @@ export type PostResponse = {
   errors?: { [key: string]: string }[];
 };
 
+export type PutRequest = {
+  name: string;
+  jobTitle: string;
+  discord?: string;
+  twitter?: string;
+  github?: string;
+  description: string;
+  isActive: boolean;
+};
+
+export type PutResponse = {
+  message?: string;
+  errors?: { [key: string]: string }[];
+};
+
 export type DeleteRequest = {
   memberId: number;
 };
@@ -63,6 +78,14 @@ export type Methods = {
     };
     reqBody: PostRequest;
     resBody: PostResponse;
+  };
+
+  put: {
+    reqHeaders: {
+      Authorization: string;
+    };
+    reqBody: PutRequest;
+    resBody: PutResponse;
   };
 
   delete: {
