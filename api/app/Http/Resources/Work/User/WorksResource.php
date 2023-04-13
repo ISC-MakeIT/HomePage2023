@@ -11,6 +11,7 @@ class WorksResource extends JsonResource {
             'workId'    => $this->work_id,
             'title'     => $this->title,
             'contents'  => $this->contents,
+            'thumbnail' => $this->thumbnail,
             'createdAt' => $this->created_at,
         ];
     }

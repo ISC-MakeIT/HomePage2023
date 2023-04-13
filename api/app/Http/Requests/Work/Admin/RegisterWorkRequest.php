@@ -13,6 +13,7 @@ class RegisterWorkRequest extends FormRequest {
         return [
             'title'    => ['required', 'max:255'],
             'contents' => ['required', 'max:20000'],
+            'picture'  => ['image', 'mimes:png,jpg,jpeg', 'max:4096'],
         ];
     }
 }

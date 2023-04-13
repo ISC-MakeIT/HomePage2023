@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Work;
 
+use App\Domain\ValueObjects\Helpers\S3Path;
 use App\Exceptions\Work\AlreadyEditedWorkException;
+use App\Helpers\S3ImageHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Work\Admin\DeleteWorkRequest;
 use App\Http\Requests\Work\Admin\EditWorkRequest;
@@ -23,16 +25,26 @@ class AdminWorkController extends Controller {
         DB::transaction(function () use ($request) {
             $validatedRequest = $request->validated();
 
+            $thumbnail = [];
+            if ($request->has('picture')) {
+                $thumbnailUrl = S3ImageHelper::putImageWithThumbnail(
+                    $request->file('picture'),
+                    S3Path::WORK_THUMBNAIL->toString()
+                );
+                $thumbnail = ['thumbnail' => $thumbnailUrl];
+            }
+
             $work = Work::create([
-                'creator' => auth()->id(),
-                'updator' => auth()->id(),
+                'creator'   => auth()->id(),
+                'updator'   => auth()->id(),
             ]);
             $nonActiveWorkContent = array_merge(
                 [
                     'work_id'  => $work->work_id,
                     'creator'  => auth()->id(),
                 ],
-                $validatedRequest
+                $validatedRequest,
+                $thumbnail
             );
             NonActiveWork::create($nonActiveWorkContent);
         });
@@ -58,22 +70,38 @@ class AdminWorkController extends Controller {
                 'version' => $foundWork->version + 1,
                 'updator' => auth()->id()
             ]);
+
+            $thumbnail = [];
+            if ($request->has('picture')) {
+                $thumbnailUrl = S3ImageHelper::putImageWithThumbnail(
+                    $request->file('picture'),
+                    S3Path::WORK_THUMBNAIL->toString()
+                );
+                $thumbnail = ['thumbnail' => $thumbnailUrl];
+            }
+
             if ($validatedRequest['isActive']) {
-                ActiveWork::create([
+                ActiveWork::create(array_merge(
+                    [
+                        'work_id'  => $validatedRequest['workId'],
+                        'title'    => $validatedRequest['title'],
+                        'contents' => $validatedRequest['contents'],
+                        'creator'  => auth()->id(),
+                    ],
+                    $thumbnail
+                ));
+                return response()->json(['message' => '活動実績の編集に成功しました。']);
+            }
+
+            NonActiveWork::create(array_merge(
+                [
                     'work_id'  => $validatedRequest['workId'],
                     'title'    => $validatedRequest['title'],
                     'contents' => $validatedRequest['contents'],
                     'creator'  => auth()->id(),
-                ]);
-                return response()->json(['message' => '活動実績の編集に成功しました。']);
-            }
-
-            NonActiveWork::create([
-                'work_id'  => $validatedRequest['workId'],
-                'title'    => $validatedRequest['title'],
-                'contents' => $validatedRequest['contents'],
-                'creator'  => auth()->id(),
-            ]);
+                ],
+                $thumbnail
+            ));
             return response()->json(['message' => '活動実績の編集に成功しました。']);
         });
     }
@@ -91,20 +119,22 @@ class AdminWorkController extends Controller {
 
             if ($foundWork->activeWork) {
                 ArchiveWork::create([
-                    'work_id'  => $foundWork->activeWork->work_id,
-                    'title'    => $foundWork->activeWork->title,
-                    'contents' => $foundWork->activeWork->contents,
-                    'creator'  => auth()->id(),
+                    'work_id'   => $foundWork->activeWork->work_id,
+                    'title'     => $foundWork->activeWork->title,
+                    'contents'  => $foundWork->activeWork->contents,
+                    'thumbnail' => $foundWork->activeWork->thumbnail,
+                    'creator'   => auth()->id(),
                 ]);
                 $foundWork->activeWork()->delete();
                 return response()->json(['message' => '活動実績の削除に成功しました。']);
             }
             if ($foundWork->nonActiveWork) {
                 ArchiveWork::create([
-                    'work_id'  => $foundWork->nonActiveWork->work_id,
-                    'title'    => $foundWork->nonActiveWork->title,
-                    'contents' => $foundWork->nonActiveWork->contents,
-                    'creator'  => auth()->id(),
+                    'work_id'   => $foundWork->nonActiveWork->work_id,
+                    'title'     => $foundWork->nonActiveWork->title,
+                    'contents'  => $foundWork->nonActiveWork->contents,
+                    'thumbnail' => $foundWork->nonActiveWork->thumbnail,
+                    'creator'   => auth()->id(),
                 ]);
                 $foundWork->nonActiveWork()->delete();
                 return response()->json(['message' => '活動実績の削除に成功しました。']);
