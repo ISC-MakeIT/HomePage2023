@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Member;
 
 use App\Domain\Beans\Member\MemberWithAbility;
+use App\Domain\ValueObjects\Helpers\S3Path;
+use App\Helpers\S3ImageHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Member\Admin\ChangeActiveRequest;
 use App\Http\Requests\Member\Admin\ChangePasswordRequest;
@@ -21,15 +23,11 @@ use App\Models\Member\Member;
 use App\Models\Member\MemberAbility;
 use App\Models\Member\NonActiveMember;
 use App\Models\Member\Role;
-use Carbon\CarbonImmutable;
-use Illuminate\Http\File;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Intervention\Image\Facades\Image as InterventionImage;
 
 class AdminMemberController extends Controller {
     public function login(MemberLoginRequest $request): JsonResponse {
@@ -181,21 +179,7 @@ class AdminMemberController extends Controller {
             $validatedRequest = $request->validated();
             $hashedPassword   = Hash::make($validatedRequest['password']);
 
-            $now                     = date_format(CarbonImmutable::now(), 'YmdHis');
-            $name                    = str_replace(' ', '_', $request->file('icon')->getClientOriginalName());
-            $tmpFileName             = "/tmp/{$now}_{$name}";
-            $tmpFileNameForThumbnail = $tmpFileName . '_thumbnail';
-
-            InterventionImage::make($request->file('icon'))->save($tmpFileNameForThumbnail, 20, 'jpg');
-            InterventionImage::make($request->file('icon'))->save($tmpFileName, 80, 'jpg');
-
-            /** @var \Illuminate\Filesystem\FilesystemAdapter */
-            $s3Storage = Storage::disk('s3');
-
-            $filePath         = $s3Storage->putFile('image/icons/thumbnail', new File($tmpFileNameForThumbnail), 'public');
-            $explodedFilePath = explode('/', $filePath);
-            $fileName         = $explodedFilePath[count($explodedFilePath) - 1];
-            $s3Storage->putFileAs('image/icons', new File($tmpFileName), $fileName, 'public');
+            $thumbnailUrl = S3ImageHelper::putImageWithThumbnail($request->file('icon'), S3Path::MEMBER_THUMBNAIL->toString());
 
             Member::createMemberWithAbility(MemberWithAbility::from(
                 $validatedRequest['name'],
@@ -204,7 +188,7 @@ class AdminMemberController extends Controller {
                 $validatedRequest['twitter'],
                 $validatedRequest['github'],
                 $validatedRequest['description'],
-                $s3Storage->url($filePath),
+                $thumbnailUrl,
                 $validatedRequest['username'],
                 $hashedPassword,
                 $validatedRequest['roleId'],
@@ -312,21 +296,7 @@ class AdminMemberController extends Controller {
             $member->activeMember()->delete();
             $member->nonActiveMember()->delete();
 
-            $now                     = date_format(CarbonImmutable::now(), 'YmdHis');
-            $name                    = str_replace(' ', '_', $request->file('icon')->getClientOriginalName());
-            $tmpFileName             = "/tmp/{$now}_{$name}";
-            $tmpFileNameForThumbnail = $tmpFileName . '_thumbnail';
-
-            InterventionImage::make($request->file('icon'))->save($tmpFileNameForThumbnail, 20, 'jpg');
-            InterventionImage::make($request->file('icon'))->save($tmpFileName, 80, 'jpg');
-
-            /** @var \Illuminate\Filesystem\FilesystemAdapter */
-            $s3Storage = Storage::disk('s3');
-
-            $filePath         = $s3Storage->putFile('image/icons/thumbnail', new File($tmpFileNameForThumbnail), 'public');
-            $explodedFilePath = explode('/', $filePath);
-            $fileName         = $explodedFilePath[count($explodedFilePath) - 1];
-            $s3Storage->putFileAs('image/icons', new File($tmpFileName), $fileName, 'public');
+            $thumbnailUrl = S3ImageHelper::putImageWithThumbnail($request->file('icon'), S3Path::MEMBER_THUMBNAIL->toString());
 
             if ($member->activeMember) {
                 ActiveMember::create([
@@ -337,7 +307,7 @@ class AdminMemberController extends Controller {
                     'twitter'     => $member->activeMember->twitter,
                     'github'      => $member->activeMember->github,
                     'description' => $member->activeMember->description,
-                    'thumbnail'   => $s3Storage->url($filePath),
+                    'thumbnail'   => $thumbnailUrl,
                     'username'    => $member->activeMember->username,
                     'password'    => $member->activeMember->password,
                     'creator'     => auth()->id()
@@ -353,7 +323,7 @@ class AdminMemberController extends Controller {
                     'twitter'     => $member->nonActiveMember->twitter,
                     'github'      => $member->nonActiveMember->github,
                     'description' => $member->nonActiveMember->description,
-                    'thumbnail'   => $s3Storage->url($filePath),
+                    'thumbnail'   => $thumbnailUrl,
                     'username'    => $member->nonActiveMember->username,
                     'password'    => $member->nonActiveMember->password,
                     'creator'     => auth()->id()
