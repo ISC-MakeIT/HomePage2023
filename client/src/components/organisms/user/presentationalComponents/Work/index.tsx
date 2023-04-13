@@ -1,6 +1,7 @@
 import { apiWork } from '@api/user/works';
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
+import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
 interface Work {
   workId: number;
   title: string;
@@ -25,6 +26,7 @@ export const Work = () => {
   }, []);
   return (
     <div
+      id='work'
       css={css`
         background-image: url(/work_background.png);
       `}
@@ -82,13 +84,39 @@ export const Work = () => {
               {works[0].contents}
             </div>
           </div>
-          <img
-            src='/money_is_everything.png'
-            alt='活動実績画像'
+          <div
             css={css`
               z-index: 2;
             `}
-          ></img>
+          >
+            <img
+              css={css`
+                margin-bottom: 40px;
+              `}
+              src='/money_is_everything.png'
+              alt='活動実績画像'
+            ></img>
+            <div
+              css={css`
+                display: flex;
+                justify-content: right;
+              `}
+            >
+              <a
+                href='/works'
+                css={css`
+                  font-size: 1rem;
+                  line-height: 1.5rem;
+                  font-weight: 700;
+                  color: #ff8567;
+                  display: flex;
+                `}
+              >
+                一覧で見る
+                <Arrow color='#ff8567' />
+              </a>
+            </div>
+          </div>
         </div>
         {/* 以下図形 */}
         <div

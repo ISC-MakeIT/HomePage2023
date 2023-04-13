@@ -62,7 +62,7 @@ export const Works = () => {
                   >
                     {work.title}
                   </div>
-                  <div
+                  {/* <div
                     css={css`
                       max-width: 700px;
                       font-size: 1rem;
@@ -72,7 +72,7 @@ export const Works = () => {
                     `}
                   >
                     神奈川情報サービス産業協会 学生ITコンテスト2021で最優秀賞を取りました。
-                  </div>
+                  </div> */}
                   <div
                     css={css`
                       max-width: 700px;
