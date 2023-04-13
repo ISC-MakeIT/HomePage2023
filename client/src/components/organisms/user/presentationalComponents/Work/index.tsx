@@ -26,6 +26,7 @@ export const Work = () => {
   }, []);
   return (
     <div
+      id='work'
       css={css`
         background-image: url(/work_background.png);
       `}
