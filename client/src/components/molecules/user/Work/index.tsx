@@ -6,7 +6,7 @@ import { BlackBoldTitle } from 'src/components/atoms/Title/BlackBoldTitle';
 
 type WorkProps = APIWork;
 
-export const Work = ({ title, contents }: WorkProps) => {
+export const Work = ({ title, contents, thumbnail }: WorkProps) => {
   return (
     <div
       css={css`
@@ -27,15 +27,14 @@ export const Work = ({ title, contents }: WorkProps) => {
         <GreyMediumText>{contents}</GreyMediumText>
       </Stack>
 
-      <div>
-        <img
-          css={css`
-            margin-bottom: 40px;
-          `}
-          src='/money_is_everything.png'
-          alt='活動実績画像'
-        />
-      </div>
+      <div
+        css={css`
+          width: 31rem;
+          height: 41.25rem;
+          background-image: url(${thumbnail});
+          background-size: cover;
+        `}
+      />
     </div>
   );
 };

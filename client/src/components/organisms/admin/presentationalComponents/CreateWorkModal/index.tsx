@@ -1,6 +1,7 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Box, Button, FormHelperText, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, colors, FormHelperText, Stack, TextField, Typography } from '@mui/material';
+import { ChangeEventHandler, useRef } from 'react';
 import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { Modal } from 'src/components/molecules/admin/Modal';
@@ -14,9 +15,12 @@ type CreateWorkModalProps = {
   register: UseFormRegister<CreateWorkFormInput>;
   handleSubmit: UseFormHandleSubmit<CreateWorkFormInput>;
   handleCreateWork: SubmitHandler<CreateWorkFormInput>;
+  handlePictureUpload: (picture: File) => void;
 
   errors: FieldErrors<CreateWorkFormInput>;
   error?: string;
+
+  picture?: string;
 };
 
 export const CreateWorkModal = ({
@@ -26,9 +30,21 @@ export const CreateWorkModal = ({
   register,
   handleSubmit,
   handleCreateWork,
+  handlePictureUpload,
   errors,
   error,
+  picture,
 }: CreateWorkModalProps) => {
+  const inputForFileUpload = useRef<HTMLInputElement>(null);
+  const onChangeInput: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const { files } = e.target;
+    if (!files) {
+      return;
+    }
+
+    handlePictureUpload(files[0]);
+  };
+
   return (
     <>
       <Button onClick={handleOpen} variant='outlined' sx={{ display: 'flex', columnGap: 1, width: '15rem' }}>
@@ -49,30 +65,66 @@ export const CreateWorkModal = ({
         </Box>
 
         <Stack component='form' onSubmit={handleSubmit(handleCreateWork)} spacing={4}>
-          <TextField
-            fullWidth
-            variant='outlined'
-            label='タイトル'
-            type='text'
-            error={'title' in errors}
-            helperText={errors.title?.message}
-            {...register('title', {
-              required: 'タイトルは必須項目です。',
-              maxLength: { value: 255, message: 'タイトルは255文字未満でなければなりません。' },
-            })}
-          />
-          <TextField
-            fullWidth
-            multiline
-            error={'contents' in errors}
-            helperText={errors.contents?.message}
-            minRows={5}
-            label='内容'
-            {...register('contents', {
-              required: '内容は必須項目です。',
-              maxLength: { value: 20000, message: '内容は255文字未満でなければなりません。' },
-            })}
-          />
+          <Stack flexDirection={'row'} columnGap={2}>
+            <Stack spacing={1.5}>
+              <Box
+                sx={{
+                  width: 300,
+                  height: 400,
+                  backgroundColor: colors.grey.A700,
+                  backgroundPosition: 'center',
+                  backgroundSize: 'cover',
+                  backgroundImage: `url(${picture})`,
+                }}
+              />
+
+              <Button
+                onClick={() => inputForFileUpload.current!.click()}
+                sx={{ display: 'flex', alignItems: 'center', columnGap: '1rem' }}
+                variant='outlined'
+              >
+                <FontAwesomeIcon icon={faUpload} />
+                アイコンをアップロード
+              </Button>
+
+              <input
+                onChange={onChangeInput}
+                hidden
+                type='file'
+                accept='image/png, image/jpg, image/jpeg'
+                ref={inputForFileUpload}
+              />
+            </Stack>
+
+            <Box sx={{ backgroundColor: colors.grey.A200, width: '1px' }} />
+
+            <Stack spacing={4} width='100%'>
+              <TextField
+                fullWidth
+                variant='outlined'
+                label='タイトル'
+                type='text'
+                error={'title' in errors}
+                helperText={errors.title?.message}
+                {...register('title', {
+                  required: 'タイトルは必須項目です。',
+                  maxLength: { value: 255, message: 'タイトルは255文字未満でなければなりません。' },
+                })}
+              />
+              <TextField
+                fullWidth
+                multiline
+                error={'contents' in errors}
+                helperText={errors.contents?.message}
+                minRows={14}
+                label='内容'
+                {...register('contents', {
+                  required: '内容は必須項目です。',
+                  maxLength: { value: 20000, message: '内容は255文字未満でなければなりません。' },
+                })}
+              />
+            </Stack>
+          </Stack>
 
           <Stack flexDirection='row' columnGap={2} justifyContent='right'>
             <Button type='button' onClick={handleClose} variant='text'>

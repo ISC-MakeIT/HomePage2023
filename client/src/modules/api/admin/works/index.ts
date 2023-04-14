@@ -26,7 +26,7 @@ export const apiCreateWork = async (token: string, work: PostRequest): Promise<P
 
 export const apiEditWork = async (token: string, work: PutRequest): Promise<PutResponse> => {
   await homePageClient().sanctum.csrf_cookie.$get();
-  return await homePageClient().api.admin.works.$put({
+  return await homePageClient().api.admin.works.$post({
     headers: { Authorization: `Bearer ${token}` },
     body: work,
   });
