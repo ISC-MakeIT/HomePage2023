@@ -16,6 +16,7 @@ export type GetResponse = {
 export type PostRequest = {
   title: string;
   contents: string;
+  picture?: File;
 };
 
 export type PostResponse = {
@@ -53,6 +54,8 @@ export type Methods = {
     resBody: GetResponse;
   };
   post: {
+    reqFormat: FormData;
+
     reqHeaders: {
       Authorization: string;
     };

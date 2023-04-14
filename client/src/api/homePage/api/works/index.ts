@@ -1,6 +1,7 @@
 export type Work = {
   workId: number;
   title: string;
+  thumbnail: string;
   contents: string;
   createdAt: string;
 };

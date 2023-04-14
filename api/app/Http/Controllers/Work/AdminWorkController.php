@@ -58,7 +58,10 @@ class AdminWorkController extends Controller {
         return DB::transaction(function () use ($request) {
             $validatedRequest = $request->validated();
 
-            $foundWork = Work::doesntHave('archiveWork')->findOrFail($validatedRequest['workId']);
+            $foundWork = Work::with(['activeWork', 'nonActiveWork'])
+                ->doesntHave('archiveWork')
+                ->findOrFail($validatedRequest['workId']);
+
             if ($foundWork->hasDifferentVersion($validatedRequest['currentVersion'])) {
                 throw new AlreadyEditedWorkException();
             }
@@ -72,6 +75,14 @@ class AdminWorkController extends Controller {
             ]);
 
             $thumbnail = [];
+
+            if ($foundWork->activeWork) {
+                $thumbnail = ['thumbnail' => $foundWork->activeWork->thumbnail];
+            }
+            if ($foundWork->nonActiveWork) {
+                $thumbnail = ['thumbnail' => $foundWork->nonActiveWork->thumbnail];
+            }
+
             if ($request->has('picture')) {
                 $thumbnailUrl = S3ImageHelper::putImageWithThumbnail(
                     $request->file('picture'),

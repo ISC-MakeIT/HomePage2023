@@ -1,7 +1,7 @@
 import { useMemo, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
-export const ScrollToHashLinkMiddleware = () => {
+export const EnableScrollToHashLinkMiddleware = () => {
   let location = useLocation();
 
   let hashElement = useMemo(() => {
