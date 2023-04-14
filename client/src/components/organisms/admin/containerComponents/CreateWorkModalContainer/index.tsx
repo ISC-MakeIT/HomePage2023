@@ -15,8 +15,12 @@ export const CreateWorkModalContainer = () => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<CreateWorkFormInput>();
+  const [pictureForDisplay, setPictureForDisplay] = useState<string>(
+    'https://makeit-homepage-for-prd.s3.ap-northeast-1.amazonaws.com/image/imagesForWork/thumbnail/default.jpg',
+  );
   const [error, setError] = useState<string>();
   const [isActive, setIsActive] = useState(false);
 
@@ -71,6 +75,17 @@ export const CreateWorkModalContainer = () => {
     }
   };
 
+  const handlePictureUpload = (picture: File) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(picture);
+    setValue('picture', picture);
+
+    reader.onload = (e) => {
+      const base64Text = e.target!.result as string;
+      setPictureForDisplay(base64Text);
+    };
+  };
+
   return (
     <CreateWorkModal
       handleOpen={handleOpen}
@@ -81,6 +96,8 @@ export const CreateWorkModalContainer = () => {
       register={register}
       errors={errors}
       error={error}
+      picture={pictureForDisplay}
+      handlePictureUpload={handlePictureUpload}
     />
   );
 };

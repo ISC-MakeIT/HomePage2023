@@ -17,12 +17,14 @@ type EditWorkModalContainerProps = {
 };
 
 export const EditWorkModalContainer = ({ workId }: EditWorkModalContainerProps) => {
+  const [pictureForDisplay, setPictureForDisplay] = useState<string>();
   const [isActive, setIsActive] = useState<boolean>(false);
   const [error, setError] = useState<string>();
   const [work, setWork] = useState<Work>();
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<EditWorkFormInput>();
   const userToken = useAppSelector(selectUserToken);
@@ -110,12 +112,25 @@ export const EditWorkModalContainer = ({ workId }: EditWorkModalContainerProps) 
     main();
   }, []);
 
+  const handlePictureUpload = (picture: File) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(picture);
+    setValue('picture', picture);
+
+    reader.onload = (e) => {
+      const base64Text = e.target!.result as string;
+      setPictureForDisplay(base64Text);
+    };
+  };
+
   const handleEditWork: SubmitHandler<EditWorkFormInput> = async (editWorkFormInput) => {
     try {
       const response = await apiEditWork(userToken, {
+        _method: 'PUT',
         workId: workId,
         title: editWorkFormInput.title,
         contents: editWorkFormInput.contents,
+        picture: editWorkFormInput.picture,
         isActive: editWorkFormInput.activityState === ACTIVITY_STATE_CONSTANT.ACTIVE,
         currentVersion: work?.currentVersion!,
       });
@@ -178,6 +193,8 @@ export const EditWorkModalContainer = ({ workId }: EditWorkModalContainerProps) 
       handleEditWork={handleEditWork}
       errors={errors}
       error={error}
+      handlePictureUpload={handlePictureUpload}
+      picture={pictureForDisplay}
     />
   );
 };

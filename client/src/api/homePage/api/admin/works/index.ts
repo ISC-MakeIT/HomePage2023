@@ -16,6 +16,7 @@ export type GetResponse = {
 export type PostRequest = {
   title: string;
   contents: string;
+  picture?: File;
 };
 
 export type PostResponse = {
@@ -24,9 +25,11 @@ export type PostResponse = {
 };
 
 export type PutRequest = {
+  _method: string;
   workId: number;
   title: string;
   contents: string;
+  picture?: File;
   isActive: boolean;
   currentVersion: number;
 };
@@ -53,18 +56,13 @@ export type Methods = {
     resBody: GetResponse;
   };
   post: {
+    reqFormat: FormData;
+
     reqHeaders: {
       Authorization: string;
     };
-    reqBody: PostRequest;
-    resBody: PostResponse;
-  };
-  put: {
-    reqHeaders: {
-      Authorization: string;
-    };
-    reqBody: PutRequest;
-    resBody: PutResponse;
+    reqBody: PostRequest | PutResponse;
+    resBody: PostResponse | PutResponse;
   };
   delete: {
     reqHeaders: {

@@ -10,6 +10,10 @@ class EditWorkRequest extends FormRequest {
     }
 
     public function rules(): array {
+        if ($this['isActive'] && gettype($this['isActive']) === 'string') {
+            $this['isActive'] = $this['isActive'] === 'true';
+        }
+
         return [
             'workId'         => ['required', 'integer', 'exists:works,work_id'],
             'currentVersion' => ['required', 'integer'],

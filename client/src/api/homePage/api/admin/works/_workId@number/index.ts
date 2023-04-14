@@ -2,6 +2,7 @@ export type Work = {
   workId: number;
   title: string;
   contents: string;
+  thumbnail: string;
   createdAt: string;
   updatedAt: string;
   isActive: boolean;

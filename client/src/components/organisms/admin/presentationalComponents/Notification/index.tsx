@@ -47,17 +47,10 @@ export const Notification = ({ notification, error }: NotificationProps) => {
         </Typography>
 
         <Stack spacing={1}>
-          <Typography
-            sx={{ overflowWrap: 'break-word', width: '75rem', letterSpacing: '0.05rem' }}
-            component='h1'
-            variant='h4'
-          >
+          <Typography sx={{ wordBreak: 'break-all', letterSpacing: '0.05rem' }} component='h1' variant='h4'>
             {notification.title}
           </Typography>
-          <Typography
-            sx={{ overflowWrap: 'break-word', width: '75rem', whiteSpace: 'pre-wrap', letterSpacing: '0.05rem' }}
-            component='p'
-          >
+          <Typography sx={{ wordBreak: 'break-all', whiteSpace: 'pre-wrap', letterSpacing: '0.05rem' }} component='p'>
             {notification.contents}
           </Typography>
         </Stack>

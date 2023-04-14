@@ -3,6 +3,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import { Link } from 'react-router-dom';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 
 type WorkProps = {
@@ -37,39 +38,47 @@ export const Work = ({ work, error }: WorkProps) => {
   }
 
   return (
-    <Stack spacing={3}>
-      <Stack spacing={1.5}>
-        <Typography
-          component='p'
-          sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}
-        >
-          {getWorkActivityStateBy(work.isActive)}
-        </Typography>
+    <Stack flexDirection='row' columnGap={4}>
+      <Link target='_blank' to={work.thumbnail}>
+        <Box
+          sx={{
+            width: 300,
+            height: 400,
+            backgroundColor: colors.grey.A700,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundImage: `url(${work.thumbnail})`,
+          }}
+        />
+      </Link>
 
-        <Stack spacing={1}>
+      <Stack spacing={3}>
+        <Stack spacing={1.5}>
           <Typography
-            sx={{ overflowWrap: 'break-word', width: '75rem', letterSpacing: '0.05rem' }}
-            component='h1'
-            variant='h4'
-          >
-            {work.title}
-          </Typography>
-          <Typography
-            sx={{ overflowWrap: 'break-word', width: '75rem', whiteSpace: 'pre-wrap', letterSpacing: '0.05rem' }}
             component='p'
+            sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}
           >
-            {work.contents}
+            {getWorkActivityStateBy(work.isActive)}
+          </Typography>
+
+          <Stack spacing={1}>
+            <Typography sx={{ wordBreak: 'break-all', letterSpacing: '0.05rem' }} component='h1' variant='h4'>
+              {work.title}
+            </Typography>
+            <Typography sx={{ wordBreak: 'break-all', whiteSpace: 'pre-wrap', letterSpacing: '0.05rem' }} component='p'>
+              {work.contents}
+            </Typography>
+          </Stack>
+        </Stack>
+
+        <Stack spacing={0.5}>
+          <Typography color={colors.grey.A700} component='p'>
+            作成日時 : {work.createdAt}
+          </Typography>
+          <Typography color={colors.grey.A700} component='p'>
+            更新日時 : {work.updatedAt}
           </Typography>
         </Stack>
-      </Stack>
-
-      <Stack spacing={0.5}>
-        <Typography color={colors.grey.A700} component='p'>
-          作成日時 : {work.createdAt}
-        </Typography>
-        <Typography color={colors.grey.A700} component='p'>
-          更新日時 : {work.updatedAt}
-        </Typography>
       </Stack>
     </Stack>
   );

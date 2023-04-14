@@ -38,14 +38,10 @@ export const Member = ({ member, error }: MemberProps) => {
                 <Typography component='p' variant='h5' color={grey.A700}>
                   {member!.jobTitle}
                 </Typography>
-                <Typography
-                  sx={{ fontWeight: 'bold', overflowWrap: 'break-word', maxWidth: '50rem' }}
-                  component='h1'
-                  variant='h3'
-                >
+                <Typography sx={{ fontWeight: 'bold', wordBreak: 'break-all' }} component='h1' variant='h3'>
                   {member!.name}
                 </Typography>
-                <Typography component='p' color={grey.A700} sx={{ overflowWrap: 'break-word', maxWidth: '80rem' }}>
+                <Typography component='p' color={grey.A700} sx={{ wordBreak: 'break-all' }}>
                   @{member!.username}
                 </Typography>
               </Box>

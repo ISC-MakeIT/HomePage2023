@@ -5,4 +5,5 @@ export type EditWorkFormInput = {
   title: string;
   contents: string;
   activityState: ACTIVITY_STATE;
+  picture?: File;
 };
