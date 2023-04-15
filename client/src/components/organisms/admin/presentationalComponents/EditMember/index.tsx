@@ -26,30 +26,13 @@ type EditMemberProps = {
 };
 
 export const EditMember = ({ member, roleList, error, register, handleSubmit, handleEditMember }: EditMemberProps) => {
-  const isFindingMember = () => !member && !error;
-  const isFailedFindMember = () => !member && error;
-
-  if (isFailedFindMember()) {
-    return (
-      <>
-        <AlertForError error={error} />
-      </>
-    );
-  }
-
-  if (isFindingMember()) {
-    return (
-      <>
-        <LinearProgress color='primary' size='md' sx={{ position: 'fixed', top: 2, left: 0, width: '100vw' }} />
-      </>
-    );
-  }
-
   return (
     <Stack rowGap={4}>
       <Stack spacing={2}>
-        <FormControl component='form' onSubmit={handleSubmit(handleEditMember)}>
+        <Stack spacing={2} component='form' onSubmit={handleSubmit(handleEditMember)}>
           <FormLabel sx={{ fontWeight: 'bold' }}>表示状態の変更</FormLabel>
+
+          <AlertForError error={error} />
 
           <Box>
             <RadioGroup
@@ -90,7 +73,7 @@ export const EditMember = ({ member, roleList, error, register, handleSubmit, ha
           <Button type='submit' variant='contained' sx={{ mt: 3 }}>
             変更を適応
           </Button>
-        </FormControl>
+        </Stack>
       </Stack>
     </Stack>
   );
