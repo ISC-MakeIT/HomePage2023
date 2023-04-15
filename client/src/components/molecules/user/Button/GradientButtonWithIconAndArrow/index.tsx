@@ -10,28 +10,36 @@ type GradientButtonWithIconAndArrowProps = {
   to?: string;
   gradientType: GRADIENT_TYPE;
   icon: JSX.Element;
-  buttonType?: 'submit' | 'button';
+  buttonType?: 'submit' | 'button' | 'reset';
   children?: React.ReactNode;
 };
 
 export const GradientButtonWithIconAndArrow = ({
-  to = '#',
+  to,
   icon,
   gradientType,
-  buttonType = 'button',
+  buttonType,
   children,
 }: GradientButtonWithIconAndArrowProps) => {
-  const GradientButton = ({ children, style }: { children: React.ReactNode; style: SerializedStyles }) => {
+  const GradientButton = ({
+    children,
+    style,
+    type,
+  }: {
+    children: React.ReactNode;
+    style: SerializedStyles;
+    type?: 'submit' | 'button' | 'reset';
+  }) => {
     if (gradientType === 'greenToBlue') {
       return (
-        <GreenToBlueGradientButton>
+        <GreenToBlueGradientButton type={type}>
           <div css={style}>{children}</div>
         </GreenToBlueGradientButton>
       );
     }
     if (gradientType === 'redToOrange') {
       return (
-        <RedToOrangeGradientButton>
+        <RedToOrangeGradientButton type={type}>
           <div css={style}>{children}</div>
         </RedToOrangeGradientButton>
       );
@@ -39,25 +47,42 @@ export const GradientButtonWithIconAndArrow = ({
     return <></>;
   };
 
-  return (
-    <Link
-      type={buttonType}
-      to={to}
-      css={css`
-        text-decoration: none;
-      `}
-    >
-      <GradientButton
-        style={css`
-          display: flex;
-          align-items: center;
-          column-gap: 0.5rem;
+  if (to) {
+    return (
+      <Link
+        to={to}
+        css={css`
+          text-decoration: none;
         `}
       >
-        {icon}
-        {children}
-        <Arrow />
-      </GradientButton>
-    </Link>
+        <GradientButton
+          type={buttonType}
+          style={css`
+            display: flex;
+            align-items: center;
+            column-gap: 0.5rem;
+          `}
+        >
+          {icon}
+          {children}
+          <Arrow />
+        </GradientButton>
+      </Link>
+    );
+  }
+
+  return (
+    <GradientButton
+      type={buttonType}
+      style={css`
+        display: flex;
+        align-items: center;
+        column-gap: 0.5rem;
+      `}
+    >
+      {icon}
+      {children}
+      <Arrow />
+    </GradientButton>
   );
 };

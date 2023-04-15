@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
 
-type BlackBoldTitleProps = {
+type BlackLargeTitleProps = {
   children: React.ReactNode;
 };
 
-export const BlackBoldTitle = ({ children }: BlackBoldTitleProps) => {
+export const BlackLargeTitle = ({ children }: BlackLargeTitleProps) => {
   return (
     <h3
       css={css`

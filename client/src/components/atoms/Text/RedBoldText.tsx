@@ -11,6 +11,7 @@ export const RedBoldText = ({ children }: RedBoldTextProps) => {
         font-size: 1rem;
         font-weight: bold;
         color: #ff8567;
+        margin: 0;
       `}
     >
       {children}

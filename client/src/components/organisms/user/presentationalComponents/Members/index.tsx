@@ -1,6 +1,6 @@
 import { Member } from '@api/user/members';
 import { css } from '@emotion/react';
-import { BlackBoldTitle } from 'src/components/atoms/Title/BlackBoldTitle';
+import { BlackLargeTitle } from 'src/components/atoms/Title/BlackLargeTitle';
 import { Member as MemberComponent } from 'src/components/molecules/user/Member';
 
 type MembersProps = {
@@ -45,7 +45,7 @@ export const Members = ({ members }: MembersProps) => {
           margin: 0 auto 6.25rem auto;
         `}
       >
-        <BlackBoldTitle>メンバー紹介</BlackBoldTitle>
+        <BlackLargeTitle>メンバー紹介</BlackLargeTitle>
       </div>
       <div
         css={css`

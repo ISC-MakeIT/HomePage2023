@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Member;
 
 use App\Domain\Beans\Member\MemberWithAbility;
 use App\Domain\ValueObjects\Helpers\S3Path;
+use App\Exceptions\Member\IllegalChangeMyRole;
 use App\Helpers\S3ImageHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Member\Admin\ChangeActiveRequest;
@@ -77,6 +78,10 @@ class AdminMemberController extends Controller {
         $this->authorize('changeRole', Member::class);
 
         $validatedRequest = $request->validated();
+
+        if ($validatedRequest['memberId'] === auth()->id()) {
+            throw new IllegalChangeMyRole();
+        }
 
         DB::transaction(function () use ($validatedRequest) {
             $memberAbility = MemberAbility::where('member_id', $validatedRequest['memberId'])->first();
@@ -401,6 +406,14 @@ class AdminMemberController extends Controller {
         $member           = Member::doesntHave('archiveMember')
             ->with(['activeMember', 'nonActiveMember', 'ability.role'])
             ->findOrFail($validatedRequest['memberId']);
+
+        return MembersResource::make($member)->toArray($request);
+    }
+
+    public function me(Request $request): array {
+        $member = Member::doesntHave('archiveMember')
+            ->with(['activeMember', 'nonActiveMember', 'ability.role'])
+            ->findOrFail(auth()->id());
 
         return MembersResource::make($member)->toArray($request);
     }
