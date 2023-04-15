@@ -6,6 +6,7 @@ import { WorkContainer } from '../organisms/user/containerComponents/WorkContain
 import { NotificationContainer } from '../organisms/user/containerComponents/NotificationContainer';
 import { HeaderWithTopPage } from '../templates/user/HeaderWithTopPage';
 import { ContactContainer } from '../organisms/user/containerComponents/ContactContainer';
+import { Recruit } from '../organisms/user/presentationalComponents/Recruit';
 
 export const Home = () => {
   return (
@@ -17,6 +18,7 @@ export const Home = () => {
       <NotificationContainer />
       <WorkContainer />
       <MembersContainer />
+      <Recruit />
       <ContactContainer />
       <Footer />
     </HeaderWithTopPage>
