@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use App\Exceptions\Member\AlreadyCreatedUserNameOfMemberException;
+use App\Exceptions\Member\IllegalChangeMyRole;
 use App\Exceptions\Notification\AlreadyEditedNotificationException;
 use App\Exceptions\Work\AlreadyEditedWorkException;
 use Aws\Exception\AwsException;
@@ -43,6 +44,9 @@ class Handler extends ExceptionHandler {
     public function render($request, Throwable $e) {
         if ($e instanceof AlreadyCreatedUserNameOfMemberException) {
             return response(['message' => '既に使用されているユーザー名です'], 400);
+        }
+        if ($e instanceof IllegalChangeMyRole) {
+            return response(['message' => '自分自身のロール変更は不可能です。'], 400);
         }
         if ($e instanceof AlreadyEditedNotificationException) {
             return response(['message' => '既に編集されているお知らせです。'], 500);

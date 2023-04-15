@@ -14,12 +14,14 @@ export const ContactContainer = () => {
     formState: { errors },
   } = useForm<ContactFormInput>();
   const [error, setError] = useState<string>();
+  const [success, setSuccess] = useState<string>();
 
   const handleContact: SubmitHandler<ContactFormInput> = async (contactFormInput) => {
     try {
       await apiContact(contactFormInput);
       setError(undefined);
       reset();
+      setSuccess('お問い合わせが完了しました。');
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const status = e.response!.status;
@@ -50,6 +52,7 @@ export const ContactContainer = () => {
       handleContact={handleContact}
       errors={errors}
       error={error}
+      success={success}
       contactCategories={CONTACT_CATEGORIES}
     />
   );

@@ -2,22 +2,17 @@ import { useEffect, useState } from 'react';
 import { EditMeModal } from '../../presentationalComponents/EditMeModal';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ACTIVITY_STATE_CONSTANT, EditMeFormInput } from '../../types/EditMeFormInput';
-import { useAlert } from 'src/modules/hooks/useAlert';
 import { useAppSelector } from '@redux/hooks';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useNavigate } from 'react-router-dom';
-import { apiMember } from '@api/admin/members/member';
 import { Member, apiEditMe } from '@api/admin/members';
 import axios from 'axios';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 import { apiChangeIcon } from '@api/admin/members/icon';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
+import { apiMe } from '@api/admin/members/me';
 
-type EditMeModalContainerProps = {
-  memberId: number;
-};
-
-export const EditMeModalContainer = ({ memberId }: EditMeModalContainerProps) => {
+export const EditMeModalContainer = () => {
   const {
     register,
     handleSubmit,
@@ -39,7 +34,7 @@ export const EditMeModalContainer = ({ memberId }: EditMeModalContainerProps) =>
       try {
         processingLine.show();
 
-        const response = await apiMember(userToken, memberId);
+        const response = await apiMe(userToken);
         setMember(response);
         setIconForDisplay(response.thumbnail);
 
@@ -82,7 +77,7 @@ export const EditMeModalContainer = ({ memberId }: EditMeModalContainerProps) =>
     };
 
     main();
-  }, []);
+  }, [isActive]);
 
   const handleOpen = () => setIsActive(true);
   const handleClose = () => setIsActive(false);

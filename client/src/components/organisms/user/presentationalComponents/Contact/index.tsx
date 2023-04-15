@@ -9,6 +9,7 @@ import { Stack } from 'src/components/atoms/Layout/Stack';
 import { WhiteLergeTitle } from 'src/components/atoms/Title/WhiteLergeTitle';
 import { Option, Select } from 'src/components/molecules/user/Input/Select';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
+import { AlertForSuccess } from 'src/components/molecules/admin/AlertForSuccess';
 
 type ContactProps = {
   register: UseFormRegister<ContactFormInput>;
@@ -17,11 +18,20 @@ type ContactProps = {
 
   errors: FieldErrors<ContactFormInput>;
   error?: string;
+  success?: string;
 
   contactCategories: Option[];
 };
 
-export const Contact = ({ register, handleSubmit, handleContact, errors, error, contactCategories }: ContactProps) => {
+export const Contact = ({
+  register,
+  handleSubmit,
+  handleContact,
+  errors,
+  error,
+  success,
+  contactCategories,
+}: ContactProps) => {
   return (
     <section
       id='contact'
@@ -51,6 +61,7 @@ export const Contact = ({ register, handleSubmit, handleContact, errors, error, 
         `}
       >
         <AlertForError error={error} />
+        <AlertForSuccess content={success} />
 
         <p
           css={css`
