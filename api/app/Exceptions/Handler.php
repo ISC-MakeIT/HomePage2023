@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use App\Exceptions\Member\AlreadyCreatedUserNameOfMemberException;
 use App\Exceptions\Notification\AlreadyEditedNotificationException;
 use App\Exceptions\Work\AlreadyEditedWorkException;
+use Aws\Exception\AwsException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -51,6 +52,9 @@ class Handler extends ExceptionHandler {
         }
         if ($e instanceof ValidationException) {
             return response(['errors' => $e->errors()], 400);
+        }
+        if ($e instanceof AwsException) {
+            return response(['message' => 'メールの送信に失敗しました。'], 500);
         }
 
         return parent::render($request, $e);
