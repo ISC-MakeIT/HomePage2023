@@ -2,7 +2,7 @@ import { Work as APIWork } from '@api/user/works';
 import { css } from '@emotion/react';
 import { Stack } from 'src/components/atoms/Layout/Stack';
 import { GreyMediumText } from 'src/components/atoms/Text/GreyMediumText';
-import { BlackBoldTitle } from 'src/components/atoms/Title/BlackBoldTitle';
+import { BlackLargeTitle } from 'src/components/atoms/Title/BlackLargeTitle';
 
 type WorkProps = APIWork;
 
@@ -23,7 +23,7 @@ export const Work = ({ title, contents, thumbnail }: WorkProps) => {
         `}
         spacing={'0.8rem'}
       >
-        <BlackBoldTitle>{title}</BlackBoldTitle>
+        <BlackLargeTitle>{title}</BlackLargeTitle>
         <GreyMediumText>{contents}</GreyMediumText>
       </Stack>
 
