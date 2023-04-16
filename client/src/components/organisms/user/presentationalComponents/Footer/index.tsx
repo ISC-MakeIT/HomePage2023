@@ -9,6 +9,8 @@ import { WhiteMediumBoldText } from 'src/components/atoms/Text/WhiteMediumBoldTe
 import { WhiteMediumText } from 'src/components/atoms/Text/WhiteMediumText';
 import { maxScreen } from 'src/modules/helpers/mediaQueries';
 import { USER_ROUTE_PATH_MAP } from 'src/routes/routePath';
+import { CONSTANT_CONTACT_CATEGORIE } from '../../constants/ContactCategories';
+import { NoDecorationLink } from 'src/components/atoms/Anchor/NoDecorationLink';
 
 export const Footer = () => {
   const links = [
@@ -105,12 +107,19 @@ export const Footer = () => {
                 row-gap: 1.75rem;
               `}
             >
-              <WhiteMediumText>MakeITについて</WhiteMediumText>
-              <WhiteMediumText>新着情報</WhiteMediumText>
-              <WhiteMediumText>案件依頼・お問い合わせ</WhiteMediumText>
-              <WhiteMediumText>体験入部</WhiteMediumText>
-              <WhiteMediumText>実績</WhiteMediumText>
-              <Link to={USER_ROUTE_PATH_MAP.WORKS}>
+              <NoDecorationLink to={`${USER_ROUTE_PATH_MAP.TOP}#about`}>
+                <WhiteMediumText>MakeITについて</WhiteMediumText>
+              </NoDecorationLink>
+              <NoDecorationLink to={`${USER_ROUTE_PATH_MAP.TOP}#notification`}>
+                <WhiteMediumText>新着情報</WhiteMediumText>
+              </NoDecorationLink>
+              <NoDecorationLink
+                to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.EXPERIENCE}#contact`}
+              >
+                <WhiteMediumText>体験入部</WhiteMediumText>
+              </NoDecorationLink>
+
+              <NoDecorationLink to={USER_ROUTE_PATH_MAP.WORKS}>
                 <WhiteButton
                   style={css`
                     width: 9.5rem;
@@ -119,19 +128,24 @@ export const Footer = () => {
                   <WhiteMediumText>実績一覧</WhiteMediumText>
                   <Arrow color='#fff' />
                 </WhiteButton>
-              </Link>
+              </NoDecorationLink>
 
-              <WhiteMediumText>メンバー紹介</WhiteMediumText>
-              <Link to={`${USER_ROUTE_PATH_MAP.TOP}#members`}>
+              <NoDecorationLink
+                to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.PROJECT}#contact`}
+              >
+                <WhiteMediumText>案件依頼・お問い合わせ</WhiteMediumText>
+              </NoDecorationLink>
+
+              <NoDecorationLink to={`${USER_ROUTE_PATH_MAP.TOP}#members`}>
                 <WhiteButton
                   style={css`
                     width: 12rem;
                   `}
                 >
-                  <WhiteMediumText>メンバー 一覧</WhiteMediumText>
+                  <WhiteMediumText>メンバー紹介</WhiteMediumText>
                   <Arrow color='#fff' />
                 </WhiteButton>
-              </Link>
+              </NoDecorationLink>
             </div>
 
             <hr
