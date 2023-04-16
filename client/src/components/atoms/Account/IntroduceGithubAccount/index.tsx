@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { GithubLogo } from 'src/components/atoms/IconWithTitle/Github';
-import { WhiteMediumText } from '../../Text/WhiteMediumText';
+import { BlackMediumText } from '../../Text/BlackMediumText';
 
 type IntroduceGithubAccountProps = {
   children?: React.ReactNode;
@@ -21,7 +21,7 @@ export const IntroduceGithubAccount = ({ children }: IntroduceGithubAccountProps
       `}
     >
       <GithubLogo />
-      <WhiteMediumText>{children}</WhiteMediumText>
+      <BlackMediumText>{children}</BlackMediumText>
     </div>
   );
 };

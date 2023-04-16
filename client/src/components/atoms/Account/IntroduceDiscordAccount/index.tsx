@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { DiscordLogo } from 'src/components/atoms/IconWithTitle/Discord';
-import { WhiteMediumText } from '../../Text/WhiteMediumText';
+import { BlackMediumText } from '../../Text/BlackMediumText';
 
 type IntroduceDiscordAccountProps = {
   children?: React.ReactNode;
@@ -21,7 +21,7 @@ export const IntroduceDiscordAccount = ({ children }: IntroduceDiscordAccountPro
       `}
     >
       <DiscordLogo />
-      <WhiteMediumText>{children}</WhiteMediumText>
+      <BlackMediumText>{children}</BlackMediumText>
     </div>
   );
 };
