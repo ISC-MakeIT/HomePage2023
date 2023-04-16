@@ -22,7 +22,6 @@ export const Members = ({ members }: MembersProps) => {
             github: member.github,
             description: member.description,
           }}
-          backgroundColor='#F15B88'
         />
       ))}
     </>

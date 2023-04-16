@@ -11,6 +11,7 @@ export const GreyMediumBoldText = ({ children }: GreyBoldTextProps) => {
         font-size: 1rem;
         font-weight: bold;
         color: #333;
+        margin: 0;
       `}
     >
       {children}

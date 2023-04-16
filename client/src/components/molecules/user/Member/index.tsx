@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import { useEffect, useRef, useState } from 'react';
 import { IntroduceDiscordAccount } from '../../../atoms/Account/IntroduceDiscordAccount';
 import { IntroduceTwitterAccount } from '../../../atoms/Account/IntroduceTwitterAccount';
 import { IntroduceGithubAccount } from '../../../atoms/Account/IntroduceGithubAccount';
@@ -10,7 +9,6 @@ import { Stack } from 'src/components/atoms/Layout/Stack';
 import { BlackMediumText } from 'src/components/atoms/Text/BlackMediumText';
 
 type MemberProps = {
-  backgroundColor: string;
   name: string;
   skill: string;
   icon: string;
@@ -22,7 +20,7 @@ type MemberProps = {
   };
 };
 
-export const Member = ({ backgroundColor, name, skill, icon, content }: MemberProps) => {
+export const Member = ({ name, skill, icon, content }: MemberProps) => {
   return (
     <div
       css={css`
@@ -35,10 +33,12 @@ export const Member = ({ backgroundColor, name, skill, icon, content }: MemberPr
         word-break: break-all;
         text-align: center;
         margin: 1.5rem auto;
+        padding: 1.5rem 0;
       `}
     >
-      <div
-        css={css`
+      <Stack
+        spacing={'1rem'}
+        style={css`
           width: 90%;
           margin: 0 auto;
         `}
@@ -57,18 +57,17 @@ export const Member = ({ backgroundColor, name, skill, icon, content }: MemberPr
           spacing='1.5rem'
           style={css`
             text-align: left;
-            margin-top: 2rem;
           `}
         >
+          <BlackMediumText>{content.description}</BlackMediumText>
+
           <div>
             <IntroduceDiscordAccount>{content.discord}</IntroduceDiscordAccount>
             <IntroduceTwitterAccount>{content.twitter}</IntroduceTwitterAccount>
             <IntroduceGithubAccount>{content.github}</IntroduceGithubAccount>
           </div>
-
-          <BlackMediumText>{content.description}</BlackMediumText>
         </Stack>
-      </div>
+      </Stack>
     </div>
   );
 };
