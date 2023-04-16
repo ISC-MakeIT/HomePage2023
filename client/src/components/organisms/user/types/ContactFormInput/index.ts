@@ -1,5 +1,7 @@
+import { CONTACT_CATEGORIE } from '../../constants/ContactCategories';
+
 export type ContactFormInput = {
   email: string;
   name: string;
-  category: string;
+  category: CONTACT_CATEGORIE;
 };

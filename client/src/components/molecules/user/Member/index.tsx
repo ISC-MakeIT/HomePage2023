@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { IntroduceDiscordAccount } from '../../../atoms/Account/IntroduceDiscordAccount';
 import { IntroduceTwitterAccount } from '../../../atoms/Account/IntroduceTwitterAccount';
 import { IntroduceGithubAccount } from '../../../atoms/Account/IntroduceGithubAccount';
-import { GreyBoldText } from 'src/components/atoms/Text/GreyBoldText';
+import { GreyMediumBoldText } from 'src/components/atoms/Text/GreyMediumBoldText';
 import { BlackSmallTitle } from 'src/components/atoms/Title/BlackSmallTitle';
 import { WhiteMediumText } from 'src/components/atoms/Text/WhiteMediumText';
 import { BackGroundImage } from 'src/components/atoms/Image/BackGroundImage';
@@ -90,15 +90,22 @@ export const Member = ({ backgroundColor, name, skill, icon, content }: MemberPr
           z-index: 2;
           margin: 1.5rem auto;
           word-break: break-all;
+          text-align: center;
 
           ${memberCardHeight()}
           ${isReversed ? { opacity: 0 } : { opacity: 1 }}
         `}
         ref={frontMemberElement}
       >
-        <BackGroundImage width='100%' height='235px' image={icon} />
+        <div
+          css={css`
+            box-shadow: 0 4px 4px rgba(51, 51, 51, 0.25);
+          `}
+        >
+          <BackGroundImage width='100%' height='235px' image={icon} />
+        </div>
         <BlackSmallTitle>{name}</BlackSmallTitle>
-        <GreyBoldText>{skill}</GreyBoldText>
+        <GreyMediumBoldText>{skill}</GreyMediumBoldText>
       </div>
 
       <div

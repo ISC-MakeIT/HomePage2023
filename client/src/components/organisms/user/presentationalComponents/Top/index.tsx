@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import { WhiteMakeIT } from 'src/components/atoms/Logo/WhiteMakeIT';
 import { CatchFrase } from 'src/components/atoms/TextCSV/CatchFrase';
 import { Contact } from 'src/components/molecules/user/Contact';
+import { maxScreen } from 'src/modules/helpers/mediaQueries';
 
 export const Top = () => {
   return (
@@ -9,75 +10,103 @@ export const Top = () => {
       <div
         id='about'
         css={css`
-          width: 100vw;
-          height: 0;
+          width: 100%;
+          height: 100vh;
           background: url(/index_top_background.jpg) left top no-repeat;
-          background-size: contain;
-          padding-top: 63%; /* (img-height / img-width * container-width) */
-          /* (853 / 1280 * 100) */
-          overflow-x: hidden;
+          background-size: cover;
+          background-position: center;
           z-index: 10;
-          position: relative;
+          position: absolute;
           filter: brightness(65%);
+
+          ${maxScreen('md')} {
+            background: url(/index_top_background_for_mobile.png);
+            background-size: cover;
+          }
         `}
-      ></div>
+      />
+
       <section
         css={css`
+          width: 100%;
+          height: 100vh;
           z-index: 20;
-          position: absolute;
-          min-width: 72vw;
-          min-height: 100vh;
-          overflow-x: hidden;
+          position: relative;
           display: flex;
-          flex-direction: column;
           align-items: center;
-          top: 27.5%;
-          left: 14vw;
+          justify-content: center;
         `}
       >
         <div
           css={css`
-            width: 42vw;
+            width: 72%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            ${maxScreen('lg')} {
+              width: 80%;
+            }
+            ${maxScreen('md')} {
+              width: 90%;
+            }
+            ${maxScreen('sm')} {
+              width: 95%;
+            }
           `}
         >
-          <WhiteMakeIT />
           <div
             css={css`
-              margin-top: 24px;
+              width: 50%;
             `}
           >
-            <CatchFrase />
-          </div>
-        </div>
-        <div
-          css={css`
-            text-align: center;
-          `}
-        >
-          <p
-            css={css`
-              color: #ffffff;
-              font-size: 1.38vw;
-              font-weight: 700;
-            `}
-          >
-            私達は、横浜でアプリ・サービス開発をメインに行う
-            <span
+            <WhiteMakeIT />
+            <div
               css={css`
-                font-size: 2.1vw;
+                margin-top: 1.5rem;
               `}
             >
-              「ものづくり」
-            </span>
-            サークルです。
-          </p>
-        </div>
-        <div
-          css={css`
-            margin-top: 64px;
-          `}
-        >
-          <Contact />
+              <CatchFrase />
+            </div>
+          </div>
+          <div
+            css={css`
+              text-align: center;
+            `}
+          >
+            <p
+              css={css`
+                color: #ffffff;
+                font-size: 1.2rem;
+                font-weight: bold;
+                line-height: 1.75;
+              `}
+            >
+              私達は、横浜でアプリ・サービス開発をメインに行う
+              <span
+                css={css`
+                  font-size: 2rem;
+
+                  ${maxScreen('md')} {
+                    &:before {
+                      white-space: pre;
+                      content: '\\A';
+                    }
+                  }
+                `}
+              >
+                「ものづくり」
+              </span>
+              サークルです。
+            </p>
+          </div>
+          <div
+            css={css`
+              margin-top: 4rem;
+            `}
+          >
+            <Contact />
+          </div>
         </div>
       </section>
     </>

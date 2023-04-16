@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Footer } from '../organisms/user/presentationalComponents/Footer';
 import { Top } from '../organisms/user/presentationalComponents/Top';
 import { MembersContainer } from '../organisms/user/containerComponents/MembersContainer';
@@ -6,6 +6,7 @@ import { WorkContainer } from '../organisms/user/containerComponents/WorkContain
 import { NotificationContainer } from '../organisms/user/containerComponents/NotificationContainer';
 import { HeaderWithTopPage } from '../templates/user/HeaderWithTopPage';
 import { ContactContainer } from '../organisms/user/containerComponents/ContactContainer';
+import { Recruit } from '../organisms/user/presentationalComponents/Recruit';
 
 export const Home = () => {
   return (
@@ -17,6 +18,7 @@ export const Home = () => {
       <NotificationContainer />
       <WorkContainer />
       <MembersContainer />
+      <Recruit />
       <ContactContainer />
       <Footer />
     </HeaderWithTopPage>

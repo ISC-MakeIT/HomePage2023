@@ -1,9 +1,10 @@
 import { css } from '@emotion/react';
-import { WhiteRadiusButton } from '../../../../atoms/Button/WhiteRadiusButton';
 import { Link } from 'react-router-dom';
 import { WhiteGithubButtonContent } from '../Content/WhiteGithubButtonContent';
+import { WhiteButton } from 'src/components/atoms/Button/WhiteButton';
+import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
 
-export const WhiteGithubButton = () => {
+export const WhiteGithubButtonWithArrow = () => {
   return (
     <Link
       to='https://github.com/ISC-MakeIT'
@@ -11,7 +12,10 @@ export const WhiteGithubButton = () => {
         text-decoration: none;
       `}
     >
-      <WhiteRadiusButton content={<WhiteGithubButtonContent />} />
+      <WhiteButton>
+        <WhiteGithubButtonContent />
+        <Arrow color='#fff' />
+      </WhiteButton>
     </Link>
   );
 };

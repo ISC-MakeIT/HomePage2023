@@ -1,10 +1,10 @@
-import { useMemo, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
 export const EnableScrollToHashLinkMiddleware = () => {
   let location = useLocation();
 
-  let hashElement = useMemo(() => {
+  useEffect(() => {
     let hash = location.hash;
     const removeHashCharacter = (str: string) => {
       const result = str.slice(1);
@@ -13,20 +13,12 @@ export const EnableScrollToHashLinkMiddleware = () => {
 
     if (hash) {
       let element = document.getElementById(removeHashCharacter(hash));
-      return element;
-    } else {
-      return null;
-    }
-  }, [location]);
-
-  useEffect(() => {
-    if (hashElement) {
-      hashElement.scrollIntoView({
+      element?.scrollIntoView({
         behavior: 'smooth',
         inline: 'nearest',
       });
     }
-  }, [hashElement]);
+  }, [location]);
 
   return <Outlet />;
 };

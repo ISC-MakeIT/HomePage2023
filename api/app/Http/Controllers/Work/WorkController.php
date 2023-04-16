@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 
 class WorkController extends Controller {
     public function works(): JsonResponse {
-        $activeWorks = ActiveWork::all();
+        $activeWorks = ActiveWork::orderBy('work_id', 'DESC')->get();
 
         return WorksResource::collection($activeWorks)->response();
     }

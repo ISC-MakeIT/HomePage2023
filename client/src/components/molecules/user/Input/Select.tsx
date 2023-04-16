@@ -1,7 +1,7 @@
 import { SerializedStyles, css } from '@emotion/react';
 import { ComponentProps } from 'react';
 import { Stack } from 'src/components/atoms/Layout/Stack';
-import { RedBoldText } from 'src/components/atoms/Text/RedBoldText';
+import { RedMediumBoldText } from 'src/components/atoms/Text/RedMediumBoldText';
 
 export type Option = {
   value: string;
@@ -22,7 +22,7 @@ export const Select = (props: SelectProps) => {
 
   const Error = () => {
     if (isErrored) {
-      return <RedBoldText>{error}</RedBoldText>;
+      return <RedMediumBoldText>{error}</RedMediumBoldText>;
     }
     return <></>;
   };
@@ -51,8 +51,10 @@ export const Select = (props: SelectProps) => {
             width: calc(100%);
           `}
         >
-          {options.map((option) => (
-            <option value={option.value}>{option.content}</option>
+          {options.map((option, index) => (
+            <option key={index} value={option.value}>
+              {option.content}
+            </option>
           ))}
         </select>
 

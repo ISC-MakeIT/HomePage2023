@@ -20,7 +20,7 @@ export const Notifications = ({ notifications }: NotificationsProps) => {
   return (
     <div
       css={css`
-        width: 100vw;
+        width: 100%;
       `}
     >
       <Stack
