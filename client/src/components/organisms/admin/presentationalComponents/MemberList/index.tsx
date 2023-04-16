@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { faEye, faEyeSlash, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 
@@ -48,7 +48,7 @@ export const MemberList = ({ memberList, error }: MemberListProps) => {
         {memberList.map((member) => (
           <TableRow
             component={Link}
-            to={`${ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS}/${member.memberId}`}
+            href={`${ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS}/${member.memberId}`}
             key={member.memberId}
             css={css`
               background-color: ${getRowBackgroudColorBy(member.isActive)};
@@ -56,24 +56,26 @@ export const MemberList = ({ memberList, error }: MemberListProps) => {
             `}
             hover
           >
-            <TableCell sx={{ maxWidth: '15rem' }}>{getMemberActivityStateBy(member.isActive)}</TableCell>
-            <TableCell>{member.roleName}</TableCell>
-            <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
-              {member.name}
-            </TableCell>
-            <TableCell>{member.memberId}</TableCell>
-            <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
-              {member.username}
-            </TableCell>
-            <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
-              {member.jobTitle}
-            </TableCell>
-            <TableCell>{elseDefaultDisplayUnExist(member.discord)}</TableCell>
-            <TableCell>{elseDefaultDisplayUnExist(member.twitter)}</TableCell>
-            <TableCell>{elseDefaultDisplayUnExist(member.github)}</TableCell>
-            <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '15rem' }}>
-              {member.description}
-            </TableCell>
+            <a href={`${ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS}/${member.memberId}`}>
+              <TableCell sx={{ maxWidth: '15rem' }}>{getMemberActivityStateBy(member.isActive)}</TableCell>
+              <TableCell>{member.roleName}</TableCell>
+              <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
+                {member.name}
+              </TableCell>
+              <TableCell>{member.memberId}</TableCell>
+              <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
+                {member.username}
+              </TableCell>
+              <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
+                {member.jobTitle}
+              </TableCell>
+              <TableCell>{elseDefaultDisplayUnExist(member.discord)}</TableCell>
+              <TableCell>{elseDefaultDisplayUnExist(member.twitter)}</TableCell>
+              <TableCell>{elseDefaultDisplayUnExist(member.github)}</TableCell>
+              <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '15rem' }}>
+                {member.description}
+              </TableCell>
+            </a>
           </TableRow>
         ))}
       </>

@@ -11,6 +11,7 @@ import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { EditNotificationModal } from '../../presentationalComponents/EditNotificationModal';
 import { ACTIVITY_STATE_CONSTANT, EditNotificationFormInput } from '../../types/EditNotificationFormInput';
+import { useRouter } from 'next/router';
 
 type EditNotificationModalContainerProps = {
   notificationId: number;
@@ -28,7 +29,7 @@ export const EditNotificationModalContainer = ({ notificationId }: EditNotificat
   const userToken = useAppSelector(selectUserToken);
   const alert = useAlert();
   const processingLine = useProcessingLine();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     const main = async () => {
@@ -130,7 +131,7 @@ export const EditNotificationModalContainer = ({ notificationId }: EditNotificat
         milliSecondCountsToHide,
       );
       setIsActive(false);
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS);
+      router.push(ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const responseData = e.response!.data;

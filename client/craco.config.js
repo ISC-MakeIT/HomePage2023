@@ -7,6 +7,7 @@ module.exports = {
         'module-resolver',
         {
           alias: {
+            '@src': 'src/',
             '@redux': 'src/redux',
             '@api': 'src/modules/api',
           },

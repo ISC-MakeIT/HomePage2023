@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
 
 type AccessToListProps = {
@@ -15,7 +15,7 @@ export const AccessToList = ({ to }: AccessToListProps) => {
       `}
     >
       <Link
-        to={to}
+        href={to}
         css={css`
           font-size: 1rem;
           line-height: 1.5rem;
@@ -24,8 +24,10 @@ export const AccessToList = ({ to }: AccessToListProps) => {
           display: flex;
         `}
       >
-        一覧で見る
-        <Arrow color='#ff8567' />
+        <>
+          一覧で見る
+          <Arrow color='#ff8567' />
+        </>
       </Link>
     </div>
   );

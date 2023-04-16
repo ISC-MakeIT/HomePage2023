@@ -1,15 +1,21 @@
 import { css } from '@emotion/react';
-import { Link, LinkProps } from 'react-router-dom';
+import Link, { LinkProps } from 'next/link';
 
-type NoDecorationLinkProps = LinkProps;
+type NoDecorationLinkProps = { children?: React.ReactNode } & LinkProps;
 
 export const NoDecorationLink = (props: NoDecorationLinkProps) => {
+  const { children } = props;
+
   return (
-    <Link
-      css={css`
-        text-decoration: none;
-      `}
-      {...props}
-    />
+    <Link {...props}>
+      <a
+        href={props.href.toString()}
+        css={css`
+          text-decoration: none;
+        `}
+      >
+        {children}
+      </a>
+    </Link>
   );
 };

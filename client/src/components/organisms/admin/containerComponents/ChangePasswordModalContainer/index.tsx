@@ -6,8 +6,8 @@ import { apiChangePassword } from '@api/admin/members/password';
 import { useAppSelector } from '@redux/hooks';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
+import { useRouter } from 'next/router';
 
 export const ChangePasswordModalContainer = () => {
   const {
@@ -19,7 +19,7 @@ export const ChangePasswordModalContainer = () => {
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState<string>();
   const userToken = useAppSelector(selectUserToken);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleOpen = () => setIsActive(true);
   const handleClose = () => setIsActive(false);
@@ -30,7 +30,7 @@ export const ChangePasswordModalContainer = () => {
       setError(undefined);
       setIsActive(false);
       reset();
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.MYPAGE, { state: { refresh: true } });
+      router.push(ADMIN_ROUTE_FULL_PATH_MAP.MYPAGE);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const status = e.response!.status;

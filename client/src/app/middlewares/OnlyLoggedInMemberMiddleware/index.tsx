@@ -1,13 +1,13 @@
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 
 export const OnlyLoggedInMemberMiddleware = () => {
   const userToken = useAppSelector(selectUserToken);
-  const navigate = useNavigate();
+  const router = useRouter();
   const alert = useAlert();
 
   useEffect(() => {
@@ -24,10 +24,10 @@ export const OnlyLoggedInMemberMiddleware = () => {
         5000,
         1000,
       );
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.LOGIN);
+      router.push(ADMIN_ROUTE_FULL_PATH_MAP.LOGIN);
       return;
     }
   }, []);
 
-  return <Outlet />;
+  return <></>;
 };

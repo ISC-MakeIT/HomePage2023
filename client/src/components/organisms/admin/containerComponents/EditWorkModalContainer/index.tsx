@@ -11,6 +11,7 @@ import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { EditWorkModal } from '../../presentationalComponents/EditWorkModal';
 import { ACTIVITY_STATE_CONSTANT, EditWorkFormInput } from '../../types/EditWorkFormInput';
+import { useRouter } from 'next/router';
 
 type EditWorkModalContainerProps = {
   workId: number;
@@ -30,7 +31,7 @@ export const EditWorkModalContainer = ({ workId }: EditWorkModalContainerProps) 
   const userToken = useAppSelector(selectUserToken);
   const alert = useAlert();
   const processingLine = useProcessingLine();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     const main = async () => {
@@ -145,7 +146,7 @@ export const EditWorkModalContainer = ({ workId }: EditWorkModalContainerProps) 
         milliSecondCountsToHide,
       );
       setIsActive(false);
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.WORKS);
+      router.push(ADMIN_ROUTE_FULL_PATH_MAP.WORKS);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const responseData = e.response!.data;

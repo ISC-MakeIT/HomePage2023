@@ -1,14 +1,14 @@
 import { useScrollTop } from 'src/modules/hooks/usePageScroll';
 import { Header } from '../../presentationalComponents/Header';
-import { useLocation } from 'react-router-dom';
 import { USER_ROUTE_PATH_MAP } from 'src/routes/routePath';
 import { useWindowSize } from 'src/modules/hooks/useWindowSize';
 import { HeaderForMobile } from '../../presentationalComponents/HeaderForMobile';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 export const HeaderContainer = () => {
   const scrollTop = useScrollTop();
-  const location = useLocation();
+  const router = useRouter();
   const { width } = useWindowSize();
   const [isOpenedMenu, setIsOpenedMenu] = useState(false);
 
@@ -21,5 +21,5 @@ export const HeaderContainer = () => {
       />
     );
   }
-  return <Header isStartingLocationInThisPage={scrollTop === 0 && location.pathname === USER_ROUTE_PATH_MAP.TOP} />;
+  return <Header isStartingLocationInThisPage={scrollTop === 0 && router.pathname === USER_ROUTE_PATH_MAP.TOP} />;
 };

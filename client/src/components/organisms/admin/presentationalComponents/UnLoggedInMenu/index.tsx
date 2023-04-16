@@ -1,21 +1,24 @@
 import { ListItemText, MenuItem } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from '../../../../../routes/routePath';
 import { MenuItemWrapper } from '../../../../molecules/admin/MenuItemWrapper';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export const UnLoggedInMenu = () => {
-  const location = useLocation();
+  const router = useRouter();
 
   return (
     <MenuItemWrapper sx={{ width: '100%', height: '100vh' }}>
       <MenuItem
         selected={
-          location.pathname === ADMIN_ROUTE_FULL_PATH_MAP.TOP || location.pathname === ADMIN_ROUTE_FULL_PATH_MAP.LOGIN
+          router.pathname === ADMIN_ROUTE_FULL_PATH_MAP.TOP || router.pathname === ADMIN_ROUTE_FULL_PATH_MAP.LOGIN
         }
         component={Link}
-        to={ADMIN_ROUTE_FULL_PATH_MAP.TOP}
+        href={ADMIN_ROUTE_FULL_PATH_MAP.TOP}
       >
-        <ListItemText>ログイン</ListItemText>
+        <a href={ADMIN_ROUTE_FULL_PATH_MAP.TOP}>
+          <ListItemText>ログイン</ListItemText>
+        </a>
       </MenuItem>
     </MenuItemWrapper>
   );
