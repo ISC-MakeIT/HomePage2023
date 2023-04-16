@@ -15,6 +15,7 @@ export const Work = (work: WorkProps) => {
       id='work'
       css={css`
         background-image: url(/work_background.png);
+        background-position: center;
       `}
     >
       <div
@@ -22,6 +23,7 @@ export const Work = (work: WorkProps) => {
           position: relative;
           background-color: rgba(255, 255, 255, 0.95);
           padding: 7.5rem 7rem;
+          overflow: hidden;
         `}
       >
         <div
@@ -33,15 +35,15 @@ export const Work = (work: WorkProps) => {
           <WorkComponent {...work} />
         </div>
 
+        <ToyBackGround />
         <div
           css={css`
+            position: relative;
             z-index: 1;
           `}
         >
-          <ToyBackGround />
+          <AccessToList to={USER_ROUTE_PATH_MAP.WORKS} />
         </div>
-
-        <AccessToList to={USER_ROUTE_PATH_MAP.WORKS} />
       </div>
     </section>
   );

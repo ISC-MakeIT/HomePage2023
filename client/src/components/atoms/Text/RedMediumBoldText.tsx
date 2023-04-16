@@ -1,16 +1,17 @@
 import { css } from '@emotion/react';
 
-type WhiteBoldTextProps = {
+type RedBoldTextProps = {
   children: React.ReactNode;
 };
 
-export const WhiteBoldText = ({ children }: WhiteBoldTextProps) => {
+export const RedMediumBoldText = ({ children }: RedBoldTextProps) => {
   return (
     <p
       css={css`
-        font-weight: bold;
         font-size: 1rem;
-        color: #fff;
+        font-weight: bold;
+        color: #ff8567;
+        margin: 0;
       `}
     >
       {children}

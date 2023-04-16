@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 
 class NotificationController extends Controller {
     public function notifications(): JsonResponse {
-        $activeNotification = ActiveNotification::all();
+        $activeNotification = ActiveNotification::orderBy('notification_id', 'DESC')->get();
 
         return NotificationsResource::collection($activeNotification)->response();
     }

@@ -1,7 +1,7 @@
 import { SerializedStyles, css } from '@emotion/react';
 import { ComponentProps } from 'react';
 import { Stack } from 'src/components/atoms/Layout/Stack';
-import { RedBoldText } from 'src/components/atoms/Text/RedBoldText';
+import { RedMediumBoldText } from 'src/components/atoms/Text/RedMediumBoldText';
 
 type TextFieldProps = {
   label: string;
@@ -16,7 +16,7 @@ export const TextField = (props: TextFieldProps) => {
 
   const Error = () => {
     if (isErrored) {
-      return <RedBoldText>{error}</RedBoldText>;
+      return <RedMediumBoldText>{error}</RedMediumBoldText>;
     }
     return <></>;
   };

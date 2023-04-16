@@ -10,6 +10,7 @@ import { WhiteLergeTitle } from 'src/components/atoms/Title/WhiteLergeTitle';
 import { Option, Select } from 'src/components/molecules/user/Input/Select';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { AlertForSuccess } from 'src/components/molecules/admin/AlertForSuccess';
+import { maxScreen } from 'src/modules/helpers/mediaQueries';
 
 type ContactProps = {
   register: UseFormRegister<ContactFormInput>;
@@ -40,6 +41,14 @@ export const Contact = ({
         padding: 2.5rem 6.25rem 5rem 6.25rem;
         box-sizing: border-box;
         width: 100%;
+
+        ${maxScreen('lg')} {
+          padding: 2.5rem;
+        }
+
+        ${maxScreen('sm')} {
+          padding: 6.25rem 1rem;
+        }
       `}
     >
       <WhiteLergeTitle
@@ -56,8 +65,16 @@ export const Contact = ({
           box-sizing: border-box;
           margin: 2.5rem auto 0 auto;
           background-color: #fff;
-          border-radius: 50px;
+          border-radius: 3.125rem;
           padding: 3.125rem 12.5rem;
+
+          ${maxScreen('lg')} {
+            padding: 3.125rem 6rem;
+          }
+
+          ${maxScreen('sm')} {
+            padding: 3.125rem 3rem;
+          }
         `}
       >
         <AlertForError error={error} />

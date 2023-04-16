@@ -7,17 +7,20 @@ import { Woman } from 'src/components/atoms/Button/Icon/Woman';
 import { DarkMakeIT } from 'src/components/atoms/Logo/DarkMakeIT';
 import { WhiteNavigation } from 'src/components/molecules/user/WhiteNavigation';
 import { BlackNavigation } from 'src/components/molecules/user/BlackNavigation';
-import { WhiteGithubButton } from 'src/components/molecules/user/Button/WhiteGithubButton';
+import { WhiteRadiusGithubButton } from 'src/components/molecules/user/Button/WhiteRadiusGithubButton';
 import { BlackGithubButton } from 'src/components/molecules/user/Button/BlackGithubButton';
 import { Link } from 'react-router-dom';
 import { USER_ROUTE_PATH_MAP } from 'src/routes/routePath';
+import { CONSTANT_CONTACT_CATEGORIE } from '../../constants/ContactCategories';
 
 type HeaderProps = {
   isStartingLocationInThisPage: boolean;
 };
 
 export const Header = ({ isStartingLocationInThisPage }: HeaderProps) => {
-  const forStartingLocation = css``;
+  const forStartingLocation = css`
+    box-shadow: 0 4px 4px rgba(51, 51, 51, 0);
+  `;
   const forStartedLocation = css`
     background-color: #fff;
     box-shadow: 0 4px 4px rgba(51, 51, 51, 0.1);
@@ -44,7 +47,7 @@ export const Header = ({ isStartingLocationInThisPage }: HeaderProps) => {
             <WhiteMakeIT />
           </Link>
           <WhiteNavigation />
-          <WhiteGithubButton />
+          <WhiteRadiusGithubButton />
         </Flex>
 
         <Flex
@@ -54,14 +57,14 @@ export const Header = ({ isStartingLocationInThisPage }: HeaderProps) => {
           `}
         >
           <GradientButtonWithIconAndArrow
-            to={`${USER_ROUTE_PATH_MAP.TOP}#contact`}
+            to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.EXPERIENCE}#contact`}
             icon={<Man width='1.5rem' height='1.5rem' />}
             gradientType='greenToBlue'
           >
             体験入部
           </GradientButtonWithIconAndArrow>
           <GradientButtonWithIconAndArrow
-            to={`${USER_ROUTE_PATH_MAP.TOP}#contact`}
+            to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.PROJECT}#contact`}
             icon={<Woman width='1.5rem' height='1.5rem' />}
             gradientType='redToOrange'
           >
@@ -103,14 +106,14 @@ export const Header = ({ isStartingLocationInThisPage }: HeaderProps) => {
           `}
         >
           <GradientButtonWithIconAndArrow
-            to={`${USER_ROUTE_PATH_MAP.TOP}#contact`}
+            to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.EXPERIENCE}#contact`}
             icon={<Man width='1.5rem' height='1.5rem' />}
             gradientType='greenToBlue'
           >
             体験入部
           </GradientButtonWithIconAndArrow>
           <GradientButtonWithIconAndArrow
-            to={`${USER_ROUTE_PATH_MAP.TOP}#contact`}
+            to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.PROJECT}#contact`}
             icon={<Woman width='1.5rem' height='1.5rem' />}
             gradientType='redToOrange'
           >

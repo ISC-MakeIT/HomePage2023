@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Footer } from '../organisms/user/presentationalComponents/Footer';
 import { Top } from '../organisms/user/presentationalComponents/Top';
 import { MembersContainer } from '../organisms/user/containerComponents/MembersContainer';

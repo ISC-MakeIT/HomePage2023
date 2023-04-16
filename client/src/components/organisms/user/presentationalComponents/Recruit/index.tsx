@@ -2,6 +2,11 @@ import { css } from '@emotion/react';
 import { Man } from 'src/components/atoms/Button/Icon/Man';
 import { WhiteMakeIT } from 'src/components/atoms/Logo/WhiteMakeIT';
 import { GradientButtonWithIconAndArrow } from 'src/components/molecules/user/Button/GradientButtonWithIconAndArrow';
+import { USER_ROUTE_PATH_MAP } from 'src/routes/routePath';
+import { CONSTANT_CONTACT_CATEGORIE } from '../../constants/ContactCategories';
+import { WhiteMediumTitle } from 'src/components/atoms/Title/WhiteMediumTitle';
+import { WhiteMediumText } from 'src/components/atoms/Text/WhiteMediumText';
+import { maxScreen } from 'src/modules/helpers/mediaQueries';
 
 export const Recruit = () => {
   return (
@@ -14,57 +19,64 @@ export const Recruit = () => {
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 4.375rem 2.5rem;
+        gap: 2.5rem;
+
+        ${maxScreen('md')} {
+          flex-direction: column;
+        }
+
+        ${maxScreen('sm')} {
+          padding: 4.375rem 0.5rem;
+        }
       `}
     >
       <div
         css={css`
-          display: inline-block;
           width: 35%;
-          padding: 0 5rem;
         `}
       >
         <WhiteMakeIT />
       </div>
-      <div
+
+      <hr
         css={css`
           width: 0;
           height: 8.5rem;
           border: 0.125rem solid #ffffff;
           margin: 0;
+
+          ${maxScreen('md')} {
+            flex-direction: column;
+            width: 8.5rem;
+            height: 0;
+          }
         `}
-      ></div>
+      />
+
       <div
         css={css`
-          width: 65%;
-          color: #ffffff;
-          display: inline-block;
-          padding: 4.375rem 2.5rem;
+          color: #fff;
+          width: 90%;
         `}
       >
-        <h1
+        <div
           css={css`
-            font-size: 1.5rem;
-            font-weight: 700;
             text-align: center;
-            margin-bottom: 5rem;
           `}
         >
-          「Make IT」 はサークルメンバーを随時募集しています
-        </h1>
-        <p
-          css={css`
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 2em;
-          `}
-        >
+          <WhiteMediumTitle>「Make IT」 はサークルメンバーを随時募集しています</WhiteMediumTitle>
+        </div>
+
+        <WhiteMediumText>
           コードが書けないプログラミング初心者・経験が無いけど実現したいことがあるデザイナー、
           具体的にやりたいことは決まってないけれど、開発を始めてみたい方などなど... Make ITは年齢 / 性別 /
           やりたいこと問わず「ものづくり」に興味がある方なら誰でも歓迎しています。
           <br />
           まずは体験入部からMake ITがどんなサークルか知って貰いたいので少しでも興味がある方は気楽に連絡ください。
           説明会のみも受け付けています。
-        </p>
+        </WhiteMediumText>
+
         <div
           css={css`
             width: fit-content;
@@ -73,7 +85,7 @@ export const Recruit = () => {
           `}
         >
           <GradientButtonWithIconAndArrow
-            to='#'
+            to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.EXPERIENCE}#contact`}
             icon={<Man width='1.5rem' height='1.5rem' />}
             gradientType='greenToBlue'
           >
