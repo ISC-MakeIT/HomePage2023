@@ -7,6 +7,7 @@ export const TwitterLogo = () => {
       css={css`
         display: flex;
         align-items: center;
+        color: #333;
       `}
     >
       <div
@@ -16,11 +17,10 @@ export const TwitterLogo = () => {
           margin-right: 0.5rem;
         `}
       >
-        <Twitter />
+        <Twitter fill='#333' />
       </div>
       <p
         css={css`
-          color: #fff;
           font-size: 1.125rem;
           font-weight: bold;
         `}

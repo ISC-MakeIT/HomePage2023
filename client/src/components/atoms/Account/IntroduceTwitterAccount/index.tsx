@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { TwitterLogo } from 'src/components/atoms/IconWithTitle/Twitter';
-import { WhiteMediumText } from '../../Text/WhiteMediumText';
+import { BlackMediumText } from '../../Text/BlackMediumText';
 
 type IntroduceTwitterAccountProps = {
   children?: React.ReactNode;
@@ -21,7 +21,7 @@ export const IntroduceTwitterAccount = ({ children }: IntroduceTwitterAccountPro
       `}
     >
       <TwitterLogo />
-      <WhiteMediumText>{children}</WhiteMediumText>
+      <BlackMediumText>{children}</BlackMediumText>
     </div>
   );
 };
