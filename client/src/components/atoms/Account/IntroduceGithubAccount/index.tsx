@@ -17,7 +17,7 @@ export const IntroduceGithubAccount = ({ children }: IntroduceGithubAccountProps
         display: grid;
         justify-content: flex-start;
         align-items: center;
-        grid-template-columns: 140px 1fr;
+        grid-template-columns: 8.75rem 1fr;
       `}
     >
       <GithubLogo />

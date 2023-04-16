@@ -11,18 +11,18 @@ export const TwitterLogo = () => {
     >
       <div
         css={css`
-          width: 30px;
-          height: 23px;
-          margin-right: 8px;
+          width: 1.875rem;
+          height: 1.4375rem;
+          margin-right: 0.5rem;
         `}
       >
         <Twitter />
       </div>
       <p
         css={css`
-          color: #ffffff;
-          font-size: 18px;
-          font-weight: 700;
+          color: #fff;
+          font-size: 1.125rem;
+          font-weight: bold;
         `}
       >
         Twitter

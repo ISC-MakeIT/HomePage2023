@@ -87,7 +87,7 @@ export const Member = ({ backgroundColor, name, skill, icon, content }: MemberPr
           background-color: #ffffff;
           width: 90%;
           backface-visibility: hidden;
-          z-index: 2;
+          transform: translateZ(2);
           margin: 1.5rem auto;
           word-break: break-all;
           text-align: center;
