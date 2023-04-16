@@ -1,7 +1,7 @@
 import { Work as APIWork } from '@api/user/works';
 import { css } from '@emotion/react';
 import { Stack } from 'src/components/atoms/Layout/Stack';
-import { GreyMediumText } from 'src/components/atoms/Text/GreyMediumText';
+import { BlackMediumText } from 'src/components/atoms/Text/BlackMediumText';
 import { BlackLargeTitle } from 'src/components/atoms/Title/BlackLargeTitle';
 import { maxScreen } from 'src/modules/helpers/mediaQueries';
 
@@ -12,7 +12,7 @@ export const Work = ({ title, contents, thumbnail }: WorkProps) => {
     <div
       css={css`
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         gap: 7.5rem;
 
         ${maxScreen('sm')} {
@@ -55,7 +55,7 @@ export const Work = ({ title, contents, thumbnail }: WorkProps) => {
         spacing={'0.8rem'}
       >
         <BlackLargeTitle>{title}</BlackLargeTitle>
-        <GreyMediumText>{contents}</GreyMediumText>
+        <BlackMediumText>{contents}</BlackMediumText>
       </Stack>
     </div>
   );
