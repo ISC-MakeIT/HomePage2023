@@ -18,7 +18,7 @@ export const ToyBackGround = () => {
       <div
         css={css`
           position: absolute;
-          left: calc((100vw / 2) + 100px);
+          left: calc((100% / 2) + 100px);
           background-color: #f15b5b;
           top: 40px;
           opacity: 0.8;
@@ -30,7 +30,7 @@ export const ToyBackGround = () => {
       <div
         css={css`
           position: absolute;
-          left: calc((100vw / 2) + 50px);
+          left: calc((100% / 2) + 50px);
           top: 600px;
           opacity: 0.8;
           border-bottom: 50px solid #c1f15b;
@@ -61,7 +61,7 @@ export const ToyBackGround = () => {
         css={css`
           position: absolute;
           top: 400px;
-          left: calc(100vw - 300px);
+          left: calc(100% - 300px);
           transform: rotate(71.5deg);
           width: 0px;
           border-right: calc(50px * 3) solid transparent;

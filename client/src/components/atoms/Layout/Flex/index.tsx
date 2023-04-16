@@ -11,7 +11,7 @@ export const Flex = ({ spacing, children, style }: FlexProps) => {
     <div
       css={css`
         display: flex;
-        column-gap: ${spacing};
+        gap: ${spacing};
         ${style}
       `}
     >

@@ -1,20 +1,30 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Contact } from '../../presentationalComponents/Contact';
 import { ContactFormInput } from '../../types/ContactFormInput';
-import { CONTACT_CATEGORIES } from '../../constants/ContactCategories';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { apiContact } from '@api/user/contact';
 import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
+import { CONTACT_CATEGORIE, CONTACT_CATEGORIES_FOR_SELECT } from '../../constants/ContactCategories';
 
 export const ContactContainer = () => {
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<ContactFormInput>();
   const [error, setError] = useState<string>();
   const [success, setSuccess] = useState<string>();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.has('contactCategory')) {
+      const contactCategory = searchParams.get('contactCategory') as CONTACT_CATEGORIE;
+      setValue('category', contactCategory);
+    }
+  }, [searchParams]);
 
   const handleContact: SubmitHandler<ContactFormInput> = async (contactFormInput) => {
     try {
@@ -53,7 +63,7 @@ export const ContactContainer = () => {
       errors={errors}
       error={error}
       success={success}
-      contactCategories={CONTACT_CATEGORIES}
+      contactCategories={CONTACT_CATEGORIES_FOR_SELECT}
     />
   );
 };

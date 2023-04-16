@@ -4,10 +4,11 @@ import { css } from '@emotion/react';
 import { SectionTitle } from 'src/components/molecules/user/SectionTitle';
 import { USER_ROUTE_PATH_MAP } from 'src/routes/routePath';
 import { AccessToList } from 'src/components/molecules/user/Button/AccessToList';
+import { maxScreen } from 'src/modules/helpers/mediaQueries';
 
 type NotificationProps = APINotification;
 
-export const Notification = ({ title, contents, createdAt }: NotificationProps) => {
+export const Notification = ({ title, createdAt }: NotificationProps) => {
   return (
     <section id='notification'>
       <div
@@ -21,6 +22,10 @@ export const Notification = ({ title, contents, createdAt }: NotificationProps) 
             display: flex;
             justify-content: space-between;
             gap: 8rem;
+
+            ${maxScreen('lg')} {
+              display: block;
+            }
           `}
         >
           <SectionTitle

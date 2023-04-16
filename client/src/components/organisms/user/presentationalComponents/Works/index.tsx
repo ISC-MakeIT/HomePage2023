@@ -23,39 +23,35 @@ export const Works = ({ works }: WorksProps) => {
             css={css`
               z-index: 2;
               position: relative;
+              width: 90%;
+              margin: 0 auto;
             `}
           >
             <Work {...work} />
           </div>
 
-          <div
-            css={css`
-              z-index: 1;
-            `}
-          >
-            <ToyBackGround />
-          </div>
+          <ToyBackGround />
         </div>
       ))}
     </>
   );
 
   return (
-    <div
-      css={css`
-        width: 100vw;
+    <Stack
+      spacing='5rem'
+      style={css`
+        width: 100%;
       `}
     >
-      <Stack
-        spacing='5rem'
-        style={css`
-          width: 90%;
+      <div
+        css={css`
           margin: 0 auto;
+          width: 90%;
         `}
       >
         <SectionTitle title='実績情報' description='今までに出場した大会や案件を行った一覧です。' />
-        <WorkList />
-      </Stack>
-    </div>
+      </div>
+      <WorkList />
+    </Stack>
   );
 };

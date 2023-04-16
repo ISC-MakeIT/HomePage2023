@@ -1,7 +1,9 @@
 import { css } from '@emotion/react';
+import { Flex } from 'src/components/atoms/Layout/Flex';
 import { GreyMediumText } from 'src/components/atoms/Text/GreyMediumText';
-import { RedBoldText } from 'src/components/atoms/Text/RedBoldText';
-import { WhiteBoldText } from 'src/components/atoms/Text/WhiteBoldText';
+import { RedMediumBoldText } from 'src/components/atoms/Text/RedMediumBoldText';
+import { WhiteMediumBoldText } from 'src/components/atoms/Text/WhiteMediumBoldText';
+import { maxScreen } from 'src/modules/helpers/mediaQueries';
 
 type NotificationProps = {
   title: string;
@@ -12,36 +14,47 @@ export const Notification = ({ title, createdAt }: NotificationProps) => {
   return (
     <div
       css={css`
-        background-color: white;
-        height: 2.5rem;
+        background-color: #fff;
         border-radius: 1.25rem;
         padding: 1rem 3rem;
         display: flex;
         align-items: center;
         margin-bottom: 1.5rem;
         column-gap: 2rem;
+
+        ${maxScreen(440)} {
+          display: block;
+        }
       `}
     >
-      <GreyMediumText>{createdAt}</GreyMediumText>
-
-      <div
-        css={css`
-          background-color: #fa5d36;
-          height: 1.5rem;
-          border-radius: 1.25rem;
-          padding: 0.5rem 2rem;
-          font-weight: 400;
-          margin-right: 1rem;
-          flex-grow: 0;
-          display: flex;
+      <Flex
+        spacing='2rem'
+        style={css`
           align-items: center;
-          justify-content: center;
         `}
       >
-        <WhiteBoldText>お知らせ</WhiteBoldText>
-      </div>
+        <GreyMediumText>{createdAt}</GreyMediumText>
 
-      <RedBoldText>{title}</RedBoldText>
+        <div
+          css={css`
+            background-color: #fa5d36;
+            height: 1.5rem;
+            border-radius: 1.25rem;
+            padding: 0.5rem 2rem;
+            font-weight: 400;
+            margin-right: 1rem;
+            flex-grow: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 5rem;
+          `}
+        >
+          <WhiteMediumBoldText>お知らせ</WhiteMediumBoldText>
+        </div>
+      </Flex>
+
+      <RedMediumBoldText>{title}</RedMediumBoldText>
     </div>
   );
 };

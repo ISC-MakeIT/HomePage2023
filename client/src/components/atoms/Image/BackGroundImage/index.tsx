@@ -14,6 +14,7 @@ export const BackGroundImage = ({ width, height, image }: BackGroundImageProps) 
         height: ${height};
         background-image: url(${image});
         background-size: cover;
+        background-position: center;
       `}
     />
   );

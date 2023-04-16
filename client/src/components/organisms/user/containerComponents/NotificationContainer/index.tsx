@@ -30,6 +30,7 @@ const getSubstringByByte = (str: string, startByte: number, byteLength: number) 
     currentByte += charByteSize;
 
     if (isByteLengthExceeded(currentByte, startByte, byteLength)) {
+      result += '...';
       break;
     }
   }
