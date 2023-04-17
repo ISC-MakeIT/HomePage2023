@@ -29,7 +29,7 @@ class ContactController extends Controller {
             $recipientEmails = ['makeit@gn.iwasaki.ac.jp'];
 
             $subject       = 'お問い合わせが届きました。';
-            $plaintextBody = 'このメールは確認必須です。' ;
+            $plaintextBody = 'このメールは必ず確認してください。' ;
 
             $email     = $validatedRequest['email'];
             $name      = $validatedRequest['name'];
@@ -48,36 +48,45 @@ class ContactController extends Controller {
                 return response()->json(['message' => 'お問い合わせに失敗しました。時間を置いてからもう一度お試しください。']);
             }
 
-            // $recipientEmails = [$validatedRequest['email']];
+            $recipientEmails = [$validatedRequest['email']];
 
-            // $subject       = '【MakeIT】お問い合わせありがとうございます';
-            // $plaintextBody = '【MakeIT】お問い合わせありがとうございます';
+            $subject       = '【MakeIT】お問い合わせありがとうございます';
+            $plaintextBody = '【MakeIT】お問い合わせありがとうございます';
 
-            // $htmlBody = <<< "EOM"
-            // ※このメールはシステムからの自動返信です
+            $htmlBody = <<< "EOM"
+            <p>※このメールはシステムからの自動返信です<br/></p>
 
-            // お名前(ニックネーム可): {$name}
-            // MekeIT にご興味をお持ちいただきありがとうございます。
-            // 以下の内容でお問い合わせを承りました。
+            <p>
+            MekeIT にご興味をお持ちいただきありがとうございます。<br/>
+            以下の内容でお問い合わせを承りました。<br/>
+            </p>
 
-            // お問い合わせカテゴリ: {$category}
+            <p>
+            ===============================================================<br/>
+            お名前(ニックネーム可): {$name}<br/>
+            お問い合わせカテゴリ: {$category}<br/>
+            メールアドレス: {$email}<br/>
+            ===============================================================<br/>
+            </p>
 
-            // 担当者が内容を確認し、返信させていただきます。
-            // 今しばらくお待ちください。
+            <p>
+            担当者が内容を確認し、返信させていただきます。<br/>
+            今しばらくお待ちください。<br/>
+            </p>
 
-            // 何かご不明な点がございましたら、お気軽にお問い合わせください。
+            <p>何かご不明な点がございましたら、お気軽にお問い合わせください。<br/></p>
 
-            // MekeIT
-            // EOM;
+            <p>MekeIT</p>
+            EOM;
 
             $errorMessage = '';
 
-            // try {
-            //     $this->mailHelper->sendMail($recipientEmails, $subject, $plaintextBody, $htmlBody);
-            // } catch (AwsException $e) {
-            //     $errorMessage = "お問い合わせ確認メールを送信できませんでした。\n※お問い合わせメールは、MakeITメールアドレス宛に届いています。";
-            //     logs()->error($errorMessage);
-            // }
+            try {
+                $this->mailHelper->sendMail($recipientEmails, $subject, $plaintextBody, $htmlBody);
+            } catch (AwsException $e) {
+                $errorMessage = "お問い合わせ確認メールを送信できませんでした。\n※お問い合わせメールは、MakeITメールアドレス宛に届いています。";
+                logs()->error($errorMessage);
+            }
 
             $message = <<< "EOM"
             ```
