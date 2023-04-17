@@ -14,20 +14,20 @@ export const AccessToList = ({ to }: AccessToListProps) => {
         justify-content: right;
       `}
     >
-      <Link
-        href={to}
-        css={css`
-          font-size: 1rem;
-          line-height: 1.5rem;
-          font-weight: bold;
-          color: #ff8567;
-          display: flex;
-        `}
-      >
-        <>
+      <Link href={to}>
+        <a
+          css={css`
+            font-size: 1rem;
+            line-height: 1.5rem;
+            font-weight: bold;
+            color: #ff8567;
+            display: flex;
+          `}
+          href={to}
+        >
           一覧で見る
           <Arrow color='#ff8567' />
-        </>
+        </a>
       </Link>
     </div>
   );

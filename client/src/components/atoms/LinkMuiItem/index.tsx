@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 type LinkMenuItemProps = Omit<MenuItemProps<'a', { href: string }>, 'component' | 'button'>;
 
-const LinkMenuItem = React.forwardRef<HTMLAnchorElement, LinkMenuItemProps>((props, forwardedRef) => {
+export const LinkMenuItem = React.forwardRef<HTMLAnchorElement, LinkMenuItemProps>((props, forwardedRef) => {
   const { href, ...other } = props;
 
   return (

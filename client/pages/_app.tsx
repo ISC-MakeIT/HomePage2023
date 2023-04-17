@@ -7,6 +7,7 @@ import { persistStore } from 'redux-persist';
 import { AlertProvider } from '@src/app/providers/AlertProvider';
 import { ProcessingLineProvider } from '@src/app/providers/ProcessingLineProvider';
 import type { AppProps } from 'next/app';
+import { OnlyLoggedInMemberMiddleware } from '@src/app/middlewares/OnlyLoggedInMemberMiddleware';
 
 const persistor = persistStore(store);
 
@@ -16,7 +17,10 @@ function App({ Component, pageProps }: AppProps) {
       <PersistGate loading={null} persistor={persistor}>
         <AlertProvider>
           <ProcessingLineProvider>
-            <Component {...pageProps} />
+            <>
+              <OnlyLoggedInMemberMiddleware />
+              <Component {...pageProps} />
+            </>
           </ProcessingLineProvider>
         </AlertProvider>
       </PersistGate>

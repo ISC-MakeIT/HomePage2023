@@ -42,17 +42,19 @@ export const NotificationList = ({ notificationList }: NotificaitonListProps) =>
     return (
       <>
         {notificationList.map((notification) => (
-          <TableRow
-            component={Link}
-            href={`${ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS}/${notification.notificationId}`}
+          <Link
             key={notification.notificationId}
-            sx={{
-              backgroundColor: getRowBackgroudColorBy(notification.isActive),
-              textDecoration: 'none',
-            }}
-            hover
+            href={`${ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS}/${notification.notificationId}`}
           >
-            <a href={`${ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS}/${notification.notificationId}`}>
+            <TableRow
+              component='a'
+              href={`${ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS}/${notification.notificationId}`}
+              sx={{
+                backgroundColor: getRowBackgroudColorBy(notification.isActive),
+                textDecoration: 'none',
+              }}
+              hover
+            >
               <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
                 {getNotificationActivityStateBy(notification.isActive)}
               </TableCell>
@@ -65,8 +67,8 @@ export const NotificationList = ({ notificationList }: NotificaitonListProps) =>
               </TableCell>
               <TableCell>{getDateFormatFrom(notification.createdAt)}</TableCell>
               <TableCell>{getDateFormatFrom(notification.updatedAt)}</TableCell>
-            </a>
-          </TableRow>
+            </TableRow>
+          </Link>
         ))}
       </>
     );

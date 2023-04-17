@@ -11,11 +11,15 @@ export const OnlyLoggedInMemberMiddleware = () => {
   const alert = useAlert();
 
   useEffect(() => {
+    const includeAdminPathNameInUrl = () => {
+      return router.pathname.includes('/admin');
+    };
+
     const userTokenIsEmpty = () => {
       return userToken === '';
     };
 
-    if (userTokenIsEmpty()) {
+    if (includeAdminPathNameInUrl() && userTokenIsEmpty()) {
       alert.delayShow(
         {
           type: 'error',

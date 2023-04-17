@@ -44,17 +44,16 @@ export const WorkList = ({ workList, error }: WorkListProps) => {
     return (
       <>
         {workList.map((work) => (
-          <TableRow
-            component={Link}
-            href={`${ADMIN_ROUTE_FULL_PATH_MAP.WORKS}/${work.workId}`}
-            key={work.workId}
-            sx={{
-              backgroundColor: getRowBackgroudColorBy(work.isActive),
-              textDecoration: 'none',
-            }}
-            hover
-          >
-            <a href={`${ADMIN_ROUTE_FULL_PATH_MAP.WORKS}/${work.workId}`}>
+          <Link key={work.workId} href={`${ADMIN_ROUTE_FULL_PATH_MAP.WORKS}/${work.workId}`}>
+            <TableRow
+              component='a'
+              href={`${ADMIN_ROUTE_FULL_PATH_MAP.WORKS}/${work.workId}`}
+              sx={{
+                backgroundColor: getRowBackgroudColorBy(work.isActive),
+                textDecoration: 'none',
+              }}
+              hover
+            >
               <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
                 {getNotificationActivityStateBy(work.isActive)}
               </TableCell>
@@ -67,8 +66,8 @@ export const WorkList = ({ workList, error }: WorkListProps) => {
               </TableCell>
               <TableCell>{getDateFormatFrom(work.createdAt)}</TableCell>
               <TableCell>{getDateFormatFrom(work.updatedAt)}</TableCell>
-            </a>
-          </TableRow>
+            </TableRow>
+          </Link>
         ))}
       </>
     );

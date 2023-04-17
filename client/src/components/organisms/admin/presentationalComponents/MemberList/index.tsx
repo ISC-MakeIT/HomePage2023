@@ -46,18 +46,17 @@ export const MemberList = ({ memberList, error }: MemberListProps) => {
     return (
       <>
         {memberList.map((member) => (
-          <TableRow
-            component={Link}
-            href={`${ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS}/${member.memberId}`}
-            key={member.memberId}
-            css={css`
-              background-color: ${getRowBackgroudColorBy(member.isActive)};
-              text-decoration: none;
-            `}
-            hover
-          >
-            <a href={`${ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS}/${member.memberId}`}>
-              <TableCell sx={{ maxWidth: '15rem' }}>{getMemberActivityStateBy(member.isActive)}</TableCell>
+          <Link key={member.memberId} href={`${ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS}/${member.memberId}`}>
+            <TableRow
+              component='a'
+              href={`${ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS}/${member.memberId}`}
+              css={css`
+                background-color: ${getRowBackgroudColorBy(member.isActive)};
+                text-decoration: none;
+              `}
+              hover
+            >
+              <TableCell sx={{ minWidth: '15rem' }}>{getMemberActivityStateBy(member.isActive)}</TableCell>
               <TableCell>{member.roleName}</TableCell>
               <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
                 {member.name}
@@ -75,8 +74,8 @@ export const MemberList = ({ memberList, error }: MemberListProps) => {
               <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '15rem' }}>
                 {member.description}
               </TableCell>
-            </a>
-          </TableRow>
+            </TableRow>
+          </Link>
         ))}
       </>
     );

@@ -5,7 +5,6 @@ import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';

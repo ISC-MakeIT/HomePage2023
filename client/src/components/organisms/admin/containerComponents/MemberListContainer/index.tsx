@@ -3,14 +3,12 @@ import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { MemberList } from '../../presentationalComponents/MemberList';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 
 export const MemberListContainer = () => {
   const [memberList, setMemberList] = useState<Member[]>([]);
   const [error, setError] = useState<string>();
-  const state: { refresh?: boolean } = useLocation().state;
   const proccessingLine = useProcessingLine();
 
   const userToken = useAppSelector(selectUserToken);
@@ -59,7 +57,7 @@ export const MemberListContainer = () => {
     };
 
     main();
-  }, [state]);
+  }, []);
 
   return <MemberList memberList={memberList} error={error} />;
 };
