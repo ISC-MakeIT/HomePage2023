@@ -18,7 +18,6 @@ import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { Modal } from 'src/components/molecules/admin/Modal';
 import { Work } from '@api/admin/works/work';
 import { ChangeEventHandler, useRef } from 'react';
-import { Link } from 'react-router-dom';
 
 type EditWorkModalProps = {
   isActive: boolean;
@@ -86,7 +85,7 @@ export const EditWorkModal = ({
         <Stack component='form' onSubmit={handleSubmit(handleEditWork)} spacing={4}>
           <Stack flexDirection={'row'} columnGap={2}>
             <Stack spacing={1.5}>
-              <Link target='_blank' to={picture ?? work.thumbnail}>
+              <a target='_blank' href={picture ?? work.thumbnail} rel='noreferrer'>
                 <Box
                   sx={{
                     width: 300,
@@ -97,7 +96,7 @@ export const EditWorkModal = ({
                     backgroundImage: `url(${picture ?? work.thumbnail})`,
                   }}
                 />
-              </Link>
+              </a>
 
               <Button
                 onClick={() => inputForFileUpload.current!.click()}

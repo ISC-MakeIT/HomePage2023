@@ -3,11 +3,11 @@ import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { DeleteResponse } from 'src/api/homePage/api/admin/members';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { DeleteMemberModel } from '../../presentationalComponents/DeleteMemberModel';
+import { useRouter } from 'next/router';
 
 type DeleteMemberModelContainerProps = {
   memberId: number;
@@ -18,7 +18,7 @@ export const DeleteMemberModelContainer = ({ memberId }: DeleteMemberModelContai
   const [error, setError] = useState<string>();
   const userToken = useAppSelector(selectUserToken);
   const alert = useAlert();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleDeleteMember = async () => {
     try {
@@ -27,7 +27,7 @@ export const DeleteMemberModelContainer = ({ memberId }: DeleteMemberModelContai
         type: 'success',
         content: response.message!,
       });
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS);
+      router.push(ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const status = e.response!.status;

@@ -1,7 +1,7 @@
 import { Member as APIMember } from '@api/admin/members';
 import { faDiscord, faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Avatar, LinearProgress, Stack } from '@mui/joy';
+import { Avatar, Stack } from '@mui/joy';
 import { Box, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';

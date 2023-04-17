@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { faBars, faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Flex } from 'src/components/atoms/Layout/Flex';
 import { DarkMakeIT } from 'src/components/atoms/Logo/DarkMakeIT';
 import { WhiteMakeIT } from 'src/components/atoms/Logo/WhiteMakeIT';
@@ -67,7 +67,7 @@ export const HeaderForMobile = ({ isOpenedMenu, handleClose, handleOpen }: Heade
         />
 
         <Link
-          to={USER_ROUTE_PATH_MAP.TOP}
+          href={USER_ROUTE_PATH_MAP.TOP}
           css={css`
             width: 7.18rem;
             &:hover {
@@ -137,7 +137,7 @@ export const HeaderForMobile = ({ isOpenedMenu, handleClose, handleOpen }: Heade
           `}
         >
           <Link
-            to={USER_ROUTE_PATH_MAP.TOP}
+            href={USER_ROUTE_PATH_MAP.TOP}
             css={css`
               &:hover {
                 cursor: pointer;
@@ -185,7 +185,7 @@ export const HeaderForMobile = ({ isOpenedMenu, handleClose, handleOpen }: Heade
             {navigationList.map((navigation, index) => (
               <li key={index} onClick={handleClose}>
                 <Link
-                  to={navigation.to}
+                  href={navigation.to}
                   css={css`
                     display: block;
                     text-decoration: none;

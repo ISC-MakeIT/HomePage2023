@@ -9,7 +9,7 @@ import { WhiteNavigation } from 'src/components/molecules/user/WhiteNavigation';
 import { BlackNavigation } from 'src/components/molecules/user/BlackNavigation';
 import { WhiteRadiusGithubButton } from 'src/components/molecules/user/Button/WhiteRadiusGithubButton';
 import { BlackGithubButton } from 'src/components/molecules/user/Button/BlackGithubButton';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { USER_ROUTE_PATH_MAP } from 'src/routes/routePath';
 import { CONSTANT_CONTACT_CATEGORIE } from '../../constants/ContactCategories';
 
@@ -35,16 +35,18 @@ export const Header = ({ isStartingLocationInThisPage }: HeaderProps) => {
             align-items: center;
           `}
         >
-          <Link
-            to={USER_ROUTE_PATH_MAP.TOP}
-            css={css`
-              width: 7.18rem;
-              &:hover {
-                cursor: pointer;
-              }
-            `}
-          >
-            <WhiteMakeIT />
+          <Link href={USER_ROUTE_PATH_MAP.TOP}>
+            <a
+              href={USER_ROUTE_PATH_MAP.TOP}
+              css={css`
+                width: 7.18rem;
+                &:hover {
+                  cursor: pointer;
+                }
+              `}
+            >
+              <WhiteMakeIT />
+            </a>
           </Link>
           <WhiteNavigation />
           <WhiteRadiusGithubButton />
@@ -84,16 +86,18 @@ export const Header = ({ isStartingLocationInThisPage }: HeaderProps) => {
             align-items: center;
           `}
         >
-          <Link
-            to={USER_ROUTE_PATH_MAP.TOP}
-            css={css`
-              width: 7.18rem;
-              &:hover {
-                cursor: pointer;
-              }
-            `}
-          >
-            <DarkMakeIT />
+          <Link href={USER_ROUTE_PATH_MAP.TOP}>
+            <a
+              href={USER_ROUTE_PATH_MAP.TOP}
+              css={css`
+                width: 7.18rem;
+                &:hover {
+                  cursor: pointer;
+                }
+              `}
+            >
+              <DarkMakeIT />
+            </a>
           </Link>
           <BlackNavigation />
           <BlackGithubButton />

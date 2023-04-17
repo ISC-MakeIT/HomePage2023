@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Notification } from 'src/api/homePage/api/admin/notifications';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
@@ -42,29 +42,33 @@ export const NotificationList = ({ notificationList }: NotificaitonListProps) =>
     return (
       <>
         {notificationList.map((notification) => (
-          <TableRow
-            component={Link}
-            to={`${ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS}/${notification.notificationId}`}
+          <Link
             key={notification.notificationId}
-            sx={{
-              backgroundColor: getRowBackgroudColorBy(notification.isActive),
-              textDecoration: 'none',
-            }}
-            hover
+            href={`${ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS}/${notification.notificationId}`}
           >
-            <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
-              {getNotificationActivityStateBy(notification.isActive)}
-            </TableCell>
-            <TableCell>{notification.notificationId}</TableCell>
-            <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '15rem' }}>
-              {notification.title}
-            </TableCell>
-            <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '15rem' }}>
-              {notification.contents}
-            </TableCell>
-            <TableCell>{getDateFormatFrom(notification.createdAt)}</TableCell>
-            <TableCell>{getDateFormatFrom(notification.updatedAt)}</TableCell>
-          </TableRow>
+            <TableRow
+              component='a'
+              href={`${ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS}/${notification.notificationId}`}
+              sx={{
+                backgroundColor: getRowBackgroudColorBy(notification.isActive),
+                textDecoration: 'none',
+              }}
+              hover
+            >
+              <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
+                {getNotificationActivityStateBy(notification.isActive)}
+              </TableCell>
+              <TableCell>{notification.notificationId}</TableCell>
+              <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '15rem' }}>
+                {notification.title}
+              </TableCell>
+              <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '15rem' }}>
+                {notification.contents}
+              </TableCell>
+              <TableCell>{getDateFormatFrom(notification.createdAt)}</TableCell>
+              <TableCell>{getDateFormatFrom(notification.updatedAt)}</TableCell>
+            </TableRow>
+          </Link>
         ))}
       </>
     );

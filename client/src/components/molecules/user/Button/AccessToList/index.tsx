@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
 
 type AccessToListProps = {
@@ -14,18 +14,20 @@ export const AccessToList = ({ to }: AccessToListProps) => {
         justify-content: right;
       `}
     >
-      <Link
-        to={to}
-        css={css`
-          font-size: 1rem;
-          line-height: 1.5rem;
-          font-weight: bold;
-          color: #ff8567;
-          display: flex;
-        `}
-      >
-        一覧で見る
-        <Arrow color='#ff8567' />
+      <Link href={to}>
+        <a
+          css={css`
+            font-size: 1rem;
+            line-height: 1.5rem;
+            font-weight: bold;
+            color: #ff8567;
+            display: flex;
+          `}
+          href={to}
+        >
+          一覧で見る
+          <Arrow color='#ff8567' />
+        </a>
       </Link>
     </div>
   );

@@ -1,62 +1,55 @@
-import { Divider, ListItemText, MenuItem } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
+import { Divider, ListItemText } from '@mui/material';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from '../../../../../routes/routePath';
 import { MenuItemWrapper } from '../../../../molecules/admin/MenuItemWrapper';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { LinkMenuItem } from '@src/components/atoms/LinkMuiItem';
 
 export const LoggedInMenu = () => {
-  const location = useLocation();
+  const router = useRouter();
 
   return (
     <MenuItemWrapper sx={{ width: '100%', height: '100vh', position: 'sticky', top: 0, left: 0 }}>
-      <MenuItem
-        selected={location.pathname === ADMIN_ROUTE_FULL_PATH_MAP.TOP}
-        component={Link}
-        to={ADMIN_ROUTE_FULL_PATH_MAP.TOP}
-      >
+      <LinkMenuItem selected={router.pathname === ADMIN_ROUTE_FULL_PATH_MAP.TOP} href={ADMIN_ROUTE_FULL_PATH_MAP.TOP}>
         <ListItemText>トップ</ListItemText>
-      </MenuItem>
+      </LinkMenuItem>
 
-      <MenuItem
-        selected={location.pathname === ADMIN_ROUTE_FULL_PATH_MAP.MYPAGE}
-        component={Link}
-        to={ADMIN_ROUTE_FULL_PATH_MAP.MYPAGE}
+      <LinkMenuItem
+        selected={router.pathname === ADMIN_ROUTE_FULL_PATH_MAP.MYPAGE}
+        href={ADMIN_ROUTE_FULL_PATH_MAP.MYPAGE}
       >
         <ListItemText>マイページ</ListItemText>
-      </MenuItem>
+      </LinkMenuItem>
 
-      <MenuItem
-        selected={location.pathname === ADMIN_ROUTE_FULL_PATH_MAP.WORKS}
-        component={Link}
-        to={ADMIN_ROUTE_FULL_PATH_MAP.WORKS}
+      <LinkMenuItem
+        selected={router.pathname === ADMIN_ROUTE_FULL_PATH_MAP.WORKS}
+        href={ADMIN_ROUTE_FULL_PATH_MAP.WORKS}
       >
         <ListItemText>活動実績 一覧</ListItemText>
-      </MenuItem>
+      </LinkMenuItem>
 
-      <MenuItem
-        selected={location.pathname === ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS}
-        component={Link}
-        to={ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS}
+      <LinkMenuItem
+        selected={router.pathname === ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS}
+        href={ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS}
       >
         <ListItemText>お知らせ 一覧</ListItemText>
-      </MenuItem>
+      </LinkMenuItem>
 
-      <MenuItem
-        selected={location.pathname === ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS}
-        component={Link}
-        to={ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS}
+      <LinkMenuItem
+        selected={router.pathname === ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS}
+        href={ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS}
       >
         <ListItemText>メンバー 一覧</ListItemText>
-      </MenuItem>
+      </LinkMenuItem>
 
       <Divider />
 
-      <MenuItem
-        selected={location.pathname === ADMIN_ROUTE_FULL_PATH_MAP.LOGOUT}
-        component={Link}
-        to={ADMIN_ROUTE_FULL_PATH_MAP.LOGOUT}
+      <LinkMenuItem
+        selected={router.pathname === ADMIN_ROUTE_FULL_PATH_MAP.LOGOUT}
+        href={ADMIN_ROUTE_FULL_PATH_MAP.LOGOUT}
       >
         <ListItemText>ログアウト</ListItemText>
-      </MenuItem>
+      </LinkMenuItem>
     </MenuItemWrapper>
   );
 };

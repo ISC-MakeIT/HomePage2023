@@ -3,7 +3,7 @@
 main() {
     yarn
     cp .env.example .env
-    yarn start
+    yarn dev
 }
 
 main
