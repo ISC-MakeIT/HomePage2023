@@ -29,7 +29,7 @@ class ContactController extends Controller {
             $recipientEmails = ['makeit@gn.iwasaki.ac.jp'];
 
             $subject       = 'お問い合わせが届きました。';
-            $plaintextBody = 'このメールは確認必須です。' ;
+            $plaintextBody = 'このメールは必ず確認してください。' ;
 
             $email     = $validatedRequest['email'];
             $name      = $validatedRequest['name'];
