@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { WhiteGithub } from '../../Button/Icon/WhiteGithub';
+import { BlackGithub } from '../../Button/Icon/BlackGithub';
 
 export const GithubLogo = () => {
   return (
@@ -7,22 +7,22 @@ export const GithubLogo = () => {
       css={css`
         display: flex;
         align-items: center;
+        color: #333;
       `}
     >
       <div
         css={css`
-          width: 30px;
-          height: 23px;
-          margin-right: 8px;
+          width: 1.875rem;
+          height: 1.4375rem;
+          margin-right: 0.5rem;
         `}
       >
-        <WhiteGithub />
+        <BlackGithub />
       </div>
       <p
         css={css`
-          color: #ffffff;
-          font-size: 18px;
-          font-weight: 700;
+          font-size: 1.125rem;
+          font-weight: bold;
         `}
       >
         Github

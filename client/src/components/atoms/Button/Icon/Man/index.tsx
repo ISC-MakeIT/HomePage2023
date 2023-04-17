@@ -1,4 +1,3 @@
-import { css } from '@emotion/react';
 import { SVGProps } from 'react';
 
 export const Man = (props: SVGProps<SVGSVGElement>) => {

@@ -58,6 +58,16 @@ export const Top = () => {
           <div
             css={css`
               width: 50%;
+
+              ${maxScreen('lg')} {
+                width: 60%;
+              }
+              ${maxScreen('md')} {
+                width: 70%;
+              }
+              ${maxScreen('sm')} {
+                width: 80%;
+              }
             `}
           >
             <WhiteMakeIT />

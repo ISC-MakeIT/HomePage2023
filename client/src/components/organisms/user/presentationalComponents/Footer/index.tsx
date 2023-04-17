@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
 import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
 import { WhiteButton } from 'src/components/atoms/Button/WhiteButton';
 import { Flex } from 'src/components/atoms/Layout/Flex';
@@ -7,6 +8,9 @@ import { WhiteLergeText } from 'src/components/atoms/Text/WhiteLergeText';
 import { WhiteMediumBoldText } from 'src/components/atoms/Text/WhiteMediumBoldText';
 import { WhiteMediumText } from 'src/components/atoms/Text/WhiteMediumText';
 import { maxScreen } from 'src/modules/helpers/mediaQueries';
+import { USER_ROUTE_PATH_MAP } from 'src/routes/routePath';
+import { CONSTANT_CONTACT_CATEGORIE } from '../../constants/ContactCategories';
+import { NoDecorationLink } from 'src/components/atoms/Anchor/NoDecorationLink';
 
 export const Footer = () => {
   const links = [
@@ -103,28 +107,45 @@ export const Footer = () => {
                 row-gap: 1.75rem;
               `}
             >
-              <WhiteMediumText>MakeITについて</WhiteMediumText>
-              <WhiteMediumText>新着情報</WhiteMediumText>
-              <WhiteMediumText>案件依頼・お問い合わせ</WhiteMediumText>
-              <WhiteMediumText>体験入部</WhiteMediumText>
-              <WhiteMediumText>実績</WhiteMediumText>
-              <WhiteButton
-                style={css`
-                  width: 9.5rem;
-                `}
+              <NoDecorationLink to={`${USER_ROUTE_PATH_MAP.TOP}#about`}>
+                <WhiteMediumText>MakeITについて</WhiteMediumText>
+              </NoDecorationLink>
+              <NoDecorationLink to={`${USER_ROUTE_PATH_MAP.TOP}#notification`}>
+                <WhiteMediumText>新着情報</WhiteMediumText>
+              </NoDecorationLink>
+              <NoDecorationLink
+                to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.EXPERIENCE}#contact`}
               >
-                <WhiteMediumText>実績一覧</WhiteMediumText>
-                <Arrow color='#fff' />
-              </WhiteButton>
-              <WhiteMediumText>メンバー紹介</WhiteMediumText>
-              <WhiteButton
-                style={css`
-                  width: 12rem;
-                `}
+                <WhiteMediumText>体験入部</WhiteMediumText>
+              </NoDecorationLink>
+
+              <NoDecorationLink to={USER_ROUTE_PATH_MAP.WORKS}>
+                <WhiteButton
+                  style={css`
+                    width: 9.5rem;
+                  `}
+                >
+                  <WhiteMediumText>実績一覧</WhiteMediumText>
+                  <Arrow color='#fff' />
+                </WhiteButton>
+              </NoDecorationLink>
+
+              <NoDecorationLink
+                to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.PROJECT}#contact`}
               >
-                <WhiteMediumText>メンバー 一覧</WhiteMediumText>
-                <Arrow color='#fff' />
-              </WhiteButton>
+                <WhiteMediumText>案件依頼・お問い合わせ</WhiteMediumText>
+              </NoDecorationLink>
+
+              <NoDecorationLink to={`${USER_ROUTE_PATH_MAP.TOP}#members`}>
+                <WhiteButton
+                  style={css`
+                    width: 12rem;
+                  `}
+                >
+                  <WhiteMediumText>メンバー紹介</WhiteMediumText>
+                  <Arrow color='#fff' />
+                </WhiteButton>
+              </NoDecorationLink>
             </div>
 
             <hr

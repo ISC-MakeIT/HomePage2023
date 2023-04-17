@@ -182,8 +182,8 @@ export const HeaderForMobile = ({ isOpenedMenu, handleClose, handleOpen }: Heade
               padding: 0;
             `}
           >
-            {navigationList.map((navigation) => (
-              <li onClick={handleClose}>
+            {navigationList.map((navigation, index) => (
+              <li key={index} onClick={handleClose}>
                 <Link
                   to={navigation.to}
                   css={css`

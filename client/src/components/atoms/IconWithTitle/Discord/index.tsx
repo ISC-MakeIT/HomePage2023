@@ -7,22 +7,22 @@ export const DiscordLogo = () => {
       css={css`
         display: flex;
         align-items: center;
+        color: #333;
       `}
     >
       <div
         css={css`
-          width: 30px;
-          height: 23px;
-          margin-right: 8px;
+          width: 1.875rem;
+          height: 1.4375rem;
+          margin-right: 0.5rem;
         `}
       >
-        <Discord />
+        <Discord fill='#333' />
       </div>
       <p
         css={css`
-          color: #ffffff;
-          font-size: 18px;
-          font-weight: 700;
+          font-size: 1.125rem;
+          font-weight: bold;
         `}
       >
         Discord
