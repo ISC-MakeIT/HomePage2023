@@ -7,12 +7,12 @@ import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { EditMember } from '../../presentationalComponents/EditMember';
 import { EditMemberFormInput } from '../../types/EditMemberFormInput';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
-import { useRouter } from 'next/router';
 
 type EditMemberContainerProps = {
   memberId: number;
@@ -26,7 +26,7 @@ export const EditMemberContainer = ({ memberId }: EditMemberContainerProps) => {
   const userToken = useAppSelector(selectUserToken);
 
   const alert = useAlert();
-  const router = useRouter();
+  const navigate = useNavigate();
   const processingLine = useProcessingLine();
 
   useEffect(() => {
@@ -99,7 +99,7 @@ export const EditMemberContainer = ({ memberId }: EditMemberContainerProps) => {
         content: changeRoleResponse.message!,
       });
 
-      router.push(ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS);
+      navigate(ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const responseData = e.response!.data;
@@ -110,7 +110,7 @@ export const EditMemberContainer = ({ memberId }: EditMemberContainerProps) => {
             type: 'error',
             content: responseData.message!,
           });
-          router.push(ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS);
+          navigate(ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS);
           return;
         }
 

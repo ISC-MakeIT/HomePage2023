@@ -1,6 +1,7 @@
 import { Role } from '@api/admin/members/roles';
 import { faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Textarea } from '@mui/joy';
 import {
   Box,
   Button,

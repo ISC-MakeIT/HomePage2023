@@ -2,7 +2,7 @@ import { Work } from '@api/admin/works';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 
@@ -44,30 +44,29 @@ export const WorkList = ({ workList, error }: WorkListProps) => {
     return (
       <>
         {workList.map((work) => (
-          <Link key={work.workId} href={`${ADMIN_ROUTE_FULL_PATH_MAP.WORKS}/${work.workId}`}>
-            <TableRow
-              component='a'
-              href={`${ADMIN_ROUTE_FULL_PATH_MAP.WORKS}/${work.workId}`}
-              sx={{
-                backgroundColor: getRowBackgroudColorBy(work.isActive),
-                textDecoration: 'none',
-              }}
-              hover
-            >
-              <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
-                {getNotificationActivityStateBy(work.isActive)}
-              </TableCell>
-              <TableCell>{work.workId}</TableCell>
-              <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '15rem' }}>
-                {work.title}
-              </TableCell>
-              <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '15rem' }}>
-                {work.contents}
-              </TableCell>
-              <TableCell>{getDateFormatFrom(work.createdAt)}</TableCell>
-              <TableCell>{getDateFormatFrom(work.updatedAt)}</TableCell>
-            </TableRow>
-          </Link>
+          <TableRow
+            component={Link}
+            to={`${ADMIN_ROUTE_FULL_PATH_MAP.WORKS}/${work.workId}`}
+            key={work.workId}
+            sx={{
+              backgroundColor: getRowBackgroudColorBy(work.isActive),
+              textDecoration: 'none',
+            }}
+            hover
+          >
+            <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '10rem' }}>
+              {getNotificationActivityStateBy(work.isActive)}
+            </TableCell>
+            <TableCell>{work.workId}</TableCell>
+            <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '15rem' }}>
+              {work.title}
+            </TableCell>
+            <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '15rem' }}>
+              {work.contents}
+            </TableCell>
+            <TableCell>{getDateFormatFrom(work.createdAt)}</TableCell>
+            <TableCell>{getDateFormatFrom(work.updatedAt)}</TableCell>
+          </TableRow>
         ))}
       </>
     );

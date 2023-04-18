@@ -4,13 +4,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { ACTIVITY_STATE_CONSTANT, EditMeFormInput } from '../../types/EditMeFormInput';
 import { useAppSelector } from '@redux/hooks';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
+import { useNavigate } from 'react-router-dom';
 import { Member, apiEditMe } from '@api/admin/members';
 import axios from 'axios';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 import { apiChangeIcon } from '@api/admin/members/icon';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { apiMe } from '@api/admin/members/me';
-import { useRouter } from 'next/router';
 
 export const EditMeModalContainer = () => {
   const {
@@ -27,7 +27,7 @@ export const EditMeModalContainer = () => {
 
   const userToken = useAppSelector(selectUserToken);
   const processingLine = useProcessingLine();
-  const router = useRouter();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const main = async () => {
@@ -101,7 +101,7 @@ export const EditMeModalContainer = () => {
       setError(undefined);
       setIsActive(false);
       reset();
-      router.push(ADMIN_ROUTE_FULL_PATH_MAP.MYPAGE);
+      navigate(ADMIN_ROUTE_FULL_PATH_MAP.MYPAGE, { state: { refresh: true } });
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const responseData = e.response!.data;

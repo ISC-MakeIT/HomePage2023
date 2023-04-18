@@ -1,5 +1,5 @@
 import { SerializedStyles, css } from '@emotion/react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { GreenToBlueGradientButton } from 'src/components/atoms/Button/GreenToBlueGradientButton';
 import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
 import { RedToOrangeGradientButton } from 'src/components/atoms/Button/RedToOrangeGradientButton';
@@ -49,26 +49,24 @@ export const GradientButtonWithIconAndArrow = ({
 
   if (to) {
     return (
-      <Link href={to}>
-        <a
-          href={to}
-          css={css`
-            text-decoration: none;
+      <Link
+        to={to}
+        css={css`
+          text-decoration: none;
+        `}
+      >
+        <GradientButton
+          type={buttonType}
+          style={css`
+            display: flex;
+            align-items: center;
+            column-gap: 0.5rem;
           `}
         >
-          <GradientButton
-            type={buttonType}
-            style={css`
-              display: flex;
-              align-items: center;
-              column-gap: 0.5rem;
-            `}
-          >
-            {icon}
-            {children}
-            <Arrow />
-          </GradientButton>
-        </a>
+          {icon}
+          {children}
+          <Arrow />
+        </GradientButton>
       </Link>
     );
   }

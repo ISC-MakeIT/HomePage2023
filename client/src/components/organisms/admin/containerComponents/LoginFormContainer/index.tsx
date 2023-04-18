@@ -2,6 +2,7 @@ import { apiLogin, Response } from '@api/admin/members/login';
 import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { setToken } from '@redux/actions/user/userTokenReducer';
 import { useAppDispatch } from '@redux/hooks';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from '../../../../../routes/routePath';
@@ -9,14 +10,13 @@ import { LoginForm } from '../../presentationalComponents/LoginForm';
 import { LoginFormInput } from '../../types/LoginFormInput';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { setUserId } from '@redux/actions/user/userIdReducer';
-import { useRouter } from 'next/router';
 
 export const LoginFormContainer = () => {
   const { register, handleSubmit } = useForm<LoginFormInput>();
   const [error, setError] = useState<string>();
   const dispatch = useAppDispatch();
   const alert = useAlert();
-  const router = useRouter();
+  const navigation = useNavigate();
 
   const handleLogin: SubmitHandler<LoginFormInput> = async (loginFormInput) => {
     try {
@@ -27,7 +27,7 @@ export const LoginFormContainer = () => {
         type: 'success',
         content: response.message!,
       });
-      router.push(ADMIN_ROUTE_FULL_PATH_MAP.TOP);
+      navigation(ADMIN_ROUTE_FULL_PATH_MAP.TOP);
     } catch (err) {
       const isNotAxiosError = () => !(err instanceof AxiosError);
 
