@@ -38,7 +38,7 @@ export const CreateWorkModalContainer = () => {
       reset();
       setIsActive(false);
 
-      router.push(ADMIN_ROUTE_FULL_PATH_MAP.WORKS);
+      router(ADMIN_ROUTE_FULL_PATH_MAP.WORKS);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const status = e.response!.status;
