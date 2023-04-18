@@ -10,6 +10,7 @@ class AuthServiceProvider extends ServiceProvider {
         App\Models\Member\Member::class             => App\Policies\MemberPolicy::class,
         App\Models\Notification\Notification::class => App\Policies\NotificationPolicy::class,
         App\Models\Notification\Work::class         => App\Policies\WorkPolicy::class,
+        App\Models\OGP\OGP::class                   => App\Policies\OGPPolicy::class,
     ];
 
     public function boot(): void {
