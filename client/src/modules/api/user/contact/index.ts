@@ -1,4 +1,4 @@
-import { PostResponse, PostRequest } from 'src/api/homePage/api/contact';
+import { type PostResponse, type PostRequest } from 'src/api/homePage/api/contact';
 import { homePageClient } from 'src/apiClient/homePage';
 
 export const apiContact = async (request: PostRequest): Promise<PostResponse> => {
@@ -6,3 +6,5 @@ export const apiContact = async (request: PostRequest): Promise<PostResponse> =>
     body: request,
   });
 };
+
+export type { PostResponse };

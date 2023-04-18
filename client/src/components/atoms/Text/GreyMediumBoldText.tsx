@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 
-type GreyBoldTextProps = {
+interface GreyBoldTextProps {
   children: React.ReactNode;
-};
+}
 
 export const GreyMediumBoldText = ({ children }: GreyBoldTextProps) => {
   return (

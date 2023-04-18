@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 
-type BlackNavigationLinkProps = {
+interface BlackNavigationLinkProps {
   to: string;
   name: string;
-};
+}
 
 export const BlackNavigationLink = ({ to, name }: BlackNavigationLinkProps) => {
   return (

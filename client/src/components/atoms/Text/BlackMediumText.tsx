@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 
-type GreyMediumTextProps = {
+interface GreyMediumTextProps {
   children: React.ReactNode;
-};
+}
 
 export const BlackMediumText = ({ children }: GreyMediumTextProps) => {
   return (

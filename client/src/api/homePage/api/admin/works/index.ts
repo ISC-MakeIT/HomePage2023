@@ -1,4 +1,4 @@
-export type Work = {
+export interface Work {
   workId: number;
   title: string;
   contents: string;
@@ -6,25 +6,25 @@ export type Work = {
   updatedAt: string;
   isActive: boolean;
   currentVersion: number;
-};
+}
 
 export type GetResponse = {
   message?: string;
-  errors?: { [key: string]: string }[];
+  errors?: Array<Record<string, string>>;
 } & Work[];
 
-export type PostRequest = {
+export interface PostRequest {
   title: string;
   contents: string;
   picture?: File;
-};
+}
 
-export type PostResponse = {
+export interface PostResponse {
   message?: string;
-  errors?: { [key: string]: string }[];
-};
+  errors?: Array<Record<string, string>>;
+}
 
-export type PutRequest = {
+export interface PutRequest {
   _method: string;
   workId: number;
   title: string;
@@ -32,23 +32,23 @@ export type PutRequest = {
   picture?: File;
   isActive: boolean;
   currentVersion: number;
-};
+}
 
-export type PutResponse = {
+export interface PutResponse {
   message?: string;
-  errors?: { [key: string]: string }[];
-};
+  errors?: Array<Record<string, string>>;
+}
 
-export type DeleteRequest = {
+export interface DeleteRequest {
   workId: number;
-};
+}
 
-export type DeleteResponse = {
+export interface DeleteResponse {
   message?: string;
-  errors?: { [key: string]: string }[];
-};
+  errors?: Array<Record<string, string>>;
+}
 
-export type Methods = {
+export interface Methods {
   get: {
     reqHeaders: {
       Authorization: string;
@@ -71,4 +71,4 @@ export type Methods = {
     reqBody: DeleteRequest;
     resBody: DeleteResponse;
   };
-};
+}

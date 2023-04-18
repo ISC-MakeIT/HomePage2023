@@ -1,5 +1,5 @@
-import { Member as APIMember } from '@api/admin/members';
-import { apiMember } from '@api/admin/members/member';
+import { type Member as APIMember } from '@api/admin/members';
+import { type GetResponse, apiMember } from '@api/admin/members/member';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
@@ -8,16 +8,16 @@ import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 import { Member } from '../../presentationalComponents/Member';
 import { useLocation } from 'react-router-dom';
 
-type MemberContainerProps = {
+interface MemberContainerProps {
   memberId: number;
-};
+}
 
 export const MemberContainer = ({ memberId }: MemberContainerProps) => {
   const [member, setMember] = useState<APIMember>();
   const [error, setError] = useState<string>('');
   const userToken = useAppSelector(selectUserToken);
   const proccessingLine = useProcessingLine();
-  const state: { refresh?: boolean } = useLocation().state;
+  const state = useLocation().state as { refresh?: boolean };
 
   useEffect(() => {
     const main = async () => {
@@ -32,7 +32,7 @@ export const MemberContainer = ({ memberId }: MemberContainerProps) => {
         proccessingLine.hide();
 
         if (axios.isAxiosError(e)) {
-          const responseData = e.response!.data;
+          const responseData = e.response!.data as GetResponse;
           const status = e.response!.status;
 
           if (status === 400) {
@@ -54,14 +54,14 @@ export const MemberContainer = ({ memberId }: MemberContainerProps) => {
             return;
           }
 
-          if (responseData.message) {
+          if (responseData.message !== '') {
             setError(responseData.message!);
             return;
           }
         }
 
         setError(
-          '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
+          '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。'
         );
       }
     };
@@ -71,7 +71,7 @@ export const MemberContainer = ({ memberId }: MemberContainerProps) => {
 
   const processMemberFrom = (preMember: APIMember) => {
     const elseDefaultDisplayUnExist = (memberElement?: string) => {
-      if (!memberElement || memberElement === '') {
+      if (memberElement === '') {
         return '存在しません';
       }
       return memberElement;
@@ -85,7 +85,7 @@ export const MemberContainer = ({ memberId }: MemberContainerProps) => {
     };
   };
 
-  if (!member) {
+  if (member == null) {
     return <></>;
   }
 

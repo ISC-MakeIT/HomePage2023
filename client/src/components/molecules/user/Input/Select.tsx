@@ -1,34 +1,34 @@
-import { SerializedStyles, css } from '@emotion/react';
-import { ComponentProps } from 'react';
+import { type SerializedStyles, css } from '@emotion/react';
+import { type ComponentProps } from 'react';
 import { Stack } from 'src/components/atoms/Layout/Stack';
 import { RedMediumBoldText } from 'src/components/atoms/Text/RedMediumBoldText';
 
-export type Option = {
+export interface Option {
   value: string;
   content: string;
-};
+}
 
-type SelectProps = {
+interface SelectProps {
   label: string;
   options: Option[];
   error?: string;
   isErrored?: boolean;
   style?: SerializedStyles;
   selectElementProps: ComponentProps<'select'>;
-};
+}
 
 export const Select = (props: SelectProps) => {
   const { style, label, options, isErrored, error, selectElementProps } = props;
 
   const Error = () => {
-    if (isErrored) {
+    if (isErrored === true) {
       return <RedMediumBoldText>{error}</RedMediumBoldText>;
     }
     return <></>;
   };
 
   return (
-    <Stack spacing='1rem' style={style}>
+    <Stack spacing="1rem" style={style}>
       <label
         htmlFor={label}
         css={css`
@@ -38,7 +38,7 @@ export const Select = (props: SelectProps) => {
       >
         {label}
       </label>
-      <Stack spacing='.5rem'>
+      <Stack spacing=".5rem">
         <select
           id={label}
           {...selectElementProps}

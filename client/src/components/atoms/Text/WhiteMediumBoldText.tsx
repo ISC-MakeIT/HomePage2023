@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 
-type WhiteBoldTextProps = {
+interface WhiteBoldTextProps {
   children: React.ReactNode;
-};
+}
 
 export const WhiteMediumBoldText = ({ children }: WhiteBoldTextProps) => {
   return (

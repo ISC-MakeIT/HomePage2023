@@ -7,14 +7,14 @@ import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
 export const WhiteGithubButtonWithArrow = () => {
   return (
     <Link
-      to='https://github.com/ISC-MakeIT'
+      to="https://github.com/ISC-MakeIT"
       css={css`
         text-decoration: none;
       `}
     >
       <WhiteButton>
         <WhiteGithubButtonContent />
-        <Arrow color='#fff' />
+        <Arrow color="#fff" />
       </WhiteButton>
     </Link>
   );

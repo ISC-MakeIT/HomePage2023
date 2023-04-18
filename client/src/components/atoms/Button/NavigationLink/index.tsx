@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 
-type LinkProps = {
+interface LinkProps {
   elementId: string;
   name: string;
-};
+}
 
 export const NavigationLink: React.FC<LinkProps> = ({ elementId, name }) => {
   return (

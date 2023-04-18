@@ -1,4 +1,4 @@
-import { SerializedStyles, css } from '@emotion/react';
+import { type SerializedStyles, css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import { GreenToBlueGradientButton } from 'src/components/atoms/Button/GreenToBlueGradientButton';
 import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
@@ -6,13 +6,13 @@ import { RedToOrangeGradientButton } from 'src/components/atoms/Button/RedToOran
 
 type GRADIENT_TYPE = 'greenToBlue' | 'redToOrange';
 
-type GradientButtonWithIconAndArrowProps = {
+interface GradientButtonWithIconAndArrowProps {
   to?: string;
   gradientType: GRADIENT_TYPE;
   icon: JSX.Element;
   buttonType?: 'submit' | 'button' | 'reset';
   children?: React.ReactNode;
-};
+}
 
 export const GradientButtonWithIconAndArrow = ({
   to,

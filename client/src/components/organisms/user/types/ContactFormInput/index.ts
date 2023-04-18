@@ -1,7 +1,7 @@
-import { CONTACT_CATEGORIE } from '../../constants/ContactCategories';
+import { type CONTACT_CATEGORIE } from '../../constants/ContactCategories';
 
-export type ContactFormInput = {
+export interface ContactFormInput {
   email: string;
   name: string;
   category: CONTACT_CATEGORIE;
-};
+}

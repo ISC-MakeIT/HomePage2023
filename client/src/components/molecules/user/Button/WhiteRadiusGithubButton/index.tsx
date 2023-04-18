@@ -6,7 +6,7 @@ import { WhiteGithubButtonContent } from '../Content/WhiteGithubButtonContent';
 export const WhiteRadiusGithubButton = () => {
   return (
     <Link
-      to='https://github.com/ISC-MakeIT'
+      to="https://github.com/ISC-MakeIT"
       css={css`
         text-decoration: none;
       `}

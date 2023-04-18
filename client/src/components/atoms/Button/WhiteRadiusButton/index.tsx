@@ -1,10 +1,10 @@
 import React from 'react';
 import { css } from '@emotion/react';
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import { type EmotionJSX } from '@emotion/react/types/jsx-namespace';
 
-type buttonProps = {
+interface buttonProps {
   content: EmotionJSX.Element;
-};
+}
 
 export const WhiteRadiusButton: React.FC<buttonProps> = (buttonContent) => {
   const { content } = buttonContent;

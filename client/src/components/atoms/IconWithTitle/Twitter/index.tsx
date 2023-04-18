@@ -17,7 +17,7 @@ export const TwitterLogo = () => {
           margin-right: 0.5rem;
         `}
       >
-        <Twitter fill='#333' />
+        <Twitter fill="#333" />
       </div>
       <p
         css={css`

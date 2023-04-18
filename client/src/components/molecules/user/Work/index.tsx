@@ -1,4 +1,4 @@
-import { Work as APIWork } from '@api/user/works';
+import { type Work as APIWork } from '@api/user/works';
 import { css } from '@emotion/react';
 import { Stack } from 'src/components/atoms/Layout/Stack';
 import { BlackMediumText } from 'src/components/atoms/Text/BlackMediumText';

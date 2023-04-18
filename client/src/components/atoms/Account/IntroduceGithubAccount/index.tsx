@@ -2,9 +2,9 @@ import { css } from '@emotion/react';
 import { GithubLogo } from 'src/components/atoms/IconWithTitle/Github';
 import { BlackMediumText } from '../../Text/BlackMediumText';
 
-type IntroduceGithubAccountProps = {
+interface IntroduceGithubAccountProps {
   children?: React.ReactNode;
-};
+}
 
 export const IntroduceGithubAccount = ({ children }: IntroduceGithubAccountProps) => {
   if (!children) {

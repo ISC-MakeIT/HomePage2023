@@ -1,4 +1,4 @@
-import { Notification as APINotification } from '@api/user/notifications';
+import { type Notification as APINotification } from '@api/user/notifications';
 import { Notification as NotificationComponent } from 'src/components/molecules/user/Notification';
 import { css } from '@emotion/react';
 import { SectionTitle } from 'src/components/molecules/user/SectionTitle';
@@ -10,7 +10,7 @@ type NotificationProps = APINotification;
 
 export const Notification = ({ title, createdAt }: NotificationProps) => {
   return (
-    <section id='notification'>
+    <section id="notification">
       <div
         css={css`
           background-color: #f8f9f9;
@@ -29,8 +29,8 @@ export const Notification = ({ title, createdAt }: NotificationProps) => {
           `}
         >
           <SectionTitle
-            title='新着情報'
-            description='サークルの活動に関することや、ブログ,リリース情報のお知らせです。'
+            title="新着情報"
+            description="サークルの活動に関することや、ブログ,リリース情報のお知らせです。"
           />
 
           <div>

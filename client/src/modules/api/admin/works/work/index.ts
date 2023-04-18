@@ -1,4 +1,4 @@
-import { Work, GetResponse } from 'src/api/homePage/api/admin/works/_workId@number';
+import { type Work, type GetResponse } from 'src/api/homePage/api/admin/works/_workId@number';
 import { homePageClient } from 'src/apiClient/homePage';
 
 export const apiWork = async (token: string, workId: number) => {

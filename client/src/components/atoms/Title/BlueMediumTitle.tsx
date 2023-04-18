@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 
-type BlueMediumTitleProps = {
+interface BlueMediumTitleProps {
   children: React.ReactNode;
-};
+}
 
 export const BlueMediumTitle = ({ children }: BlueMediumTitleProps) => {
   return (

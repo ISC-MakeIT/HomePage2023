@@ -2,9 +2,9 @@ import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
 
-type AccessToListProps = {
+interface AccessToListProps {
   to: string;
-};
+}
 
 export const AccessToList = ({ to }: AccessToListProps) => {
   return (
@@ -25,7 +25,7 @@ export const AccessToList = ({ to }: AccessToListProps) => {
         `}
       >
         一覧で見る
-        <Arrow color='#ff8567' />
+        <Arrow color="#ff8567" />
       </Link>
     </div>
   );

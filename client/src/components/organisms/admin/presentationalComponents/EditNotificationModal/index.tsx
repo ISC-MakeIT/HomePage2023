@@ -1,13 +1,13 @@
-import { Notification } from '@api/admin/notifications/notification';
+import { type Notification } from '@api/admin/notifications/notification';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Box, Button, FormHelperText, FormLabel, Radio, RadioGroup, Stack, TextField, Typography } from '@mui/material';
-import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form';
+import { type FieldErrors, type SubmitHandler, type UseFormHandleSubmit, type UseFormRegister } from 'react-hook-form';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { Modal } from 'src/components/molecules/admin/Modal';
-import { ACTIVITY_STATE_CONSTANT, EditNotificationFormInput } from '../../types/EditNotificationFormInput';
+import { ACTIVITY_STATE_CONSTANT, type EditNotificationFormInput } from '../../types/EditNotificationFormInput';
 
-type EditNotificationModalProps = {
+interface EditNotificationModalProps {
   isActive: boolean;
   handleOpen: () => void;
   handleClose: () => void;
@@ -20,7 +20,7 @@ type EditNotificationModalProps = {
   errors: FieldErrors<EditNotificationFormInput>;
 
   error?: string;
-};
+}
 
 export const EditNotificationModal = ({
   isActive,
@@ -38,8 +38,8 @@ export const EditNotificationModal = ({
       <Button
         onClick={handleOpen}
         sx={{ display: 'flex', columnGap: 1, width: '6rem' }}
-        color='primary'
-        variant='outlined'
+        color="primary"
+        variant="outlined"
       >
         <FontAwesomeIcon icon={faEdit} />
         編集
@@ -49,18 +49,18 @@ export const EditNotificationModal = ({
         <AlertForError error={error} />
 
         <Box>
-          <Typography variant='h6' component='h2'>
+          <Typography variant="h6" component="h2">
             お知らせを編集
           </Typography>
           <FormHelperText>お知らせの編集を行います。</FormHelperText>
         </Box>
 
-        <Stack component='form' onSubmit={handleSubmit(handleEditNotification)} spacing={2}>
+        <Stack component="form" onSubmit={handleSubmit(handleEditNotification)} spacing={2}>
           <TextField
             fullWidth
-            variant='outlined'
-            label='タイトル'
-            type='text'
+            variant="outlined"
+            label="タイトル"
+            type="text"
             error={'title' in errors}
             helperText={errors.title?.message}
             defaultValue={notification.title}
@@ -75,7 +75,7 @@ export const EditNotificationModal = ({
             error={'contents' in errors}
             helperText={errors.contents?.message}
             minRows={5}
-            label='内容'
+            label="内容"
             defaultValue={notification.contents}
             {...register('contents', {
               required: '内容は必須項目です。',
@@ -87,7 +87,7 @@ export const EditNotificationModal = ({
             <RadioGroup
               defaultValue={notification.isActive ? ACTIVITY_STATE_CONSTANT.ACTIVE : ACTIVITY_STATE_CONSTANT.NON_ACTIVE}
               sx={{ p: 2, gap: 2 }}
-              id='activityState'
+              id="activityState"
               {...register('activityState')}
             >
               <Stack flexDirection={'row'} columnGap={2}>
@@ -107,11 +107,11 @@ export const EditNotificationModal = ({
             </RadioGroup>
           </Box>
 
-          <Stack flexDirection='row' columnGap={1}>
-            <Button onClick={handleClose} type='button' variant='text' color='error'>
+          <Stack flexDirection="row" columnGap={1}>
+            <Button onClick={handleClose} type="button" variant="text" color="error">
               キャンセル
             </Button>
-            <Button type='submit' variant='contained' color='success'>
+            <Button type="submit" variant="contained" color="success">
               編集を適応
             </Button>
           </Stack>

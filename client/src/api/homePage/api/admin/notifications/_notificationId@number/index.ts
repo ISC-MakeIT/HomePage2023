@@ -1,4 +1,4 @@
-export type Notification = {
+export interface Notification {
   notificationId: number;
   title: string;
   contents: string;
@@ -6,18 +6,18 @@ export type Notification = {
   updatedAt: string;
   isActive: boolean;
   currentVersion: number;
-};
+}
 
 export type GetResponse = {
   message?: string;
-  errors?: { [key: string]: string }[];
+  errors?: Array<Record<string, string>>;
 } & Notification;
 
-export type Methods = {
+export interface Methods {
   get: {
     reqHeaders: {
       Authorization: string;
     };
     resBody: GetResponse;
   };
-};
+}

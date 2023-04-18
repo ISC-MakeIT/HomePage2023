@@ -1,4 +1,4 @@
-import { PutRequest, PutResponse } from 'src/api/homePage/api/admin/members/password';
+import { type PutRequest, type PutResponse } from 'src/api/homePage/api/admin/members/password';
 import { homePageClient } from 'src/apiClient/homePage';
 
 export const apiChangePassword = async (token: string, request: PutRequest): Promise<PutResponse> => {
@@ -8,3 +8,5 @@ export const apiChangePassword = async (token: string, request: PutRequest): Pro
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+export type { PutResponse };

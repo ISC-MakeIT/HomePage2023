@@ -1,10 +1,10 @@
-import { SerializedStyles, css } from '@emotion/react';
+import { type SerializedStyles, css } from '@emotion/react';
 
-type FlexProps = {
+interface FlexProps {
   children?: React.ReactNode;
   style?: SerializedStyles;
   spacing?: string;
-};
+}
 
 export const Flex = ({ spacing, children, style }: FlexProps) => {
   return (

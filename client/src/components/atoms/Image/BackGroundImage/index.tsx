@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
 
-type BackGroundImageProps = {
+interface BackGroundImageProps {
   width: string;
   height: string;
   image: string;
-};
+}
 
 export const BackGroundImage = ({ width, height, image }: BackGroundImageProps) => {
   return (
