@@ -2,7 +2,6 @@ import { css } from '@emotion/react';
 import { faBars, faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
-import { Flex } from 'src/components/atoms/Layout/Flex';
 import { DarkMakeIT } from 'src/components/atoms/Logo/DarkMakeIT';
 import { WhiteMakeIT } from 'src/components/atoms/Logo/WhiteMakeIT';
 import { GradientButtonWithIconAndArrow } from 'src/components/molecules/user/Button/GradientButtonWithIconAndArrow';
@@ -11,14 +10,14 @@ import { CONSTANT_CONTACT_CATEGORIE } from '../../constants/ContactCategories';
 import { Man } from 'src/components/atoms/Button/Icon/Man';
 import { Woman } from 'src/components/atoms/Button/Icon/Woman';
 
-type HeaderForMobileProps = {
+interface HeaderForMobileProps {
   isOpenedMenu: boolean;
   handleOpen: () => void;
   handleClose: () => void;
-};
+}
 
 export const HeaderForMobile = ({ isOpenedMenu, handleClose, handleOpen }: HeaderForMobileProps) => {
-  const navigationList: { to: string; title: string }[] = [
+  const navigationList: Array<{ to: string; title: string }> = [
     {
       to: `${USER_ROUTE_PATH_MAP.TOP}#about`,
       title: 'Make ITについて',
@@ -61,8 +60,8 @@ export const HeaderForMobile = ({ isOpenedMenu, handleClose, handleOpen }: Heade
             }
           `}
           onClick={handleOpen}
-          color='#333'
-          size='2xl'
+          color="#333"
+          size="2xl"
           icon={faBars}
         />
 
@@ -122,8 +121,8 @@ export const HeaderForMobile = ({ isOpenedMenu, handleClose, handleOpen }: Heade
                 `
               : css``}
           `}
-          color='#fff'
-          size='4x'
+          color="#fff"
+          size="4x"
           icon={faClose}
           onClick={handleClose}
         />
@@ -159,15 +158,15 @@ export const HeaderForMobile = ({ isOpenedMenu, handleClose, handleOpen }: Heade
           >
             <GradientButtonWithIconAndArrow
               to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.EXPERIENCE}#contact`}
-              icon={<Man width='1.5rem' height='1.5rem' />}
-              gradientType='greenToBlue'
+              icon={<Man width="1.5rem" height="1.5rem" />}
+              gradientType="greenToBlue"
             >
               体験入部
             </GradientButtonWithIconAndArrow>
             <GradientButtonWithIconAndArrow
               to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.PROJECT}#contact`}
-              icon={<Woman width='1.5rem' height='1.5rem' />}
-              gradientType='redToOrange'
+              icon={<Woman width="1.5rem" height="1.5rem" />}
+              gradientType="redToOrange"
             >
               案件の依頼
             </GradientButtonWithIconAndArrow>

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
+import { type RootState } from '../../store';
 import { ACTION_TYPES } from '../actionTypes';
 
 const userIdSlice = createSlice({
@@ -8,7 +8,7 @@ const userIdSlice = createSlice({
     value: 0,
   },
   reducers: {
-    setUserId: (state, action) => {
+    setUserId: (state, action: { payload: number }) => {
       state.value = action.payload;
     },
   },

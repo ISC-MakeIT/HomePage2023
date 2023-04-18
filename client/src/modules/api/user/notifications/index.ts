@@ -1,4 +1,4 @@
-import { GetResponse, Notification } from 'src/api/homePage/api/notifications';
+import { type GetResponse, type Notification } from 'src/api/homePage/api/notifications';
 import { homePageClient } from 'src/apiClient/homePage';
 
 export const apiNotifications = async (): Promise<GetResponse> => {

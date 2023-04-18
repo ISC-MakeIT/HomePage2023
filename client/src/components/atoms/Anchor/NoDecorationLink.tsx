@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { Link, LinkProps } from 'react-router-dom';
+import { Link, type LinkProps } from 'react-router-dom';
 
 type NoDecorationLinkProps = LinkProps;
 

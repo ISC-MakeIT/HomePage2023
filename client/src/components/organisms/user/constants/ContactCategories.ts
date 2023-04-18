@@ -1,4 +1,4 @@
-import { Option } from 'src/components/molecules/user/Input/Select';
+import { type Option } from 'src/components/molecules/user/Input/Select';
 
 export const CONSTANT_CONTACT_CATEGORIE = { EXPERIENCE: '体験入部', PROJECT: '案件の依頼' } as const;
 

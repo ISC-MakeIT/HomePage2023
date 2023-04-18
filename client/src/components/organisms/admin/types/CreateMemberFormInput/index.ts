@@ -1,4 +1,4 @@
-export type CreateMemberFormInput = {
+export interface CreateMemberFormInput {
   name: string;
   jobTitle: string;
   roleId: number;
@@ -9,4 +9,4 @@ export type CreateMemberFormInput = {
   icon: File;
   username: string;
   password: string;
-};
+}

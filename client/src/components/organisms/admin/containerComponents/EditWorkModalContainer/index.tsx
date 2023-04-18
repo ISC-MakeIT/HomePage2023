@@ -1,20 +1,20 @@
-import { apiEditWork } from '@api/admin/works';
-import { apiWork, Work } from '@api/admin/works/work';
+import { apiEditWork, type GetResponse, type PutResponse } from '@api/admin/works';
+import { apiWork, type Work } from '@api/admin/works/work';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { EditWorkModal } from '../../presentationalComponents/EditWorkModal';
-import { ACTIVITY_STATE_CONSTANT, EditWorkFormInput } from '../../types/EditWorkFormInput';
+import { ACTIVITY_STATE_CONSTANT, type EditWorkFormInput } from '../../types/EditWorkFormInput';
 
-type EditWorkModalContainerProps = {
+interface EditWorkModalContainerProps {
   workId: number;
-};
+}
 
 export const EditWorkModalContainer = ({ workId }: EditWorkModalContainerProps) => {
   const [pictureForDisplay, setPictureForDisplay] = useState<string>();
@@ -47,7 +47,7 @@ export const EditWorkModalContainer = ({ workId }: EditWorkModalContainerProps) 
         const MILLI_SECOND_COUNTS_TO_HIDE_FOR_ALERT = 1000 * 10;
 
         if (axios.isAxiosError(e)) {
-          const responseData = e.response!.data;
+          const responseData = e.response!.data as GetResponse;
           const status = e.response!.status;
 
           if (status === 400) {
@@ -56,7 +56,7 @@ export const EditWorkModalContainer = ({ workId }: EditWorkModalContainerProps) 
                 type: 'error',
                 content: Object.values(responseData.errors!).join('\n'),
               },
-              MILLI_SECOND_COUNTS_TO_HIDE_FOR_ALERT,
+              MILLI_SECOND_COUNTS_TO_HIDE_FOR_ALERT
             );
             return;
           }
@@ -71,7 +71,7 @@ export const EditWorkModalContainer = ({ workId }: EditWorkModalContainerProps) 
                 type: 'error',
                 content: 'このページにアクセスするためには、ADMIN以上の権限がなければなりません。',
               },
-              MILLI_SECOND_COUNTS_TO_HIDE_FOR_ALERT,
+              MILLI_SECOND_COUNTS_TO_HIDE_FOR_ALERT
             );
             return;
           }
@@ -82,18 +82,18 @@ export const EditWorkModalContainer = ({ workId }: EditWorkModalContainerProps) 
                 type: 'error',
                 content: '存在しないお知らせです。',
               },
-              MILLI_SECOND_COUNTS_TO_HIDE_FOR_ALERT,
+              MILLI_SECOND_COUNTS_TO_HIDE_FOR_ALERT
             );
             return;
           }
 
-          if (responseData.message) {
+          if (responseData.message !== '') {
             alert.show(
               {
                 type: 'error',
                 content: responseData.message!,
               },
-              MILLI_SECOND_COUNTS_TO_HIDE_FOR_ALERT,
+              MILLI_SECOND_COUNTS_TO_HIDE_FOR_ALERT
             );
             return;
           }
@@ -104,7 +104,7 @@ export const EditWorkModalContainer = ({ workId }: EditWorkModalContainerProps) 
             type: 'error',
             content: '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。',
           },
-          MILLI_SECOND_COUNTS_TO_HIDE_FOR_ALERT,
+          MILLI_SECOND_COUNTS_TO_HIDE_FOR_ALERT
         );
       }
     };
@@ -127,7 +127,7 @@ export const EditWorkModalContainer = ({ workId }: EditWorkModalContainerProps) 
     try {
       const response = await apiEditWork(userToken, {
         _method: 'PUT',
-        workId: workId,
+        workId,
         title: editWorkFormInput.title,
         contents: editWorkFormInput.contents,
         picture: editWorkFormInput.picture,
@@ -142,13 +142,13 @@ export const EditWorkModalContainer = ({ workId }: EditWorkModalContainerProps) 
           type: 'success',
           content: response.message!,
         },
-        milliSecondCountsToHide,
+        milliSecondCountsToHide
       );
       setIsActive(false);
       navigate(ADMIN_ROUTE_FULL_PATH_MAP.WORKS);
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        const responseData = e.response!.data;
+        const responseData = e.response!.data as PutResponse;
         const status = e.response!.status;
 
         if (status === 400) {
@@ -166,27 +166,31 @@ export const EditWorkModalContainer = ({ workId }: EditWorkModalContainerProps) 
           return;
         }
 
-        if (responseData.message) {
-          setError(responseData.message!);
+        if (responseData.message !== '') {
+          setError(responseData.message);
           return;
         }
       }
 
       setError(
-        '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
+        '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。'
       );
     }
   };
 
-  if (!work) {
+  if (work == null) {
     return <></>;
   }
 
   return (
     <EditWorkModal
       isActive={isActive}
-      handleOpen={() => setIsActive(true)}
-      handleClose={() => setIsActive(false)}
+      handleOpen={() => {
+        setIsActive(true);
+      }}
+      handleClose={() => {
+        setIsActive(false);
+      }}
       work={work}
       register={register}
       handleSubmit={handleSubmit}

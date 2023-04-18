@@ -1,35 +1,25 @@
-import { Member as APIMember } from '@api/admin/members';
-import { Role } from '@api/admin/members/roles';
-import { LinearProgress, Stack } from '@mui/joy';
-import {
-  Box,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Radio,
-  RadioGroup,
-  Select,
-  MenuItem,
-  Button,
-} from '@mui/material';
-import { SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form';
+import { type Member as APIMember } from '@api/admin/members';
+import { type Role } from '@api/admin/members/roles';
+import { Stack } from '@mui/joy';
+import { Box, FormHelperText, FormLabel, Radio, RadioGroup, Select, MenuItem, Button } from '@mui/material';
+import { type SubmitHandler, type UseFormHandleSubmit, type UseFormRegister } from 'react-hook-form';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
-import { ACTIVITY_STATE_CONSTANT, EditMemberFormInput } from '../../types/EditMemberFormInput';
+import { ACTIVITY_STATE_CONSTANT, type EditMemberFormInput } from '../../types/EditMemberFormInput';
 
-type EditMemberProps = {
+interface EditMemberProps {
   member?: APIMember;
   roleList: Role[];
   error?: string;
   register: UseFormRegister<EditMemberFormInput>;
   handleSubmit: UseFormHandleSubmit<EditMemberFormInput>;
   handleEditMember: SubmitHandler<EditMemberFormInput>;
-};
+}
 
 export const EditMember = ({ member, roleList, error, register, handleSubmit, handleEditMember }: EditMemberProps) => {
   return (
     <Stack rowGap={4}>
       <Stack spacing={2}>
-        <Stack spacing={2} component='form' onSubmit={handleSubmit(handleEditMember)}>
+        <Stack spacing={2} component="form" onSubmit={handleSubmit(handleEditMember)}>
           <FormLabel sx={{ fontWeight: 'bold' }}>表示状態の変更</FormLabel>
 
           <AlertForError error={error} />
@@ -38,7 +28,7 @@ export const EditMember = ({ member, roleList, error, register, handleSubmit, ha
             <RadioGroup
               defaultValue={member!.isActive ? ACTIVITY_STATE_CONSTANT.ACTIVE : ACTIVITY_STATE_CONSTANT.NON_ACTIVE}
               sx={{ p: 2, gap: 2 }}
-              id='activityState'
+              id="activityState"
               {...register('activityState')}
             >
               <Stack flexDirection={'row'} columnGap={2}>
@@ -70,7 +60,7 @@ export const EditMember = ({ member, roleList, error, register, handleSubmit, ha
             </Select>
           </Box>
 
-          <Button type='submit' variant='contained' sx={{ mt: 3 }}>
+          <Button type="submit" variant="contained" sx={{ mt: 3 }}>
             変更を適応
           </Button>
         </Stack>

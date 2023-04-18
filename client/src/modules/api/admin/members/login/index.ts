@@ -1,4 +1,4 @@
-import { Request, Response } from '../../../../../api/homePage/api/admin/login';
+import { type Request, type Response } from '../../../../../api/homePage/api/admin/login';
 import { homePageClient } from 'src/apiClient/homePage';
 
 export const apiLogin = async ({ username, password }: Request): Promise<Response> => {

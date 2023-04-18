@@ -8,10 +8,11 @@ const breakpoints = {
 type Breakpoints = typeof breakpoints; // breakpoints変数から型を作成
 type Breakpointkeys = keyof Breakpoints; // オブジェクト型のkeyからユニオン型を作成("sm" | "md" | "lg" | "xl")
 
-type ArgumentBreakpoint = Breakpointkeys | number; //引数の型
+type ArgumentBreakpoint = Breakpointkeys | number; // 引数の型
 
+// eslint-disable-next-line
 const isBreakpointkeys = (value: any): value is Breakpointkeys => {
-  return value in breakpoints; //breakpointsに対象のプロパティがあるかチェック
+  return value in breakpoints; // breakpointsに対象のプロパティがあるかチェック
 };
 
 export const minScreen = (breakpoint: ArgumentBreakpoint) => {

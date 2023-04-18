@@ -1,18 +1,18 @@
-export type Response = {
+export interface Response {
   message?: string;
   token?: string;
   memberId?: number;
-  errors?: { [key: string]: string }[];
-};
+  errors?: Array<Record<string, string>>;
+}
 
-export type Request = {
+export interface Request {
   username: string;
   password: string;
-};
+}
 
-export type Methods = {
+export interface Methods {
   post: {
     reqBody: Request;
     resBody: Response;
   };
-};
+}

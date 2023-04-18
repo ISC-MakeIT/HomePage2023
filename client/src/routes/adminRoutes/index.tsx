@@ -18,7 +18,7 @@ export const AdminRoutes = () => {
       <Route path={ADMIN_ROUTE_PATH_MAP.TOP} element={<Home />} />
       <Route path={ADMIN_ROUTE_PATH_MAP.LOGIN} element={<Login />} />
 
-      <Route path='/' element={<OnlyLoggedInMemberMiddleware />}>
+      <Route path="/" element={<OnlyLoggedInMemberMiddleware />}>
         <Route path={ADMIN_ROUTE_PATH_MAP.LOGOUT} element={<Logout />} />
 
         <Route path={ADMIN_ROUTE_PATH_MAP.WORKS} element={<Works />} />

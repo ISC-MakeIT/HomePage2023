@@ -1,15 +1,15 @@
-export type Work = {
+export interface Work {
   workId: number;
   title: string;
   thumbnail: string;
   contents: string;
   createdAt: string;
-};
+}
 
 export type GetResponse = Work[];
 
-export type Methods = {
+export interface Methods {
   get: {
     resBody: GetResponse;
   };
-};
+}

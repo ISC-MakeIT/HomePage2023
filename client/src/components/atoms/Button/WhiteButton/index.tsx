@@ -1,9 +1,9 @@
-import { SerializedStyles, css } from '@emotion/react';
+import { type SerializedStyles, css } from '@emotion/react';
 
-type WhiteButtonProps = {
+interface WhiteButtonProps {
   children?: React.ReactNode;
   style?: SerializedStyles;
-};
+}
 
 export const WhiteButton = ({ children, style }: WhiteButtonProps) => {
   return (

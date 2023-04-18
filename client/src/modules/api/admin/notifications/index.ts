@@ -1,11 +1,11 @@
 import {
-  DeleteResponse,
-  GetResponse,
-  Notification,
-  PostRequest,
-  PostResponse,
-  PutRequest,
-  PutResponse,
+  type DeleteResponse,
+  type GetResponse,
+  type Notification,
+  type PostRequest,
+  type PostResponse,
+  type PutRequest,
+  type PutResponse,
 } from 'src/api/homePage/api/admin/notifications';
 import { homePageClient } from 'src/apiClient/homePage';
 
@@ -40,4 +40,4 @@ export const apiDeleteNotification = async (token: string, notificationId: numbe
   });
 };
 
-export type { GetResponse, Notification, PutResponse, DeleteResponse };
+export type { GetResponse, Notification, PostResponse, PutResponse, DeleteResponse };

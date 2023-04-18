@@ -2,9 +2,9 @@ import { css } from '@emotion/react';
 import { DiscordLogo } from 'src/components/atoms/IconWithTitle/Discord';
 import { BlackMediumText } from '../../Text/BlackMediumText';
 
-type IntroduceDiscordAccountProps = {
+interface IntroduceDiscordAccountProps {
   children?: React.ReactNode;
-};
+}
 
 export const IntroduceDiscordAccount = ({ children }: IntroduceDiscordAccountProps) => {
   if (!children) {

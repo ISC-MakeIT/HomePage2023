@@ -1,16 +1,16 @@
-import { ReadStream } from 'fs';
+import { type ReadStream } from 'fs';
 
-export type PostResponse = {
+export interface PostResponse {
   message?: string;
-  errors?: { [key: string]: string }[];
-};
+  errors?: Array<Record<string, string>>;
+}
 
-export type PostRequest = {
+export interface PostRequest {
   icon: File | ReadStream;
   _method: string;
-};
+}
 
-export type Methods = {
+export interface Methods {
   post: {
     reqFormat: FormData;
 
@@ -20,4 +20,4 @@ export type Methods = {
     reqBody: PostRequest;
     resBody: PostResponse;
   };
-};
+}

@@ -13,9 +13,9 @@ import { Link } from 'react-router-dom';
 import { USER_ROUTE_PATH_MAP } from 'src/routes/routePath';
 import { CONSTANT_CONTACT_CATEGORIE } from '../../constants/ContactCategories';
 
-type HeaderProps = {
+interface HeaderProps {
   isStartingLocationInThisPage: boolean;
-};
+}
 
 export const Header = ({ isStartingLocationInThisPage }: HeaderProps) => {
   const forStartingLocation = css`
@@ -30,7 +30,7 @@ export const Header = ({ isStartingLocationInThisPage }: HeaderProps) => {
     return (
       <>
         <Flex
-          spacing='1.5rem'
+          spacing="1.5rem"
           style={css`
             align-items: center;
           `}
@@ -51,22 +51,22 @@ export const Header = ({ isStartingLocationInThisPage }: HeaderProps) => {
         </Flex>
 
         <Flex
-          spacing='1rem'
+          spacing="1rem"
           style={css`
             align-items: center;
           `}
         >
           <GradientButtonWithIconAndArrow
             to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.EXPERIENCE}#contact`}
-            icon={<Man width='1.5rem' height='1.5rem' />}
-            gradientType='greenToBlue'
+            icon={<Man width="1.5rem" height="1.5rem" />}
+            gradientType="greenToBlue"
           >
             体験入部
           </GradientButtonWithIconAndArrow>
           <GradientButtonWithIconAndArrow
             to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.PROJECT}#contact`}
-            icon={<Woman width='1.5rem' height='1.5rem' />}
-            gradientType='redToOrange'
+            icon={<Woman width="1.5rem" height="1.5rem" />}
+            gradientType="redToOrange"
           >
             案件の依頼
           </GradientButtonWithIconAndArrow>
@@ -79,7 +79,7 @@ export const Header = ({ isStartingLocationInThisPage }: HeaderProps) => {
     return (
       <>
         <Flex
-          spacing='1.5rem'
+          spacing="1.5rem"
           style={css`
             align-items: center;
           `}
@@ -100,22 +100,22 @@ export const Header = ({ isStartingLocationInThisPage }: HeaderProps) => {
         </Flex>
 
         <Flex
-          spacing='1rem'
+          spacing="1rem"
           style={css`
             align-items: center;
           `}
         >
           <GradientButtonWithIconAndArrow
             to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.EXPERIENCE}#contact`}
-            icon={<Man width='1.5rem' height='1.5rem' />}
-            gradientType='greenToBlue'
+            icon={<Man width="1.5rem" height="1.5rem" />}
+            gradientType="greenToBlue"
           >
             体験入部
           </GradientButtonWithIconAndArrow>
           <GradientButtonWithIconAndArrow
             to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.PROJECT}#contact`}
-            icon={<Woman width='1.5rem' height='1.5rem' />}
-            gradientType='redToOrange'
+            icon={<Woman width="1.5rem" height="1.5rem" />}
+            gradientType="redToOrange"
           >
             案件の依頼
           </GradientButtonWithIconAndArrow>

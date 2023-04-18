@@ -17,7 +17,7 @@ export const DiscordLogo = () => {
           margin-right: 0.5rem;
         `}
       >
-        <Discord fill='#333' />
+        <Discord fill="#333" />
       </div>
       <p
         css={css`

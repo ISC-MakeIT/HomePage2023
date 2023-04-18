@@ -8,7 +8,7 @@ import { BackGroundImage } from 'src/components/atoms/Image/BackGroundImage';
 import { Stack } from 'src/components/atoms/Layout/Stack';
 import { BlackMediumText } from 'src/components/atoms/Text/BlackMediumText';
 
-type MemberProps = {
+interface MemberProps {
   name: string;
   skill: string;
   icon: string;
@@ -18,7 +18,7 @@ type MemberProps = {
     github?: string;
     description?: string;
   };
-};
+}
 
 export const Member = ({ name, skill, icon, content }: MemberProps) => {
   return (
@@ -48,13 +48,13 @@ export const Member = ({ name, skill, icon, content }: MemberProps) => {
             box-shadow: 0 4px 4px rgba(51, 51, 51, 0.25);
           `}
         >
-          <BackGroundImage width='100%' height='235px' image={icon} />
+          <BackGroundImage width="100%" height="235px" image={icon} />
         </div>
         <BlackSmallTitle>{name}</BlackSmallTitle>
         <GreyMediumBoldText>{skill}</GreyMediumBoldText>
 
         <Stack
-          spacing='1.5rem'
+          spacing="1.5rem"
           style={css`
             text-align: left;
           `}

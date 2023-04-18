@@ -1,5 +1,5 @@
-import { ReadStream } from 'fs';
-import { PostResponse } from 'src/api/homePage/api/admin/members/icon';
+import { type ReadStream } from 'fs';
+import { type PostResponse } from 'src/api/homePage/api/admin/members/icon';
 import { homePageClient } from 'src/apiClient/homePage';
 
 export const apiChangeIcon = async (token: string, icon: File | ReadStream): Promise<PostResponse> => {
@@ -9,3 +9,5 @@ export const apiChangeIcon = async (token: string, icon: File | ReadStream): Pro
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+export type { PostResponse };

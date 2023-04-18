@@ -1,4 +1,4 @@
-import { apiWork, GetResponse, Work as APIWork } from '@api/admin/works/work';
+import { apiWork, type GetResponse, type Work as APIWork } from '@api/admin/works/work';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 import { Work } from '../../presentationalComponents/Work';
 
-type WorkContainerProps = {
+interface WorkContainerProps {
   workId: number;
-};
+}
 
 export const WorkContainer = ({ workId }: WorkContainerProps) => {
   const [work, setWork] = useState<APIWork>();
@@ -30,9 +30,9 @@ export const WorkContainer = ({ workId }: WorkContainerProps) => {
 
         if (axios.isAxiosError(e)) {
           const status = e.response!.status;
-          const responseData: GetResponse = e.request!.data;
+          const responseData = e.response!.data as GetResponse;
 
-          if (status === 400 && responseData.message) {
+          if (status === 400 && responseData.message !== '') {
             setError(responseData.message);
             return;
           }
@@ -61,9 +61,8 @@ export const WorkContainer = ({ workId }: WorkContainerProps) => {
         }
 
         setError(
-          '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
+          '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。'
         );
-        return;
       }
     };
 
@@ -79,7 +78,7 @@ export const WorkContainer = ({ workId }: WorkContainerProps) => {
       const date = new Date(isoDate);
 
       return `${date.getFullYear()} ${twoDigitZeroPaddingBy(date.getMonth() + 1)}/${twoDigitZeroPaddingBy(
-        date.getDate(),
+        date.getDate()
       )} ${twoDigitZeroPaddingBy(date.getHours())}:${twoDigitZeroPaddingBy(date.getMinutes())}`;
     };
 
@@ -90,7 +89,7 @@ export const WorkContainer = ({ workId }: WorkContainerProps) => {
     };
   };
 
-  if (!work) {
+  if (work == null) {
     return <></>;
   }
 

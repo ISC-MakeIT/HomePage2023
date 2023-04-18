@@ -1,11 +1,11 @@
 import { Stack } from '@mui/material';
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { MenuContainer } from '../../organisms/admin/containerComponents/MenuContainer';
 
-type NavigationWithHeaderProps = {
+interface NavigationWithHeaderProps {
   children?: ReactNode;
   spacing?: number;
-};
+}
 
 export const NavigationWithHeader = ({ children, spacing = 2 }: NavigationWithHeaderProps) => {
   return (

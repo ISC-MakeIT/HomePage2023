@@ -1,4 +1,4 @@
-import { apiNotifications, Notification as APINotification } from '@api/user/notifications';
+import { apiNotifications, type Notification as APINotification } from '@api/user/notifications';
 import { useEffect, useState } from 'react';
 import { Notification } from '../../presentationalComponents/Notification';
 import { cdate } from 'cdate';
@@ -62,7 +62,7 @@ export const NotificationContainer = () => {
     main();
   }, []);
 
-  if (!notification) {
+  if (notification == null) {
     return <></>;
   }
   return <Notification {...notification} />;

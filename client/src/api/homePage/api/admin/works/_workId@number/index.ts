@@ -1,4 +1,4 @@
-export type Work = {
+export interface Work {
   workId: number;
   title: string;
   contents: string;
@@ -7,18 +7,18 @@ export type Work = {
   updatedAt: string;
   isActive: boolean;
   currentVersion: number;
-};
+}
 
 export type GetResponse = {
   message?: string;
-  errors?: { [key: string]: string }[];
+  errors?: Array<Record<string, string>>;
 } & Work;
 
-export type Methods = {
+export interface Methods {
   get: {
     reqHeaders: {
       Authorization: string;
     };
     resBody: GetResponse;
   };
-};
+}

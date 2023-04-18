@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AdminRoutes } from './adminRoutes';
-import { ADMIN_ROUTE_FULL_PATH_MAP, USER_ROUTE_PATH_MAP } from './routePath';
+import { ADMIN_ROUTE_FULL_PATH_MAP } from './routePath';
 import { UserRoutes } from './userRoutes';
 
 export const RouterConfig = () => {

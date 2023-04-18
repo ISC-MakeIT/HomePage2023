@@ -1,5 +1,5 @@
-export type Methods = {
+export interface Methods {
   get: {
     resBody: undefined;
   };
-};
+}
