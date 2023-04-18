@@ -4,11 +4,11 @@ import axios from 'axios';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { CreateNotificationModal } from '../../presentationalComponents/CreateNotificationModal';
 import { CreateNotificationFormInput } from '../../types/CreateNotificationFormInput';
-import { useRouter } from 'next/router';
 
 export const CreateNotificationModalContainer = () => {
   const {
@@ -22,7 +22,7 @@ export const CreateNotificationModalContainer = () => {
 
   const alert = useAlert();
   const userToken = useSelector(selectUserToken);
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const handleOpen = () => setIsActive(true);
   const handleClose = () => setIsActive(false);
@@ -34,7 +34,9 @@ export const CreateNotificationModalContainer = () => {
       reset();
       setIsActive(false);
 
-      router.push(ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS);
+      navigate(ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS, {
+        state: { refresh: true },
+      });
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const status = e.response!.status;

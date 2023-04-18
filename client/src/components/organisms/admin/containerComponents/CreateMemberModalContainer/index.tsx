@@ -5,11 +5,11 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { CreateMemberModal } from '../../presentationalComponents/CreateMemberModal';
 import { CreateMemberFormInput } from '../../types/CreateMemberFormInput';
-import { useRouter } from 'next/router';
 
 export const CreateMemberModalContainer = () => {
   const {
@@ -26,7 +26,7 @@ export const CreateMemberModalContainer = () => {
 
   const alert = useAlert();
   const userToken = useSelector(selectUserToken);
-  const router = useRouter();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const main = async () => {
@@ -81,7 +81,9 @@ export const CreateMemberModalContainer = () => {
       setIsActive(false);
       setIconForDisplay(undefined);
 
-      router.push(ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS);
+      navigate(ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS, {
+        state: { refresh: true },
+      });
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const status = e.response!.status;
