@@ -25,7 +25,7 @@ module.exports = {
     '@typescript-eslint',
     'unused-imports', //追加 使っていないimportを自動で削除用
   ],
-  ignorePatterns: ['build'], //追加 .eslintignoreに対象外にしているが無いとコンパイルに時間がかかる
+  ignorePatterns: ['build', '.eslintrc.js'], //追加 .eslintignoreに対象外にしているが無いとコンパイルに時間がかかる
   /*-- ↓以下追加 --*/
   rules: {
     'no-use-before-define': 'off', //関数や変数が定義される前に使われているとエラーになるデフォルトの機能をoff

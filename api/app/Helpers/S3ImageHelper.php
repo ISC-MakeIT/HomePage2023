@@ -30,8 +30,22 @@ class S3ImageHelper {
         $filePath         = $s3Storage->putFile($path, new File($tmpFileNameForThumbnail), 'public');
         $explodedFilePath = explode('/', $filePath);
         $fileName         = $explodedFilePath[count($explodedFilePath) - 1];
-        $s3Storage->putFileAs('image/icons', new File($tmpFileName), $fileName, 'public');
+        $s3Storage->putFileAs(str_replace('/thumbnail', '', $path), new File($tmpFileName), $fileName, 'public');
 
+        return $s3Storage->url($filePath);
+    }
+
+    public static function putImage(UploadedFile $image, string $path, int $quality = 80): string {
+        $now                     = date_format(CarbonImmutable::now(), 'YmdHis');
+        $name                    = str_replace(' ', '_', $image->getClientOriginalName());
+        $tmpFileName             = "/tmp/{$now}_{$name}";
+
+        InterventionImage::make($image)->save($tmpFileName, $quality, 'jpg');
+
+        /** @var \Illuminate\Filesystem\FilesystemAdapter */
+        $s3Storage = Storage::disk('s3');
+
+        $filePath = $s3Storage->putFile($path, new File($tmpFileName), 'public');
         return $s3Storage->url($filePath);
     }
 }

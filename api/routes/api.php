@@ -5,6 +5,7 @@ use App\Http\Controllers\Member\AdminMemberController;
 use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Notification\AdminNotificationController;
 use App\Http\Controllers\Notification\NotificationController;
+use App\Http\Controllers\OGP\AdminOGPController;
 use App\Http\Controllers\Work\AdminWorkController;
 use App\Http\Controllers\Work\WorkController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,13 @@ Route::prefix('/admin')->group(function () {
             Route::put('/', [AdminWorkController::class, 'edit']);
             Route::delete('/', [AdminWorkController::class, 'delete']);
             Route::get('/{workId}', [AdminWorkController::class, 'work']);
+        });
+        Route::prefix('/ogps')->group(function() {
+            Route::get('/', [AdminOGPController::class, 'OGPList']);
+            Route::post('/', [AdminOGPController::class, 'registerOGP']);
+            Route::put('/', [AdminOGPController::class, 'editOGP']);
+            Route::delete('/', [AdminOGPController::class, 'deleteOGP']);
+            Route::get('/detail', [AdminOGPController::class, 'OGP']);
         });
         Route::post('/logout', [AdminMemberController::class, 'logout'])->name('logout');
     });
