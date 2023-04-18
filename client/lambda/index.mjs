@@ -1,9 +1,9 @@
 import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
 
-const bots = ['Twitterbot', 'facebookexternalhit'];
-const FB_APP_ID = 'EZ9OONPN7OR4J';
-const DDB_TABLE_NAME = '';
-const URL_PREFIX = 'https://d1iftsw0yrgksz.cloudfront.net';
+const bots = ['Twitterbot', 'facebookexternalhit', 'Discordbot', 'Slackbot', 'ChatWork'];
+const FB_APP_ID = '';
+const DDB_TABLE_NAME = 'e';
+const URL_PREFIX = '';
 
 const dynamoDbClient = new DynamoDBClient({
   apiVersion: '2012-08-10',
@@ -17,14 +17,15 @@ export const handler = async (event, _, callback) => {
   const uri = request.uri;
   const userAgent = request.headers['user-agent'][0].value;
   console.log('userAgent', userAgent);
+  const url = `${URL_PREFIX}${uri}?${request.querystring}`
+  console.log('url', url)
 
   const isBot = bots.some((bot) => {
     return userAgent.includes(bot);
   });
 
   if (isBot) {
-    const url = new URL(`${URL_PREFIX}${uri}?${request.querystring}`);
-    const meta = await getMetaFrom(url.pathname);
+    const meta = await getMetaFrom(uri);
     const response = {
       status: '200',
       statusDescription: 'OK',
@@ -36,7 +37,7 @@ export const handler = async (event, _, callback) => {
           },
         ],
       },
-      body: getContent(url.toString(), meta),
+      body: getContent(url, meta),
     };
     callback(null, response);
     return;
@@ -87,13 +88,18 @@ const getMetaFrom = async (pathname) => {
       .send(
         new GetItemCommand({
           TableName: DDB_TABLE_NAME,
-          Key: { url: pathname },
+          Key: { url: { 'S': pathname } },
         }),
-      )
-      .promise();
-    return result.Item;
+      );
+    return {
+      url: result.Item['url']['S'],
+      title: result.Item['title']['S'],
+      description: result.Item['description']['S'],
+      keywords: result.Item['keywords']['S'],
+      thumbnail: result.Item['thumbnail']['S'],
+    };
   } catch (e) {
-    console.error('getInfo error', e);
+    console.error('getMetaFrom error', e);
     throw e;
   }
 };
