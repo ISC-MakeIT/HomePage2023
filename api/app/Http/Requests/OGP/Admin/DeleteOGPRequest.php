@@ -11,7 +11,7 @@ class DeleteOGPRequest extends FormRequest {
 
     public function rules(): array {
         return [
-            'url' => ['required', 'string', 'url'],
+            'url' => ['required', 'string', 'max:512'],
         ];
     }
 }

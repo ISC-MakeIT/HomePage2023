@@ -11,7 +11,7 @@ class RegisterOGPRequest extends FormRequest {
 
     public function rules(): array {
         return [
-            'url'         => ['required', 'string', 'url'],
+            'url'         => ['required', 'string', 'max:512'],
             'title'       => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:1000'],
             'keywords'    => ['required', 'string', 'max:1000'],

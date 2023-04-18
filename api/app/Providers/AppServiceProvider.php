@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider {
             ]);
         });
 
-        $this->app->bind(DynamoDbClient::class, function() {
+        $this->app->bind(DynamoDbClient::class, function () {
             $sdk = new Sdk([
                 'endpoint' => env('DYNAMO_ENDPOINT'),
                 'region'   => 'ap-northeast-1',

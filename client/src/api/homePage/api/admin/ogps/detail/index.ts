@@ -13,14 +13,14 @@ export interface GetRequest {
 export type GetResponse = {
   message?: string;
   errors?: Array<Record<string, string>>;
-} & OGP[];
+} & OGP;
 
 export interface Methods {
   get: {
     reqHeaders: {
       Authorization: string;
     };
-    reqBody: GetRequest;
+    query: GetRequest;
     resBody: GetResponse;
   };
 }

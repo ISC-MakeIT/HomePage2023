@@ -10,11 +10,11 @@ class OGPResources extends JsonResource {
         unset($request);
 
         return [
-            'url'         => $this->url,
-            'description' => $this->description,
-            'title'       => $this->title,
-            'keywords'    => $this->keywords,
-            'thumbnail'   => $this->thumbnail,
+            'url'         => $this['url'],
+            'description' => $this['description'],
+            'title'       => $this['title'],
+            'keywords'    => $this['keywords'],
+            'thumbnail'   => $this['thumbnail'],
         ];
     }
 }

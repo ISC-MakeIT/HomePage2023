@@ -28,6 +28,8 @@ class AdminOGPController extends Controller {
         $thumbnailUrl = S3ImageHelper::putImage(
             $request->file('thumbnail'),
             S3Path::OGP_THUMBNAIL->toString(),
+            1200,
+            630,
             15
         );
         OGP::insert(
@@ -49,6 +51,8 @@ class AdminOGPController extends Controller {
             $thumbnailUrl = S3ImageHelper::putImage(
                 $request->file('thumbnail'),
                 S3Path::OGP_THUMBNAIL->toString(),
+                1200,
+                630,
                 15
             );
             OGP::update(
@@ -61,7 +65,7 @@ class AdminOGPController extends Controller {
             return response()->json(['message' => 'OGPの編集に成功しました。']);
         }
 
-        $preOgp = OGP::findByUrl($validatedRequest['url']);
+        $preOgp       = OGP::findByUrl($validatedRequest['url']);
         $thumbnailUrl = $preOgp['thumbnail'];
         OGP::update(
             $validatedRequest['url'],

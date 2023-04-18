@@ -102,7 +102,7 @@ return [
     */
     'dynamodb' => [
         'end_point'   => env('DYNAMODB_END_POINT'),
-        'table_name' => env('DYNAMODB_TABLE_NAME'),
+        'table_name'  => env('DYNAMODB_TABLE_NAME'),
     ],
 
     /*

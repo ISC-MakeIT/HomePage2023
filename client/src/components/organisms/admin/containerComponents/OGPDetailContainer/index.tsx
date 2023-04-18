@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
-import { OGPList } from '../../presentationalComponents/OGPList';
-import { type GetResponse, type OGP, apiOGPList } from '@api/admin/ogps';
-import { useAppSelector } from '@redux/hooks';
+import { OGPDetail } from '../../presentationalComponents/OGPDetail';
+import { type OGP, apiOGP, type GetResponse } from '@api/admin/ogps/detail';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
+import { useAppSelector } from '@redux/hooks';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 import axios from 'axios';
 
-export const OGPListContainer = () => {
-  const [ogpList, setOgpList] = useState<OGP[]>();
+interface OGPDetailContainerProps {
+  url: string | null;
+}
+
+export const OGPDetailContainer = ({ url }: OGPDetailContainerProps) => {
+  const [ogp, setOgp] = useState<OGP>();
   const [error, setError] = useState<string>();
   const userToken = useAppSelector(selectUserToken);
 
@@ -18,8 +22,8 @@ export const OGPListContainer = () => {
       try {
         processingLine.show();
 
-        const response = await apiOGPList(userToken);
-        setOgpList(response);
+        const response = await apiOGP(userToken, { url: url! });
+        setOgp(response);
 
         processingLine.hide();
       } catch (e) {
@@ -66,5 +70,5 @@ export const OGPListContainer = () => {
     main();
   }, []);
 
-  return <OGPList ogpList={ogpList} error={error} />;
+  return <OGPDetail ogp={ogp} error={error} />;
 };

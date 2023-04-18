@@ -39,7 +39,7 @@ Route::prefix('/admin')->group(function () {
             Route::delete('/', [AdminWorkController::class, 'delete']);
             Route::get('/{workId}', [AdminWorkController::class, 'work']);
         });
-        Route::prefix('/ogps')->group(function() {
+        Route::prefix('/ogps')->group(function () {
             Route::get('/', [AdminOGPController::class, 'OGPList']);
             Route::post('/', [AdminOGPController::class, 'registerOGP']);
             Route::put('/', [AdminOGPController::class, 'editOGP']);

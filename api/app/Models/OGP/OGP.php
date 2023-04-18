@@ -8,9 +8,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class OGP {
     public static function dynamodbClient() {
         $sdk = new Sdk([
-            'endpoint' => config('database.dynamodb.endpoint'),
-            'region'   => config('filesystems.disks.s3.region'),
-            'version'  => 'latest',
+            'endpoint'    => config('database.dynamodb.endpoint'),
+            'region'      => config('filesystems.disks.s3.region'),
+            'version'     => 'latest',
             'credentials' => [
                 'key'    => config('filesystems.disks.s3.key'),
                 'secret' => config('filesystems.disks.s3.secret'),
@@ -25,7 +25,7 @@ class OGP {
         $response = $dynamodbClient->scan([
             "TableName" => config('database.dynamodb.table_name'),
         ]);
-        return array_map(function($item) {
+        return array_map(function ($item) {
             return [
                 'url'         => $item['url']['S'],
                 'description' => $item['description']['S'],
@@ -99,7 +99,7 @@ class OGP {
 
         $dynamodbClient->putItem([
             "TableName"                => config('database.dynamodb.table_name'),
-            'Item' => [
+            'Item'                     => [
                 'url'         => ['S' => $url],
                 'description' => ['S' => $description],
                 'title'       => ['S' => $title],
@@ -114,7 +114,7 @@ class OGP {
 
         $dynamodbClient->deleteItem([
             "TableName" => config('database.dynamodb.table_name'),
-            'Key' => [
+            'Key'       => [
                 'url' => ['S' => $url],
             ],
         ]);

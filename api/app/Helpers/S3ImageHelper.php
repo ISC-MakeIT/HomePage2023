@@ -35,12 +35,12 @@ class S3ImageHelper {
         return $s3Storage->url($filePath);
     }
 
-    public static function putImage(UploadedFile $image, string $path, int $quality = 80): string {
+    public static function putImage(UploadedFile $image, string $path, int $width, int $height, int $quality = 80): string {
         $now                     = date_format(CarbonImmutable::now(), 'YmdHis');
         $name                    = str_replace(' ', '_', $image->getClientOriginalName());
         $tmpFileName             = "/tmp/{$now}_{$name}";
 
-        InterventionImage::make($image)->save($tmpFileName, $quality, 'jpg');
+        InterventionImage::make($image)->fit($width, $height)->save($tmpFileName, $quality, 'jpg');
 
         /** @var \Illuminate\Filesystem\FilesystemAdapter */
         $s3Storage = Storage::disk('s3');
