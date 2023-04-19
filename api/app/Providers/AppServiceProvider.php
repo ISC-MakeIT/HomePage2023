@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Aws\DynamoDb\DynamoDbClient;
+use Aws\Sdk;
 use Aws\Ses\SesClient;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,6 +18,15 @@ class AppServiceProvider extends ServiceProvider {
                     'max_attempts' => 5,
                 ],
             ]);
+        });
+
+        $this->app->bind(DynamoDbClient::class, function () {
+            $sdk = new Sdk([
+                'endpoint' => env('DYNAMO_ENDPOINT'),
+                'region'   => 'ap-northeast-1',
+                'version'  => 'latest'
+            ]);
+            return $sdk->createDynamoDb();
         });
     }
 

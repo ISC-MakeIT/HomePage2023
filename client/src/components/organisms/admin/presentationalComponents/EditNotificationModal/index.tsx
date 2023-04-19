@@ -79,7 +79,7 @@ export const EditNotificationModal = ({
             defaultValue={notification.contents}
             {...register('contents', {
               required: '内容は必須項目です。',
-              maxLength: { value: 20000, message: '内容は255文字未満でなければなりません。' },
+              maxLength: { value: 20000, message: '内容は20000文字未満でなければなりません。' },
             })}
           />
 

@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use App\Exceptions\Helpers\FailSendMailException;
+use Aws\Exception\AwsException;
 use Aws\Ses\SesClient;
 
 class MailHelper {
@@ -15,28 +17,32 @@ class MailHelper {
         $senderEmail = 'makeit@gn.iwasaki.ac.jp';
         $charSet     = 'UTF-8';
 
-        $this->sesClient->sendEmail([
-            'Destination' => [
-                'ToAddresses' => $recipientEmails,
-            ],
-            'ReplyToAddresses' => [$senderEmail],
-            'Source'           => $senderEmail,
-            'Message'          => [
-                'Body' => [
-                    'Html' => [
-                        'Charset' => $charSet,
-                        'Data'    => $htmlBody,
+        try {
+            $this->sesClient->sendEmail([
+                'Destination' => [
+                    'ToAddresses' => $recipientEmails,
+                ],
+                'ReplyToAddresses' => [$senderEmail],
+                'Source'           => $senderEmail,
+                'Message'          => [
+                    'Body' => [
+                        'Html' => [
+                            'Charset' => $charSet,
+                            'Data'    => $htmlBody,
+                        ],
+                        'Text' => [
+                            'Charset' => $charSet,
+                            'Data'    => $plaintextBody,
+                        ],
                     ],
-                    'Text' => [
+                    'Subject' => [
                         'Charset' => $charSet,
-                        'Data'    => $plaintextBody,
+                        'Data'    => $subject,
                     ],
                 ],
-                'Subject' => [
-                    'Charset' => $charSet,
-                    'Data'    => $subject,
-                ],
-            ],
-        ]);
+            ]);
+        } catch (AwsException $e) {
+            throw new FailSendMailException();
+        }
     }
 }

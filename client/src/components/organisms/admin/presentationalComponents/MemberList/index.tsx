@@ -36,7 +36,7 @@ export const MemberList = ({ memberList, error }: MemberListProps) => {
   };
 
   const elseDefaultDisplayUnExist = (memberElement?: string) => {
-    if (memberElement === '') {
+    if (!memberElement || memberElement === '') {
       return '存在しません';
     }
     return memberElement;
