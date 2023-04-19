@@ -25,14 +25,13 @@ export const Member = ({ name, skill, icon, content }: MemberProps) => {
     <div
       css={css`
         background-color: #ffffff;
-        width: 22.6rem;
+        width: 25rem;
         transition: 0.5s;
         box-shadow: 0px 2px 5px #919191;
         line-height: 1.5;
         white-space: pre-wrap;
         word-break: break-all;
         text-align: center;
-        margin: 1.5rem auto;
         padding: 1.5rem 0;
       `}
     >

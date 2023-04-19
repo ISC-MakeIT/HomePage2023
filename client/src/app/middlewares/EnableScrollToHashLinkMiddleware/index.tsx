@@ -11,12 +11,14 @@ export const EnableScrollToHashLinkMiddleware = () => {
       return result;
     };
 
-    if (hash === '') {
+    if (hash !== '') {
       const element = document.getElementById(removeHashCharacter(hash));
-      element?.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'nearest',
-      });
+      setTimeout(() => {
+        element?.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'start',
+        });
+      }, 100);
     }
   }, [location]);
 

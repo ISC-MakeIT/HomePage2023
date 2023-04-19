@@ -21,6 +21,7 @@ export const Notifications = ({ notifications }: NotificationsProps) => {
     <div
       css={css`
         width: 100%;
+        background-color: #f8f9f9;
       `}
     >
       <Stack
