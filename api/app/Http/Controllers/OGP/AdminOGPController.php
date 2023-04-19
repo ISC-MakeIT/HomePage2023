@@ -30,7 +30,7 @@ class AdminOGPController extends Controller {
             S3Path::OGP_THUMBNAIL->toString(),
             1200,
             630,
-            15
+            20
         );
         OGP::insert(
             $validatedRequest['url'],
@@ -47,13 +47,13 @@ class AdminOGPController extends Controller {
 
         $validatedRequest = $request->validated();
 
-        if ($request->empty('thumbnail')) {
+        if ($request->has('thumbnail')) {
             $thumbnailUrl = S3ImageHelper::putImage(
                 $request->file('thumbnail'),
                 S3Path::OGP_THUMBNAIL->toString(),
                 1200,
                 630,
-                15
+                20
             );
             OGP::update(
                 $validatedRequest['url'],

@@ -5,12 +5,13 @@ import { useAppSelector } from '@redux/hooks';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 export const OGPListContainer = () => {
   const [ogpList, setOgpList] = useState<OGP[]>();
   const [error, setError] = useState<string>();
   const userToken = useAppSelector(selectUserToken);
-
+  const state = useLocation().state as { refresh?: boolean };
   const processingLine = useProcessingLine();
 
   useEffect(() => {
@@ -64,7 +65,7 @@ export const OGPListContainer = () => {
     };
 
     main();
-  }, []);
+  }, [state]);
 
   return <OGPList ogpList={ogpList} error={error} />;
 };

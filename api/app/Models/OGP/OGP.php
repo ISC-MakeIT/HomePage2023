@@ -98,8 +98,8 @@ class OGP {
         $dynamodbClient = self::dynamoDbClient();
 
         $dynamodbClient->putItem([
-            "TableName"                => config('database.dynamodb.table_name'),
-            'Item'                     => [
+            "TableName" => config('database.dynamodb.table_name'),
+            'Item'      => [
                 'url'         => ['S' => $url],
                 'description' => ['S' => $description],
                 'title'       => ['S' => $title],

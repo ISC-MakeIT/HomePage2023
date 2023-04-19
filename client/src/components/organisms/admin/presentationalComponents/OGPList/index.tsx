@@ -1,4 +1,4 @@
-import { Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { type OGP } from 'src/api/homePage/api/admin/ogps';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
@@ -10,13 +10,6 @@ interface OGPListProps {
 }
 
 export const OGPList = ({ ogpList, error }: OGPListProps) => {
-  const keywordsToChips = (keywords: string) => {
-    const splittedKeywords = keywords.split(',');
-    return splittedKeywords.map((splittedKeyword, index) => (
-      <Chip key={index} label={splittedKeyword} variant="outlined" />
-    ));
-  };
-
   const OGPListForTableBody = () => {
     return (
       <>
@@ -37,7 +30,16 @@ export const OGPList = ({ ogpList, error }: OGPListProps) => {
             <TableCell sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '15rem' }}>
               {ogp.description}
             </TableCell>
-            <TableCell sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>{keywordsToChips(ogp.keywords)}</TableCell>
+            <TableCell
+              sx={{
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                maxWidth: '15rem',
+              }}
+            >
+              {ogp.keywords}
+            </TableCell>
             <TableCell>{ogp.thumbnail}</TableCell>
           </TableRow>
         ))}
