@@ -44,7 +44,7 @@ export const Modal = ({ width, height, children, handleClose }: ModalProps) => {
             rgba(0, 0, 0, 0.12) 0px 9px 46px 8px;
           padding: 2rem;
           width: ${width ?? '37.5rem'};
-          height: ${height ?? '37.5rem'};
+          height: ${height ?? 'auto'};
         `}
       >
         <FontAwesomeIcon
