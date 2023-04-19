@@ -1,4 +1,8 @@
-import { apiNotification, GetResponse, Notification as APINotification } from '@api/admin/notifications/notification';
+import {
+  apiNotification,
+  type GetResponse,
+  type Notification as APINotification,
+} from '@api/admin/notifications/notification';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
@@ -6,9 +10,9 @@ import { useEffect, useState } from 'react';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 import { Notification } from '../../presentationalComponents/Notification';
 
-type NotificationContainerProps = {
+interface NotificationContainerProps {
   notificationId: number;
-};
+}
 
 export const NotificationContainer = ({ notificationId }: NotificationContainerProps) => {
   const [notification, setNotification] = useState<APINotification>();
@@ -30,9 +34,9 @@ export const NotificationContainer = ({ notificationId }: NotificationContainerP
 
         if (axios.isAxiosError(e)) {
           const status = e.response!.status;
-          const responseData: GetResponse = e.request!.data;
+          const responseData = e.response!.data as GetResponse;
 
-          if (status === 400 && responseData.message) {
+          if (status === 400 && responseData.message !== '') {
             setError(responseData.message);
             return;
           }
@@ -61,9 +65,8 @@ export const NotificationContainer = ({ notificationId }: NotificationContainerP
         }
 
         setError(
-          '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
+          '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。'
         );
-        return;
       }
     };
 
@@ -79,7 +82,7 @@ export const NotificationContainer = ({ notificationId }: NotificationContainerP
       const date = new Date(isoDate);
 
       return `${date.getFullYear()} ${twoDigitZeroPaddingBy(date.getMonth() + 1)}/${twoDigitZeroPaddingBy(
-        date.getDate(),
+        date.getDate()
       )} ${twoDigitZeroPaddingBy(date.getHours())}:${twoDigitZeroPaddingBy(date.getMinutes())}`;
     };
 
@@ -90,7 +93,7 @@ export const NotificationContainer = ({ notificationId }: NotificationContainerP
     };
   };
 
-  if (!notification) {
+  if (notification == null) {
     return <></>;
   }
 

@@ -11,6 +11,8 @@ import { ADMIN_ROUTE_PATH_MAP } from '../routePath';
 import { OnlyLoggedInMemberMiddleware } from 'src/app/middlewares/OnlyLoggedInMemberMiddleware';
 import { Work } from 'src/components/pages/admin/works/workId';
 import { MyPage } from 'src/components/pages/admin/mypage';
+import { OGPSetting } from 'src/components/pages/admin/ogpSetting';
+import { OGPDetail } from 'src/components/pages/admin/ogpSetting/detail';
 
 export const AdminRoutes = () => {
   return (
@@ -18,8 +20,11 @@ export const AdminRoutes = () => {
       <Route path={ADMIN_ROUTE_PATH_MAP.TOP} element={<Home />} />
       <Route path={ADMIN_ROUTE_PATH_MAP.LOGIN} element={<Login />} />
 
-      <Route path='/' element={<OnlyLoggedInMemberMiddleware />}>
+      <Route path="/" element={<OnlyLoggedInMemberMiddleware />}>
         <Route path={ADMIN_ROUTE_PATH_MAP.LOGOUT} element={<Logout />} />
+
+        <Route path={ADMIN_ROUTE_PATH_MAP.OGP_SETTING} element={<OGPSetting />} />
+        <Route path={`${ADMIN_ROUTE_PATH_MAP.OGP_SETTING}/detail`} element={<OGPDetail />} />
 
         <Route path={ADMIN_ROUTE_PATH_MAP.WORKS} element={<Works />} />
         <Route path={`${ADMIN_ROUTE_PATH_MAP.WORKS}/:workId`} element={<Work />} />
@@ -29,6 +34,8 @@ export const AdminRoutes = () => {
 
         <Route path={ADMIN_ROUTE_PATH_MAP.MEMBERS} element={<Members />} />
         <Route path={`${ADMIN_ROUTE_PATH_MAP.MEMBERS}/:memberId`} element={<Member />} />
+
+        <Route path={ADMIN_ROUTE_PATH_MAP.NOTIFICATIONS} element={<Notifications />} />
 
         <Route path={`${ADMIN_ROUTE_PATH_MAP.MYPAGE}`} element={<MyPage />} />
       </Route>

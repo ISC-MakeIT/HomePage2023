@@ -1,5 +1,5 @@
-import { GetResponse, Role } from 'src/api/homePage/api/admin/members/roles';
-import { PutResponse } from 'src/api/homePage/api/admin/members/role';
+import { type GetResponse, type Role } from 'src/api/homePage/api/admin/members/roles';
+import { type PutResponse } from 'src/api/homePage/api/admin/members/role';
 import { homePageClient } from 'src/apiClient/homePage';
 
 export const apiRoles = async (token: string): Promise<GetResponse> => {

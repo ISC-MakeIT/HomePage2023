@@ -5,10 +5,10 @@ import { RedMediumBoldText } from 'src/components/atoms/Text/RedMediumBoldText';
 import { WhiteMediumBoldText } from 'src/components/atoms/Text/WhiteMediumBoldText';
 import { maxScreen } from 'src/modules/helpers/mediaQueries';
 
-type NotificationProps = {
+interface NotificationProps {
   title: string;
   createdAt: string;
-};
+}
 
 export const Notification = ({ title, createdAt }: NotificationProps) => {
   return (
@@ -28,7 +28,7 @@ export const Notification = ({ title, createdAt }: NotificationProps) => {
       `}
     >
       <Flex
-        spacing='2rem'
+        spacing="2rem"
         style={css`
           align-items: center;
         `}

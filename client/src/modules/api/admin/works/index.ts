@@ -1,11 +1,11 @@
 import {
-  DeleteResponse,
-  GetResponse,
-  Work,
-  PostRequest,
-  PostResponse,
-  PutRequest,
-  PutResponse,
+  type DeleteResponse,
+  type GetResponse,
+  type Work,
+  type PostRequest,
+  type PostResponse,
+  type PutRequest,
+  type PutResponse,
 } from 'src/api/homePage/api/admin/works';
 import { homePageClient } from 'src/apiClient/homePage';
 
@@ -40,4 +40,4 @@ export const apiDeleteWork = async (token: string, workId: number): Promise<Dele
   });
 };
 
-export type { GetResponse, Work, PutResponse, DeleteResponse };
+export type { GetResponse, Work, PostResponse, PutResponse, DeleteResponse };

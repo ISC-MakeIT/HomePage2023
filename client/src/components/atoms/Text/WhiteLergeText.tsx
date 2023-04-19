@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 
-type WhiteLergeTextProps = {
+interface WhiteLergeTextProps {
   children: React.ReactNode;
-};
+}
 
 export const WhiteLergeText = ({ children }: WhiteLergeTextProps) => {
   return (

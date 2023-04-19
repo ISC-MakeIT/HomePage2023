@@ -1,10 +1,10 @@
 import { GreyMediumText } from 'src/components/atoms/Text/GreyMediumText';
 import { BlueMediumTitle } from 'src/components/atoms/Title/BlueMediumTitle';
 
-type SectionTitleProps = {
+interface SectionTitleProps {
   title: string;
   description: string;
-};
+}
 
 export const SectionTitle = ({ title, description }: SectionTitleProps) => {
   return (

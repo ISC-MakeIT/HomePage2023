@@ -3,9 +3,9 @@ import { initProcessingLineState, selectProcessingLine } from '@redux/actions/pr
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { useEffect } from 'react';
 
-type ProcessingLineProviderProps = {
+interface ProcessingLineProviderProps {
   children?: React.ReactNode;
-};
+}
 
 export const ProcessingLineProvider = ({ children }: ProcessingLineProviderProps) => {
   const proccessingLineState = useAppSelector(selectProcessingLine);
@@ -19,7 +19,7 @@ export const ProcessingLineProvider = ({ children }: ProcessingLineProviderProps
     return (
       <>
         {children}
-        <LinearProgress color='primary' size='md' sx={{ position: 'fixed', top: 2, left: 0, width: '100vw' }} />
+        <LinearProgress color="primary" size="md" sx={{ position: 'fixed', top: 2, left: 0, width: '100vw' }} />
       </>
     );
   }

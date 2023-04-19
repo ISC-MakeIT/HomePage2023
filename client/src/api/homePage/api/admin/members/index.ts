@@ -1,6 +1,6 @@
-import { ReadStream } from 'fs';
+import { type ReadStream } from 'fs';
 
-export type Member = {
+export interface Member {
   memberId: number;
   name: string;
   jobTitle: string;
@@ -13,14 +13,14 @@ export type Member = {
   roleId: number;
   roleName: string;
   isActive: boolean;
-};
+}
 
 export type GetResponse = {
   message?: string;
-  errors?: { [key: string]: string }[];
+  errors?: Array<Record<string, string>>;
 } & Member[];
 
-export type PostRequest = {
+export interface PostRequest {
   name: string;
   jobTitle: string;
   roleId: number;
@@ -31,14 +31,14 @@ export type PostRequest = {
   icon: File | ReadStream;
   username: string;
   password: string;
-};
+}
 
-export type PostResponse = {
+export interface PostResponse {
   message?: string;
-  errors?: { [key: string]: string }[];
-};
+  errors?: Array<Record<string, string>>;
+}
 
-export type PutRequest = {
+export interface PutRequest {
   name: string;
   jobTitle: string;
   discord?: string;
@@ -46,23 +46,23 @@ export type PutRequest = {
   github?: string;
   description: string;
   isActive: boolean;
-};
+}
 
-export type PutResponse = {
+export interface PutResponse {
   message?: string;
-  errors?: { [key: string]: string }[];
-};
+  errors?: Array<Record<string, string>>;
+}
 
-export type DeleteRequest = {
+export interface DeleteRequest {
   memberId: number;
-};
+}
 
-export type DeleteResponse = {
+export interface DeleteResponse {
   message?: string;
-  errors?: { [key: string]: string }[];
-};
+  errors?: Array<Record<string, string>>;
+}
 
-export type Methods = {
+export interface Methods {
   get: {
     reqHeaders: {
       Authorization: string;
@@ -95,4 +95,4 @@ export type Methods = {
     reqBody: DeleteRequest;
     resBody: DeleteResponse;
   };
-};
+}

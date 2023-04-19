@@ -12,11 +12,15 @@ export const HeaderContainer = () => {
   const { width } = useWindowSize();
   const [isOpenedMenu, setIsOpenedMenu] = useState(false);
 
-  if (768 >= width) {
+  if (width <= 768) {
     return (
       <HeaderForMobile
-        handleOpen={() => setIsOpenedMenu(true)}
-        handleClose={() => setIsOpenedMenu(false)}
+        handleOpen={() => {
+          setIsOpenedMenu(true);
+        }}
+        handleClose={() => {
+          setIsOpenedMenu(false);
+        }}
         isOpenedMenu={isOpenedMenu}
       />
     );

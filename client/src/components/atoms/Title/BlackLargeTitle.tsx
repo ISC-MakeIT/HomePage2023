@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 
-type BlackLargeTitleProps = {
+interface BlackLargeTitleProps {
   children: React.ReactNode;
-};
+}
 
 export const BlackLargeTitle = ({ children }: BlackLargeTitleProps) => {
   return (

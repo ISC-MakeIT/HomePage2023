@@ -1,9 +1,9 @@
-import { SerializedStyles, css } from '@emotion/react';
+import { type SerializedStyles, css } from '@emotion/react';
 
-type WhiteLergeTitleProps = {
+interface WhiteLergeTitleProps {
   children: React.ReactNode;
   style?: SerializedStyles;
-};
+}
 
 export const WhiteLergeTitle = ({ children, style }: WhiteLergeTitleProps) => {
   return (

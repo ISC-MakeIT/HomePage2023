@@ -1,7 +1,5 @@
-import { Work as APIWork } from '@api/user/works';
+import { type Work as APIWork } from '@api/user/works';
 import { css } from '@emotion/react';
-import { Link } from 'react-router-dom';
-import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
 import { USER_ROUTE_PATH_MAP } from 'src/routes/routePath';
 import { Work as WorkComponent } from 'src/components/molecules/user/Work';
 import { AccessToList } from 'src/components/molecules/user/Button/AccessToList';
@@ -12,7 +10,7 @@ type WorkProps = APIWork;
 export const Work = (work: WorkProps) => {
   return (
     <section
-      id='work'
+      id="work"
       css={css`
         background-image: url(/work_background.png);
         background-position: center;

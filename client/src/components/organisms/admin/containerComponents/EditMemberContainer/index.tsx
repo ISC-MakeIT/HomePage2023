@@ -1,22 +1,22 @@
-import { Member } from '@api/admin/members';
+import { type PutResponse, type Member } from '@api/admin/members';
 import { apiChangeActive } from '@api/admin/members/active';
 import { apiMember } from '@api/admin/members/member';
-import { apiChangeRole, apiRoles, Role } from '@api/admin/members/roles';
+import { apiChangeRole, apiRoles, type Role } from '@api/admin/members/roles';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { EditMember } from '../../presentationalComponents/EditMember';
-import { EditMemberFormInput } from '../../types/EditMemberFormInput';
+import { type EditMemberFormInput } from '../../types/EditMemberFormInput';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 
-type EditMemberContainerProps = {
+interface EditMemberContainerProps {
   memberId: number;
-};
+}
 
 export const EditMemberContainer = ({ memberId }: EditMemberContainerProps) => {
   const [member, setMember] = useState<Member>();
@@ -44,7 +44,7 @@ export const EditMemberContainer = ({ memberId }: EditMemberContainerProps) => {
         processingLine.hide();
 
         if (axios.isAxiosError(e)) {
-          const responseData = e.response!.data;
+          const responseData = e.response!.data as PutResponse;
           const status = e.response!.status;
 
           if (status === 400) {
@@ -66,14 +66,14 @@ export const EditMemberContainer = ({ memberId }: EditMemberContainerProps) => {
             return;
           }
 
-          if (responseData.message) {
+          if (responseData.message !== '') {
             setError(responseData.message!);
             return;
           }
         }
 
         setError(
-          '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
+          '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。'
         );
       }
     };
@@ -86,7 +86,7 @@ export const EditMemberContainer = ({ memberId }: EditMemberContainerProps) => {
       const changeActivityResponse = await apiChangeActive(
         userToken,
         memberId,
-        editMemberFormInput.activityState === 'active',
+        editMemberFormInput.activityState === 'active'
       );
       alert.show({
         type: 'success',
@@ -102,10 +102,10 @@ export const EditMemberContainer = ({ memberId }: EditMemberContainerProps) => {
       navigate(ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS);
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        const responseData = e.response!.data;
+        const responseData = e.response!.data as PutResponse;
         const status = e.response!.status;
 
-        if (status === 400 && responseData.message) {
+        if (status === 400 && responseData.message !== '') {
           alert.show({
             type: 'error',
             content: responseData.message!,
@@ -133,19 +133,19 @@ export const EditMemberContainer = ({ memberId }: EditMemberContainerProps) => {
           return;
         }
 
-        if (responseData.message) {
+        if (responseData.message !== '') {
           setError(responseData.message!);
           return;
         }
       }
 
       setError(
-        '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
+        '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。'
       );
     }
   };
 
-  if (!member) {
+  if (member == null) {
     return <></>;
   }
 

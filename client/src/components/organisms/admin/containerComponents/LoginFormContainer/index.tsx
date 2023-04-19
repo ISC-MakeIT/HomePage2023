@@ -1,13 +1,13 @@
-import { apiLogin, Response } from '@api/admin/members/login';
+import { apiLogin, type Response } from '@api/admin/members/login';
 import { AxiosError } from 'axios';
 import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { setToken } from '@redux/actions/user/userTokenReducer';
 import { useAppDispatch } from '@redux/hooks';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from '../../../../../routes/routePath';
 import { LoginForm } from '../../presentationalComponents/LoginForm';
-import { LoginFormInput } from '../../types/LoginFormInput';
+import { type LoginFormInput } from '../../types/LoginFormInput';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { setUserId } from '@redux/actions/user/userIdReducer';
 
@@ -21,35 +21,33 @@ export const LoginFormContainer = () => {
   const handleLogin: SubmitHandler<LoginFormInput> = async (loginFormInput) => {
     try {
       const response = await apiLogin(loginFormInput);
-      dispatch(setToken(response.token));
-      dispatch(setUserId(response.memberId));
+      dispatch(setToken(response.token!));
+      dispatch(setUserId(response.memberId!));
       alert.show({
         type: 'success',
         content: response.message!,
       });
       navigation(ADMIN_ROUTE_FULL_PATH_MAP.TOP);
-    } catch (err) {
-      const isNotAxiosError = () => !(err instanceof AxiosError);
+    } catch (e) {
+      const isNotAxiosError = () => !(e instanceof AxiosError);
 
       if (isNotAxiosError()) {
         setError(
-          '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
+          '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。'
         );
         return;
       }
 
-      const axiosErr = err as AxiosError;
+      const axiosError = e as AxiosError;
 
-      const isFailedLogin = () => axiosErr.response && axiosErr.response.data;
-
-      if (isFailedLogin()) {
-        const response: Response = axiosErr.response!.data!;
+      if (axiosError.response !== undefined) {
+        const response = axiosError.response.data as Response;
         setError(response.message);
         return;
       }
 
       setError(
-        '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
+        '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。'
       );
     }
   };

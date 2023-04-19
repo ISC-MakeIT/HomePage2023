@@ -4,7 +4,7 @@ import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { GetResponse, Notification } from 'src/api/homePage/api/admin/notifications';
+import { type GetResponse, type Notification } from 'src/api/homePage/api/admin/notifications';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { NotificationList } from '../../presentationalComponents/NotificationList';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
@@ -14,7 +14,7 @@ export const NotificationListContainer = () => {
 
   const alert = useAlert();
   const userToken = useAppSelector(selectUserToken);
-  const state: { refresh?: boolean } = useLocation().state;
+  const state = useLocation().state as { refresh?: boolean };
   const proccessingLine = useProcessingLine();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export const NotificationListContainer = () => {
 
         if (axios.isAxiosError(e)) {
           const status = e.response!.status;
-          const responseData: GetResponse = e.response!.data;
+          const responseData = e.response!.data as GetResponse;
 
           if (status === 401) {
             return;
@@ -57,7 +57,6 @@ export const NotificationListContainer = () => {
           content:
             '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
         });
-        return;
       }
     };
 

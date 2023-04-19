@@ -1,15 +1,15 @@
-import { Member } from '..';
+import { type Member } from '..';
 
-export type Response = {
+export type GetResponse = {
   message?: string;
-  errors?: { [key: string]: string }[];
+  errors?: Array<Record<string, string>>;
 } & Member;
 
-export type Methods = {
+export interface Methods {
   get: {
     reqHeaders: {
       Authorization: string;
     };
-    resBody: Response;
+    resBody: GetResponse;
   };
-};
+}

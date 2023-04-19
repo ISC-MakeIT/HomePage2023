@@ -1,28 +1,28 @@
-import { Member } from '@api/admin/members';
+import { type Member } from '@api/admin/members';
 import { css } from '@emotion/react';
-import { faEye, faEyeSlash, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 
-type MemberListProps = {
+interface MemberListProps {
   memberList: Member[];
   error?: string;
-};
+}
 
 export const MemberList = ({ memberList, error }: MemberListProps) => {
   const getMemberActivityStateBy = (isActive: boolean) => {
     if (isActive) {
       return (
-        <Stack flexDirection='row' columnGap='0.5rem' alignItems='center'>
+        <Stack flexDirection="row" columnGap="0.5rem" alignItems="center">
           <FontAwesomeIcon color={colors.green[800]} icon={faEye} /> 公開
         </Stack>
       );
     }
     return (
-      <Stack flexDirection='row' columnGap='0.5rem' alignItems='center'>
+      <Stack flexDirection="row" columnGap="0.5rem" alignItems="center">
         <FontAwesomeIcon color={colors.grey.A700} icon={faEyeSlash} /> 非公開
       </Stack>
     );

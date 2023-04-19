@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
+import { type RootState } from '../../store';
 import { ACTION_TYPES } from '../actionTypes';
 
 const proccessingLineSlice = createSlice({

@@ -12,7 +12,9 @@ export const useWindowSize = () => {
     };
     window.addEventListener('resize', onResize);
 
-    return () => window.removeEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('resize', onResize);
+    };
   }, [window.innerWidth, window.innerHeight]);
 
   return size;

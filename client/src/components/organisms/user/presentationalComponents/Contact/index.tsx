@@ -1,18 +1,18 @@
 import { css } from '@emotion/react';
-import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form';
+import { type FieldErrors, type SubmitHandler, type UseFormHandleSubmit, type UseFormRegister } from 'react-hook-form';
 import { Woman } from 'src/components/atoms/Button/Icon/Woman';
 import { GradientButtonWithIconAndArrow } from 'src/components/molecules/user/Button/GradientButtonWithIconAndArrow';
-import { ContactFormInput } from '../../types/ContactFormInput';
+import { type ContactFormInput } from '../../types/ContactFormInput';
 import { TextField } from 'src/components/molecules/user/Input/TextField';
 import { Flex } from 'src/components/atoms/Layout/Flex';
 import { Stack } from 'src/components/atoms/Layout/Stack';
 import { WhiteLergeTitle } from 'src/components/atoms/Title/WhiteLergeTitle';
-import { Option, Select } from 'src/components/molecules/user/Input/Select';
+import { type Option, Select } from 'src/components/molecules/user/Input/Select';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { AlertForSuccess } from 'src/components/molecules/admin/AlertForSuccess';
 import { maxScreen } from 'src/modules/helpers/mediaQueries';
 
-type ContactProps = {
+interface ContactProps {
   register: UseFormRegister<ContactFormInput>;
   handleSubmit: UseFormHandleSubmit<ContactFormInput>;
   handleContact: SubmitHandler<ContactFormInput>;
@@ -22,7 +22,7 @@ type ContactProps = {
   success?: string;
 
   contactCategories: Option[];
-};
+}
 
 export const Contact = ({
   register,
@@ -35,7 +35,7 @@ export const Contact = ({
 }: ContactProps) => {
   return (
     <section
-      id='contact'
+      id="contact"
       css={css`
         background-color: #f15b5b;
         padding: 2.5rem 6.25rem 5rem 6.25rem;
@@ -98,9 +98,9 @@ export const Contact = ({
           `}
           onSubmit={handleSubmit(handleContact)}
         >
-          <Stack spacing='3rem'>
+          <Stack spacing="3rem">
             <TextField
-              label='メールアドレス'
+              label="メールアドレス"
               isErrored={'email' in errors}
               error={errors.email?.message}
               inputElementProps={{
@@ -112,7 +112,7 @@ export const Contact = ({
               }}
             />
             <TextField
-              label='お名前(ニックネーム可)'
+              label="お名前(ニックネーム可)"
               isErrored={'name' in errors}
               error={errors.name?.message}
               inputElementProps={{
@@ -124,7 +124,7 @@ export const Contact = ({
               }}
             />
             <Select
-              label='お問い合わせカテゴリ'
+              label="お問い合わせカテゴリ"
               isErrored={'category' in errors}
               error={errors.category?.message}
               options={contactCategories}
@@ -143,9 +143,9 @@ export const Contact = ({
             `}
           >
             <GradientButtonWithIconAndArrow
-              buttonType='submit'
-              icon={<Woman width='1.5rem' height='1.5rem' />}
-              gradientType='redToOrange'
+              buttonType="submit"
+              icon={<Woman width="1.5rem" height="1.5rem" />}
+              gradientType="redToOrange"
             >
               この内容で送信する
             </GradientButtonWithIconAndArrow>

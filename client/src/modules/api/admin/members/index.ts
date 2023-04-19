@@ -1,12 +1,12 @@
 import { homePageClient } from 'src/apiClient/homePage';
 import {
-  DeleteResponse,
-  GetResponse,
-  Member,
-  PostRequest,
-  PostResponse,
-  PutRequest,
-  PutResponse,
+  type DeleteResponse,
+  type GetResponse,
+  type Member,
+  type PostRequest,
+  type PostResponse,
+  type PutRequest,
+  type PutResponse,
 } from '../../../../api/homePage/api/admin/members';
 
 export const apiMembers = async (token: string): Promise<GetResponse> => {

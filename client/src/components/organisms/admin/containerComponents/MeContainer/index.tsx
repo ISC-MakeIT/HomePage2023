@@ -1,4 +1,4 @@
-import { Member as APIMember } from '@api/admin/members';
+import { type Member as APIMember } from '@api/admin/members';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
@@ -6,14 +6,14 @@ import { useEffect, useState } from 'react';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 import { Member } from '../../presentationalComponents/Member';
 import { useLocation } from 'react-router-dom';
-import { apiMe } from '@api/admin/members/me';
+import { type GetResponse, apiMe } from '@api/admin/members/me';
 
 export const MeContainer = () => {
   const [member, setMember] = useState<APIMember>();
   const [error, setError] = useState<string>('');
   const userToken = useAppSelector(selectUserToken);
   const proccessingLine = useProcessingLine();
-  const state: { refresh?: boolean } = useLocation().state;
+  const state = useLocation().state as { refresh?: boolean };
 
   useEffect(() => {
     const main = async () => {
@@ -28,7 +28,7 @@ export const MeContainer = () => {
         proccessingLine.hide();
 
         if (axios.isAxiosError(e)) {
-          const responseData = e.response!.data;
+          const responseData = e.response!.data as GetResponse;
           const status = e.response!.status;
 
           if (status === 400) {
@@ -50,14 +50,14 @@ export const MeContainer = () => {
             return;
           }
 
-          if (responseData.message) {
+          if (responseData.message !== '') {
             setError(responseData.message!);
             return;
           }
         }
 
         setError(
-          '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
+          '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。'
         );
       }
     };
@@ -67,7 +67,7 @@ export const MeContainer = () => {
 
   const processMemberFrom = (preMember: APIMember) => {
     const elseDefaultDisplayUnExist = (memberElement?: string) => {
-      if (!memberElement || memberElement === '') {
+      if (memberElement === '') {
         return '存在しません';
       }
       return memberElement;
@@ -81,7 +81,7 @@ export const MeContainer = () => {
     };
   };
 
-  if (!member) {
+  if (member == null) {
     return <></>;
   }
 

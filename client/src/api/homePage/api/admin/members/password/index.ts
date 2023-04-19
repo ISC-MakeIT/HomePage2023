@@ -1,14 +1,14 @@
-export type PutResponse = {
+export interface PutResponse {
   message?: string;
-  errors?: { [key: string]: string }[];
-};
+  errors?: Array<Record<string, string>>;
+}
 
-export type PutRequest = {
+export interface PutRequest {
   oldPassword: string;
   newPassword: string;
-};
+}
 
-export type Methods = {
+export interface Methods {
   put: {
     reqHeaders: {
       Authorization: string;
@@ -16,4 +16,4 @@ export type Methods = {
     reqBody: PutRequest;
     resBody: PutResponse;
   };
-};
+}

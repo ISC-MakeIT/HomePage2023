@@ -1,4 +1,4 @@
-import { ACTIVITY_STATE_CONSTANT, EditWorkFormInput } from '../../types/EditWorkFormInput';
+import { ACTIVITY_STATE_CONSTANT, type EditWorkFormInput } from '../../types/EditWorkFormInput';
 import { faEdit, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -13,14 +13,14 @@ import {
   Typography,
   colors,
 } from '@mui/material';
-import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form';
+import { type FieldErrors, type SubmitHandler, type UseFormHandleSubmit, type UseFormRegister } from 'react-hook-form';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { Modal } from 'src/components/molecules/admin/Modal';
-import { Work } from '@api/admin/works/work';
-import { ChangeEventHandler, useRef } from 'react';
+import { type Work } from '@api/admin/works/work';
+import { type ChangeEventHandler, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-type EditWorkModalProps = {
+interface EditWorkModalProps {
   isActive: boolean;
   handleOpen: () => void;
   handleClose: () => void;
@@ -36,7 +36,7 @@ type EditWorkModalProps = {
   errors: FieldErrors<EditWorkFormInput>;
 
   error?: string;
-};
+}
 
 export const EditWorkModal = ({
   isActive,
@@ -54,7 +54,7 @@ export const EditWorkModal = ({
   const inputForFileUpload = useRef<HTMLInputElement>(null);
   const onChangeInput: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { files } = e.target;
-    if (!files) {
+    if (files == null) {
       return;
     }
 
@@ -66,8 +66,8 @@ export const EditWorkModal = ({
       <Button
         onClick={handleOpen}
         sx={{ display: 'flex', columnGap: 1, width: '6rem' }}
-        color='primary'
-        variant='outlined'
+        color="primary"
+        variant="outlined"
       >
         <FontAwesomeIcon icon={faEdit} />
         編集
@@ -77,16 +77,16 @@ export const EditWorkModal = ({
         <AlertForError error={error} />
 
         <Box>
-          <Typography variant='h6' component='h2'>
+          <Typography variant="h6" component="h2">
             お知らせを編集
           </Typography>
           <FormHelperText>お知らせの編集を行います。</FormHelperText>
         </Box>
 
-        <Stack component='form' onSubmit={handleSubmit(handleEditWork)} spacing={4}>
+        <Stack component="form" onSubmit={handleSubmit(handleEditWork)} spacing={4}>
           <Stack flexDirection={'row'} columnGap={2}>
             <Stack spacing={1.5}>
-              <Link target='_blank' to={picture ?? work.thumbnail}>
+              <Link target="_blank" to={picture ?? work.thumbnail}>
                 <Box
                   sx={{
                     width: 300,
@@ -100,9 +100,11 @@ export const EditWorkModal = ({
               </Link>
 
               <Button
-                onClick={() => inputForFileUpload.current!.click()}
+                onClick={() => {
+                  inputForFileUpload.current!.click();
+                }}
                 sx={{ display: 'flex', alignItems: 'center', columnGap: '1rem' }}
-                variant='outlined'
+                variant="outlined"
               >
                 <FontAwesomeIcon icon={faUpload} />
                 アイコンをアップロード
@@ -111,8 +113,8 @@ export const EditWorkModal = ({
               <input
                 onChange={onChangeInput}
                 hidden
-                type='file'
-                accept='image/png, image/jpg, image/jpeg'
+                type="file"
+                accept="image/png, image/jpg, image/jpeg"
                 ref={inputForFileUpload}
               />
             </Stack>
@@ -122,9 +124,9 @@ export const EditWorkModal = ({
             <Stack sx={{ width: '100%' }} spacing={2}>
               <TextField
                 fullWidth
-                variant='outlined'
-                label='タイトル'
-                type='text'
+                variant="outlined"
+                label="タイトル"
+                type="text"
                 error={'title' in errors}
                 helperText={errors.title?.message}
                 defaultValue={work.title}
@@ -139,7 +141,7 @@ export const EditWorkModal = ({
                 error={'contents' in errors}
                 helperText={errors.contents?.message}
                 minRows={5}
-                label='内容'
+                label="内容"
                 defaultValue={work.contents}
                 {...register('contents', {
                   required: '内容は必須項目です。',
@@ -151,7 +153,7 @@ export const EditWorkModal = ({
                 <RadioGroup
                   defaultValue={work.isActive ? ACTIVITY_STATE_CONSTANT.ACTIVE : ACTIVITY_STATE_CONSTANT.NON_ACTIVE}
                   sx={{ p: 2, gap: 2 }}
-                  id='activityState'
+                  id="activityState"
                   {...register('activityState')}
                 >
                   <Stack flexDirection={'row'} columnGap={2}>
@@ -173,11 +175,11 @@ export const EditWorkModal = ({
             </Stack>
           </Stack>
 
-          <Stack justifyContent='right' flexDirection='row' columnGap={1}>
-            <Button onClick={handleClose} type='button' variant='text' color='error'>
+          <Stack justifyContent="right" flexDirection="row" columnGap={1}>
+            <Button onClick={handleClose} type="button" variant="text" color="error">
               キャンセル
             </Button>
-            <Button type='submit' variant='contained' color='success'>
+            <Button type="submit" variant="contained" color="success">
               編集を適応
             </Button>
           </Stack>

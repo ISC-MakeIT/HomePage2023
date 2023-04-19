@@ -1,4 +1,4 @@
-import { GetResponse, Member } from 'src/api/homePage/api/members';
+import { type GetResponse, type Member } from 'src/api/homePage/api/members';
 import { homePageClient } from 'src/apiClient/homePage';
 
 export const apiMembers = async (): Promise<GetResponse> => {

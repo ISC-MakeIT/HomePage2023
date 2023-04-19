@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 
-type WhiteNavigationLinkProps = {
+interface WhiteNavigationLinkProps {
   to: string;
   name: string;
-};
+}
 
 export const WhiteNavigationLink = ({ to, name }: WhiteNavigationLinkProps) => {
   return (

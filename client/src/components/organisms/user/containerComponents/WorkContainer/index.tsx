@@ -1,4 +1,4 @@
-import { Work, apiWorks } from '@api/user/works';
+import { type Work, apiWorks } from '@api/user/works';
 import { useEffect, useState } from 'react';
 import { Work as WorkComponent } from '../../presentationalComponents/Work';
 
@@ -22,7 +22,7 @@ export const WorkContainer = () => {
     main();
   }, []);
 
-  if (!work) {
+  if (work == null) {
     return <></>;
   }
 

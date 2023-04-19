@@ -4,13 +4,13 @@ import { Box, Button, FormHelperText, Stack, Typography } from '@mui/material';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { Modal } from 'src/components/molecules/admin/Modal';
 
-type DeleteNotificationModelProps = {
+interface DeleteNotificationModelProps {
   isActive: boolean;
   handleOpen: () => void;
   handleClose: () => void;
   handleDeleteNotification: () => void;
   error?: string;
-};
+}
 
 export const DeleteNotificationModel = ({
   isActive,
@@ -21,7 +21,7 @@ export const DeleteNotificationModel = ({
 }: DeleteNotificationModelProps) => {
   return (
     <Stack>
-      <Button onClick={handleOpen} sx={{ display: 'flex', columnGap: 1, width: '6rem' }} color='error' variant='text'>
+      <Button onClick={handleOpen} sx={{ display: 'flex', columnGap: 1, width: '6rem' }} color="error" variant="text">
         <FontAwesomeIcon icon={faTrash} />
         削除
       </Button>
@@ -29,7 +29,7 @@ export const DeleteNotificationModel = ({
       <Modal isActive={isActive} handleClose={handleClose}>
         <AlertForError error={error} />
         <Box>
-          <Typography variant='h6' component='h2'>
+          <Typography variant="h6" component="h2">
             お知らせを削除
           </Typography>
           <FormHelperText>
@@ -37,11 +37,11 @@ export const DeleteNotificationModel = ({
             間違えて削除してしまった場合は、管理者にお問い合わせください。
           </FormHelperText>
         </Box>
-        <Stack flexDirection='row' columnGap={2}>
-          <Button onClick={handleClose} variant='outlined'>
+        <Stack flexDirection="row" columnGap={2}>
+          <Button onClick={handleClose} variant="outlined">
             キャンセル
           </Button>
-          <Button onClick={handleDeleteNotification} variant='contained' color='error'>
+          <Button onClick={handleDeleteNotification} variant="contained" color="error">
             削除
           </Button>
         </Stack>

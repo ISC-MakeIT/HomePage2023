@@ -1,4 +1,4 @@
-import { Work } from '@api/admin/works';
+import { type Work } from '@api/admin/works';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 
-type WorkListProps = {
+interface WorkListProps {
   workList: Work[];
   error?: string;
-};
+}
 
 export const WorkList = ({ workList, error }: WorkListProps) => {
   const WorkListForTableBody = () => {
@@ -23,13 +23,13 @@ export const WorkList = ({ workList, error }: WorkListProps) => {
     const getNotificationActivityStateBy = (isActive: boolean) => {
       if (isActive) {
         return (
-          <Stack flexDirection='row' columnGap='0.5rem' alignItems='center'>
+          <Stack flexDirection="row" columnGap="0.5rem" alignItems="center">
             <FontAwesomeIcon color={colors.green[800]} icon={faEye} /> 公開
           </Stack>
         );
       }
       return (
-        <Stack flexDirection='row' columnGap='0.5rem' alignItems='center'>
+        <Stack flexDirection="row" columnGap="0.5rem" alignItems="center">
           <FontAwesomeIcon color={colors.grey.A700} icon={faEyeSlash} /> 非公開
         </Stack>
       );

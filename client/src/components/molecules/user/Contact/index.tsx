@@ -47,8 +47,8 @@ export const Contact = () => {
       >
         <GradientButtonWithIconAndArrow
           to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.EXPERIENCE}#contact`}
-          icon={<Man width='1.5rem' height='1.5rem' />}
-          gradientType='greenToBlue'
+          icon={<Man width="1.5rem" height="1.5rem" />}
+          gradientType="greenToBlue"
         >
           体験入部
         </GradientButtonWithIconAndArrow>
@@ -63,8 +63,8 @@ export const Contact = () => {
 
         <GradientButtonWithIconAndArrow
           to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.PROJECT}#contact`}
-          icon={<Woman width='1.5rem' height='1.5rem' />}
-          gradientType='redToOrange'
+          icon={<Woman width="1.5rem" height="1.5rem" />}
+          gradientType="redToOrange"
         >
           案件の依頼
         </GradientButtonWithIconAndArrow>

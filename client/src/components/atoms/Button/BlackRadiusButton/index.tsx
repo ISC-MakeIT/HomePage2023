@@ -1,9 +1,9 @@
 import React from 'react';
 import { css } from '@emotion/react';
 
-type BlackRadiusProps = {
+interface BlackRadiusProps {
   content: JSX.Element;
-};
+}
 
 export const BlackRadiusButton = ({ content }: BlackRadiusProps) => {
   return (

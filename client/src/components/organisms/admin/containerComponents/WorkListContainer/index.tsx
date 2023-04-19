@@ -1,4 +1,4 @@
-import { apiWorks, GetResponse, Work } from '@api/admin/works';
+import { apiWorks, type GetResponse, type Work } from '@api/admin/works';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
@@ -12,7 +12,7 @@ export const WorkListContainer = () => {
   const [error, setError] = useState<string>();
 
   const userToken = useAppSelector(selectUserToken);
-  const state: { refresh?: boolean } = useLocation().state;
+  const state = useLocation().state as { refresh?: boolean };
   const proccessingLine = useProcessingLine();
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export const WorkListContainer = () => {
 
         if (axios.isAxiosError(e)) {
           const status = e.response!.status;
-          const responseData: GetResponse = e.response!.data;
+          const responseData = e.response!.data as GetResponse;
 
           if (status === 401) {
             return;
@@ -41,14 +41,13 @@ export const WorkListContainer = () => {
             return;
           }
 
-          setError(responseData.message!);
+          setError(responseData.message);
           return;
         }
 
         setError(
-          '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
+          '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。'
         );
-        return;
       }
     };
 

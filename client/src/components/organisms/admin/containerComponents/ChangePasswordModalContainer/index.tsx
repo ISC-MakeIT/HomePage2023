@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { ChangePasswordModal } from '../../presentationalComponents/ChangePasswordModal';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { ChangePasswordFormInput } from '../../types/ChangePasswordFormInput';
-import { apiChangePassword } from '@api/admin/members/password';
+import { type SubmitHandler, useForm } from 'react-hook-form';
+import { type ChangePasswordFormInput } from '../../types/ChangePasswordFormInput';
+import { type PutResponse, apiChangePassword } from '@api/admin/members/password';
 import { useAppSelector } from '@redux/hooks';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import axios from 'axios';
@@ -21,8 +21,12 @@ export const ChangePasswordModalContainer = () => {
   const userToken = useAppSelector(selectUserToken);
   const navigate = useNavigate();
 
-  const handleOpen = () => setIsActive(true);
-  const handleClose = () => setIsActive(false);
+  const handleOpen = () => {
+    setIsActive(true);
+  };
+  const handleClose = () => {
+    setIsActive(false);
+  };
 
   const handleChangePassword: SubmitHandler<ChangePasswordFormInput> = async (changePasswordFormInput) => {
     try {
@@ -34,10 +38,10 @@ export const ChangePasswordModalContainer = () => {
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const status = e.response!.status;
-        const responseData = e.response!.data;
+        const responseData = e.response!.data as PutResponse;
 
-        if (status === 400 && responseData.message) {
-          setError(responseData.message!);
+        if (status === 400 && responseData.message !== '') {
+          setError(responseData.message);
           return;
         }
 
@@ -50,12 +54,12 @@ export const ChangePasswordModalContainer = () => {
           return;
         }
 
-        setError(responseData.message!);
+        setError(responseData.message);
         return;
       }
 
       setError(
-        '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
+        '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。'
       );
     }
   };

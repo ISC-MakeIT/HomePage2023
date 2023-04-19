@@ -9,7 +9,7 @@ import { ProcessingLineProvider } from './providers/ProcessingLineProvider';
 
 const persistor = persistStore(store);
 
-function App() {
+const App = () => {
   return (
     <Provider store={store}>
       <HelmetProvider>
@@ -23,6 +23,6 @@ function App() {
       </HelmetProvider>
     </Provider>
   );
-}
+};
 
 export default App;
