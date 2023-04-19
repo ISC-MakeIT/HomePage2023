@@ -122,6 +122,7 @@ export const Notification = ({ title, contents, createdAt }: NotificationProps) 
           <div
             css={css`
               word-break: break-all;
+              white-space: pre-wrap;
             `}
           >
             <div
