@@ -1,8 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
 export const EnableScrollToHashLinkMiddleware = () => {
   const location = useLocation();
+  const [isLoadedPage, setIsLoadedPage] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoadedPage(true);
+    }, 1000);
+  }, [location]);
 
   useEffect(() => {
     const hash = location.hash;
@@ -13,12 +20,20 @@ export const EnableScrollToHashLinkMiddleware = () => {
 
     if (hash !== '') {
       const element = document.getElementById(removeHashCharacter(hash));
+      if (isLoadedPage) {
+        element?.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'start',
+        });
+        return;
+      }
+
       setTimeout(() => {
         element?.scrollIntoView({
           behavior: 'smooth',
           inline: 'start',
         });
-      }, 100);
+      }, 750);
     }
   }, [location]);
 
