@@ -38,6 +38,7 @@ export const Work = (work: WorkProps) => {
           css={css`
             position: relative;
             z-index: 1;
+            margin-top: 1rem;
           `}
         >
           <AccessToList to={USER_ROUTE_PATH_MAP.WORKS} />
