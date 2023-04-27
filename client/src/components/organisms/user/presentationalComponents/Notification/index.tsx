@@ -8,7 +8,7 @@ import { maxScreen } from 'src/modules/helpers/mediaQueries';
 
 type NotificationProps = APINotification;
 
-export const Notification = ({ title, createdAt }: NotificationProps) => {
+export const Notification = ({ title, contents, createdAt }: NotificationProps) => {
   return (
     <section id="notification">
       <div
@@ -34,7 +34,7 @@ export const Notification = ({ title, createdAt }: NotificationProps) => {
           />
 
           <div>
-            <NotificationComponent title={title} createdAt={createdAt} />
+            <NotificationComponent contents={contents} title={title} createdAt={createdAt} />
             <AccessToList to={USER_ROUTE_PATH_MAP.NOTIFICATIONS} />
           </div>
         </div>
