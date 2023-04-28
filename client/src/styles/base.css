@@ -3,3 +3,21 @@
 body {
   font-family: 'Zen Maru Gothic', sans-serif;
 }
+
+@media screen and (max-width: 1280px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 10px;
+  }
+}

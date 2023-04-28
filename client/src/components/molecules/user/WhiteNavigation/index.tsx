@@ -3,7 +3,7 @@ import { WhiteNavigationLink } from 'src/components/atoms/Button/WhiteNavigation
 import { USER_ROUTE_PATH_MAP } from 'src/routes/routePath';
 
 export const WhiteNavigation = () => {
-  const navigationList: { to: string; title: string }[] = [
+  const navigationList: Array<{ to: string; title: string }> = [
     {
       to: `${USER_ROUTE_PATH_MAP.TOP}#about`,
       title: 'Make ITについて',

@@ -1,32 +1,41 @@
-import { useMemo, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
 export const EnableScrollToHashLinkMiddleware = () => {
-  let location = useLocation();
+  const location = useLocation();
+  const [isLoadedPage, setIsLoadedPage] = useState(false);
 
-  let hashElement = useMemo(() => {
-    let hash = location.hash;
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoadedPage(true);
+    }, 1000);
+  }, [location]);
+
+  useEffect(() => {
+    const hash = location.hash;
     const removeHashCharacter = (str: string) => {
       const result = str.slice(1);
       return result;
     };
 
-    if (hash) {
-      let element = document.getElementById(removeHashCharacter(hash));
-      return element;
-    } else {
-      return null;
+    if (hash !== '') {
+      const element = document.getElementById(removeHashCharacter(hash));
+      if (isLoadedPage) {
+        element?.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'start',
+        });
+        return;
+      }
+
+      setTimeout(() => {
+        element?.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'start',
+        });
+      }, 750);
     }
   }, [location]);
-
-  useEffect(() => {
-    if (hashElement) {
-      hashElement.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'nearest',
-      });
-    }
-  }, [hashElement]);
 
   return <Outlet />;
 };

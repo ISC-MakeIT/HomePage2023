@@ -1,4 +1,4 @@
-export type ChangePasswordFormInput = {
+export interface ChangePasswordFormInput {
   oldPassword: string;
   newPassword: string;
-};
+}

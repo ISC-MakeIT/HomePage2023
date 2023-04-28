@@ -1,4 +1,4 @@
-import { apiDeleteWork, DeleteResponse } from '@api/admin/works';
+import { apiDeleteWork, type DeleteResponse } from '@api/admin/works';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
@@ -8,9 +8,9 @@ import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { DeleteWorkModel } from '../../presentationalComponents/DeleteWorkModel';
 
-type DeleteWorkModalContainerProps = {
+interface DeleteWorkModalContainerProps {
   workId: number;
-};
+}
 
 export const DeleteWorkModalContainer = ({ workId }: DeleteWorkModalContainerProps) => {
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -30,7 +30,7 @@ export const DeleteWorkModalContainer = ({ workId }: DeleteWorkModalContainerPro
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const status = e.response!.status;
-        const responseData: DeleteResponse = e.response!.data;
+        const responseData = e.response!.data as DeleteResponse;
 
         if (status === 400) {
           setError(Object.values(responseData.errors!).join('\n'));
@@ -50,7 +50,7 @@ export const DeleteWorkModalContainer = ({ workId }: DeleteWorkModalContainerPro
         return;
       }
       setError(
-        '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
+        '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。'
       );
     }
   };
@@ -58,8 +58,12 @@ export const DeleteWorkModalContainer = ({ workId }: DeleteWorkModalContainerPro
   return (
     <DeleteWorkModel
       isActive={isActive}
-      handleOpen={() => setIsActive(true)}
-      handleClose={() => setIsActive(false)}
+      handleOpen={() => {
+        setIsActive(true);
+      }}
+      handleClose={() => {
+        setIsActive(false);
+      }}
       handleDeleteWork={handleDeleteWork}
       error={error}
     />

@@ -6,9 +6,9 @@ import { EditNotificationModalContainer } from 'src/components/organisms/admin/c
 import { NotificationContainer } from 'src/components/organisms/admin/containerComponents/NotificationContainer';
 import { NavigationWithHeader } from '../../../../templates/admin/NavigraitonWithHeader';
 
-type RouterParams = {
+interface RouterParams {
   notificationId: string;
-};
+}
 
 export const Notification = () => {
   const { notificationId } = useParams<RouterParams>();
@@ -19,7 +19,7 @@ export const Notification = () => {
         <title>お知らせID: {notificationId} の詳細 | MakeIT</title>
       </Helmet>
 
-      <Stack flexDirection='row' columnGap={2}>
+      <Stack flexDirection="row" columnGap={2}>
         <EditNotificationModalContainer notificationId={Number(notificationId)} />
         <DeleteNotificationModalContainer notificationId={Number(notificationId)} />
       </Stack>

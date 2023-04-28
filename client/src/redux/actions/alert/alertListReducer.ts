@@ -1,12 +1,12 @@
-import { AlertColor } from '@mui/material';
+import { type AlertColor } from '@mui/material';
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
+import { type RootState } from '../../store';
 import { ACTION_TYPES } from '../actionTypes';
 
-type Alert = {
+interface Alert {
   type: AlertColor;
   content: string;
-};
+}
 
 const alertListSlice = createSlice({
   name: ACTION_TYPES.USER_TOKEN,

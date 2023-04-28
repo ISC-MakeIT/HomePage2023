@@ -6,7 +6,7 @@ import { BlackGithubButtonContent } from '../Content/BlackGithubButtonContent';
 export const BlackGithubButton = () => {
   return (
     <Link
-      to='https://github.com/ISC-MakeIT'
+      to="https://github.com/ISC-MakeIT"
       css={css`
         text-decoration: none;
       `}

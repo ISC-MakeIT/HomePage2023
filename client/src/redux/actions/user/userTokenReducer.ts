@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
+import { type RootState } from '../../store';
 import { ACTION_TYPES } from '../actionTypes';
 
 const userTokenSlice = createSlice({
@@ -8,7 +8,7 @@ const userTokenSlice = createSlice({
     value: '',
   },
   reducers: {
-    setToken: (state, action) => {
+    setToken: (state, action: { payload: string }) => {
       state.value = action.payload;
     },
   },

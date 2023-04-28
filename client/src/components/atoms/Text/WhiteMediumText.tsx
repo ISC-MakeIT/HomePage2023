@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 
-type WhiteMediumTextProps = {
+interface WhiteMediumTextProps {
   children: React.ReactNode;
-};
+}
 
 export const WhiteMediumText = ({ children }: WhiteMediumTextProps) => {
   return (
@@ -10,6 +10,8 @@ export const WhiteMediumText = ({ children }: WhiteMediumTextProps) => {
       css={css`
         font-size: 1rem;
         color: #fff;
+        margin: 0;
+        line-height: 2;
       `}
     >
       {children}

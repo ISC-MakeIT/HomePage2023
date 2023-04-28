@@ -1,4 +1,3 @@
-import { colors } from '@mui/material';
 import { Stack } from '@mui/system';
 import { initAlertList, selectAlertList } from '@redux/actions/alert/alertListReducer';
 import { useEffect } from 'react';
@@ -6,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { AlertForSuccess } from 'src/components/molecules/admin/AlertForSuccess';
 
-type AlertProviderProps = {
+interface AlertProviderProps {
   children?: React.ReactNode;
-};
+}
 
 export const AlertProvider = ({ children }: AlertProviderProps) => {
   const dispatch = useDispatch();

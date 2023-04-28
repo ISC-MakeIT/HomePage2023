@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
 import { DiscordLogo } from 'src/components/atoms/IconWithTitle/Discord';
-import { WhiteMediumText } from '../../Text/WhiteMediumText';
+import { BlackMediumText } from '../../Text/BlackMediumText';
 
-type IntroduceDiscordAccountProps = {
+interface IntroduceDiscordAccountProps {
   children?: React.ReactNode;
-};
+}
 
 export const IntroduceDiscordAccount = ({ children }: IntroduceDiscordAccountProps) => {
   if (!children) {
@@ -17,11 +17,11 @@ export const IntroduceDiscordAccount = ({ children }: IntroduceDiscordAccountPro
         display: grid;
         justify-content: flex-start;
         align-items: center;
-        grid-template-columns: 140px 1fr;
+        grid-template-columns: 8.75rem 1fr;
       `}
     >
       <DiscordLogo />
-      <WhiteMediumText>{children}</WhiteMediumText>
+      <BlackMediumText>{children}</BlackMediumText>
     </div>
   );
 };

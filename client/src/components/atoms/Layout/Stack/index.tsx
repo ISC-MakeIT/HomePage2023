@@ -1,10 +1,10 @@
-import { SerializedStyles, css } from '@emotion/react';
+import { type SerializedStyles, css } from '@emotion/react';
 
-type StackProps = {
+interface StackProps {
   children?: React.ReactNode;
   style?: SerializedStyles;
   spacing: string;
-};
+}
 
 export const Stack = ({ spacing, children, style }: StackProps) => {
   return (

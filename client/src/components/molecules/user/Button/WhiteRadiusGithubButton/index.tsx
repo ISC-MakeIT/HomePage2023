@@ -3,10 +3,10 @@ import { WhiteRadiusButton } from '../../../../atoms/Button/WhiteRadiusButton';
 import { Link } from 'react-router-dom';
 import { WhiteGithubButtonContent } from '../Content/WhiteGithubButtonContent';
 
-export const WhiteGithubButton = () => {
+export const WhiteRadiusGithubButton = () => {
   return (
     <Link
-      to='https://github.com/ISC-MakeIT'
+      to="https://github.com/ISC-MakeIT"
       css={css`
         text-decoration: none;
       `}

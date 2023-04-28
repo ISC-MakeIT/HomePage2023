@@ -5,9 +5,9 @@ import { EditMemberContainer } from 'src/components/organisms/admin/containerCom
 import { MemberContainer } from 'src/components/organisms/admin/containerComponents/MemberContainer';
 import { NavigationWithHeader } from '../../../../templates/admin/NavigraitonWithHeader';
 
-type RouterParams = {
+interface RouterParams {
   memberId: string;
-};
+}
 
 export const Member = () => {
   const { memberId } = useParams<RouterParams>();

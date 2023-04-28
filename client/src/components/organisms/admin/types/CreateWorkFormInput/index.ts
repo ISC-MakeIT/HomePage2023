@@ -1,5 +1,5 @@
-export type CreateWorkFormInput = {
+export interface CreateWorkFormInput {
   title: string;
   contents: string;
   picture?: File;
-};
+}

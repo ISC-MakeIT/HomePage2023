@@ -22,10 +22,9 @@ export const OnlyLoggedInMemberMiddleware = () => {
           content: 'ログインが必要です。',
         },
         5000,
-        1000,
+        1000
       );
       navigate(ADMIN_ROUTE_FULL_PATH_MAP.LOGIN);
-      return;
     }
   }, []);
 

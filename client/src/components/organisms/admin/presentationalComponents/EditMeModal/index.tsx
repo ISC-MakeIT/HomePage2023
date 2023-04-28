@@ -1,4 +1,4 @@
-import { Member } from '@api/admin/members';
+import { type Member } from '@api/admin/members';
 import { faUpload, faUserEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -13,13 +13,13 @@ import {
   Typography,
   colors,
 } from '@mui/material';
-import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form';
+import { type FieldErrors, type SubmitHandler, type UseFormHandleSubmit, type UseFormRegister } from 'react-hook-form';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { Modal } from 'src/components/molecules/admin/Modal';
-import { ACTIVITY_STATE_CONSTANT, EditMeFormInput } from '../../types/EditMeFormInput';
-import { ChangeEventHandler, useRef } from 'react';
+import { ACTIVITY_STATE_CONSTANT, type EditMeFormInput } from '../../types/EditMeFormInput';
+import { type ChangeEventHandler, useRef } from 'react';
 
-type EditMeModalProps = {
+interface EditMeModalProps {
   member: Member;
   isActive: boolean;
   handleOpen: () => void;
@@ -34,7 +34,7 @@ type EditMeModalProps = {
 
   errors: FieldErrors<EditMeFormInput>;
   error?: string;
-};
+}
 
 export const EditMeModal = ({
   member,
@@ -52,7 +52,7 @@ export const EditMeModal = ({
   const inputForFileUpload = useRef<HTMLInputElement>(null);
   const onChangeInput: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { files } = e.target;
-    if (!files) {
+    if (files == null) {
       return;
     }
 
@@ -61,7 +61,7 @@ export const EditMeModal = ({
 
   return (
     <>
-      <Button onClick={handleOpen} variant='outlined' sx={{ display: 'flex', columnGap: 1, width: '15rem' }}>
+      <Button onClick={handleOpen} variant="outlined" sx={{ display: 'flex', columnGap: 1, width: '15rem' }}>
         <FontAwesomeIcon icon={faUserEdit} /> プロフィールを編集
       </Button>
 
@@ -69,14 +69,14 @@ export const EditMeModal = ({
         <AlertForError error={error} />
 
         <Box>
-          <Typography variant='h6' component='h2'>
+          <Typography variant="h6" component="h2">
             プロフィールを編集
           </Typography>
           <FormHelperText>モラルに気をつけて記述しようね。</FormHelperText>
         </Box>
 
-        <Stack component='form' onSubmit={handleSubmit(handleEditMe)} spacing={4}>
-          <Stack flexDirection='row' columnGap={4}>
+        <Stack component="form" onSubmit={handleSubmit(handleEditMe)} spacing={4}>
+          <Stack flexDirection="row" columnGap={4}>
             <Stack spacing={1.5}>
               <Box
                 sx={{
@@ -90,9 +90,11 @@ export const EditMeModal = ({
               />
 
               <Button
-                onClick={() => inputForFileUpload.current!.click()}
+                onClick={() => {
+                  inputForFileUpload.current!.click();
+                }}
                 sx={{ display: 'flex', alignItems: 'center', columnGap: '1rem' }}
-                variant='outlined'
+                variant="outlined"
               >
                 <FontAwesomeIcon icon={faUpload} />
                 アイコンをアップロード
@@ -101,8 +103,8 @@ export const EditMeModal = ({
               <input
                 onChange={onChangeInput}
                 hidden
-                type='file'
-                accept='image/png, image/jpg, image/jpeg'
+                type="file"
+                accept="image/png, image/jpg, image/jpeg"
                 ref={inputForFileUpload}
               />
             </Stack>
@@ -110,13 +112,13 @@ export const EditMeModal = ({
             <Box sx={{ backgroundColor: colors.grey.A200, width: '1px' }} />
 
             <Stack spacing={1.5}>
-              <Stack flexDirection={'row'} columnGap='1rem'>
-                <Box width='100%'>
+              <Stack flexDirection={'row'} columnGap="1rem">
+                <Box width="100%">
                   <TextField
                     fullWidth
-                    variant='outlined'
-                    label='名前'
-                    type='text'
+                    variant="outlined"
+                    label="名前"
+                    type="text"
                     defaultValue={member.name}
                     error={'name' in errors}
                     helperText={errors.name?.message}
@@ -126,12 +128,12 @@ export const EditMeModal = ({
                     })}
                   />
                 </Box>
-                <Box width='100%'>
+                <Box width="100%">
                   <TextField
                     fullWidth
-                    variant='outlined'
-                    label='役職'
-                    type='text'
+                    variant="outlined"
+                    label="役職"
+                    type="text"
                     defaultValue={member.jobTitle}
                     error={'jobTitle' in errors}
                     helperText={errors.jobTitle?.message}
@@ -144,13 +146,13 @@ export const EditMeModal = ({
               </Stack>
 
               <Stack>
-                <Stack flexDirection={'row'} columnGap='1rem'>
+                <Stack flexDirection={'row'} columnGap="1rem">
                   <TextField
                     fullWidth
-                    variant='outlined'
-                    label='Discordユーザー名'
-                    placeholder='example#0000'
-                    type='text'
+                    variant="outlined"
+                    label="Discordユーザー名"
+                    placeholder="example#0000"
+                    type="text"
                     defaultValue={member.discord}
                     error={'discord' in errors}
                     helperText={errors.discord?.message}
@@ -160,10 +162,10 @@ export const EditMeModal = ({
                   />
                   <TextField
                     fullWidth
-                    variant='outlined'
-                    label='Twitterユーザー名'
-                    placeholder='@example'
-                    type='text'
+                    variant="outlined"
+                    label="Twitterユーザー名"
+                    placeholder="@example"
+                    type="text"
                     defaultValue={member.twitter}
                     error={'twitter' in errors}
                     helperText={errors.twitter?.message}
@@ -173,9 +175,9 @@ export const EditMeModal = ({
                   />
                   <TextField
                     fullWidth
-                    variant='outlined'
-                    label='Githubユーザー名'
-                    type='text'
+                    variant="outlined"
+                    label="Githubユーザー名"
+                    type="text"
                     defaultValue={member.github}
                     error={'github' in errors}
                     helperText={errors.github?.message}
@@ -191,7 +193,7 @@ export const EditMeModal = ({
                   minRows={5}
                   fullWidth
                   multiline
-                  placeholder='自己紹介'
+                  placeholder="自己紹介"
                   defaultValue={member.description}
                   error={'description' in errors}
                   helperText={errors.description?.message}
@@ -204,9 +206,9 @@ export const EditMeModal = ({
 
               <Box>
                 <RadioGroup
-                  defaultValue={member!.isActive ? ACTIVITY_STATE_CONSTANT.ACTIVE : ACTIVITY_STATE_CONSTANT.NON_ACTIVE}
+                  defaultValue={member.isActive ? ACTIVITY_STATE_CONSTANT.ACTIVE : ACTIVITY_STATE_CONSTANT.NON_ACTIVE}
                   sx={{ p: 2, gap: 2 }}
-                  id='activityState'
+                  id="activityState"
                   {...register('activityState')}
                 >
                   <Stack flexDirection={'row'} columnGap={2}>
@@ -228,11 +230,11 @@ export const EditMeModal = ({
             </Stack>
           </Stack>
 
-          <Stack flexDirection='row' columnGap={2} justifyContent='right'>
-            <Button type='button' onClick={handleClose} variant='text'>
+          <Stack flexDirection="row" columnGap={2} justifyContent="right">
+            <Button type="button" onClick={handleClose} variant="text">
               キャンセル
             </Button>
-            <Button type='submit' variant='contained' color='success'>
+            <Button type="submit" variant="contained" color="success">
               編集
             </Button>
           </Stack>

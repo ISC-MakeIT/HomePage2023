@@ -12,13 +12,12 @@ export const Home = () => {
   useEffect(() => {
     if (userToken === '') {
       navigate(`${ADMIN_ROUTE_FULL_PATH_MAP.LOGIN}`);
-      return;
     }
   });
 
   return (
     <NavigationWithHeader>
-      <b>bタグで "HELLO WORLD"</b>
+      <b>bタグで HELLO WORLD</b>
     </NavigationWithHeader>
   );
 };

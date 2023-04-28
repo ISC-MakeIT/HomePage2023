@@ -1,4 +1,4 @@
-export type CreateNotificationFormInput = {
+export interface CreateNotificationFormInput {
   title: string;
   contents: string;
-};
+}

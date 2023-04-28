@@ -1,9 +1,9 @@
-import { MenuList, Paper, SxProps, Theme } from '@mui/material';
+import { MenuList, Paper, type SxProps, type Theme } from '@mui/material';
 
-type MenuItemWrapperProps = {
+interface MenuItemWrapperProps {
   children: React.ReactNode;
   sx?: SxProps<Theme>;
-};
+}
 
 export const MenuItemWrapper = ({ children, sx }: MenuItemWrapperProps) => {
   return (

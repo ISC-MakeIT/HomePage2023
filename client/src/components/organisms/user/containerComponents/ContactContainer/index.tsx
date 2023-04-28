@@ -1,21 +1,31 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { Contact } from '../../presentationalComponents/Contact';
-import { ContactFormInput } from '../../types/ContactFormInput';
-import { CONTACT_CATEGORIES } from '../../constants/ContactCategories';
-import { useState } from 'react';
-import { apiContact } from '@api/user/contact';
+import { type ContactFormInput } from '../../types/ContactFormInput';
+import { useEffect, useState } from 'react';
+import { type PostResponse, apiContact } from '@api/user/contact';
 import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
+import { type CONTACT_CATEGORIE, CONTACT_CATEGORIES_FOR_SELECT } from '../../constants/ContactCategories';
 
 export const ContactContainer = () => {
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<ContactFormInput>();
   const [error, setError] = useState<string>();
   const [success, setSuccess] = useState<string>();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.has('contactCategory')) {
+      const contactCategory = searchParams.get('contactCategory') as CONTACT_CATEGORIE;
+      setValue('category', contactCategory);
+    }
+  }, [searchParams]);
 
   const handleContact: SubmitHandler<ContactFormInput> = async (contactFormInput) => {
     try {
@@ -30,10 +40,10 @@ export const ContactContainer = () => {
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const status = e.response!.status;
-        const responseData = e.response!.data;
+        const responseData = e.response!.data as PostResponse;
 
-        if (status === 400 && responseData.message) {
-          setError(responseData.message!);
+        if (status === 400 && responseData.message !== '') {
+          setError(responseData.message);
           return;
         }
 
@@ -42,7 +52,7 @@ export const ContactContainer = () => {
           return;
         }
 
-        setError(responseData.message!);
+        setError(responseData.message);
         return;
       }
 
@@ -61,7 +71,7 @@ export const ContactContainer = () => {
       error={error}
       success={success}
       isSubmitting={isSubmitting}
-      contactCategories={CONTACT_CATEGORIES}
+      contactCategories={CONTACT_CATEGORIES_FOR_SELECT}
     />
   );
 };

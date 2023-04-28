@@ -1,11 +1,12 @@
-import { Member } from '@api/user/members';
+import { type Member } from '@api/user/members';
 import { css } from '@emotion/react';
 import { BlackLargeTitle } from 'src/components/atoms/Title/BlackLargeTitle';
 import { Member as MemberComponent } from 'src/components/molecules/user/Member';
+import { maxScreen } from 'src/modules/helpers/mediaQueries';
 
-type MembersProps = {
+interface MembersProps {
   members: Member[];
-};
+}
 
 export const Members = ({ members }: MembersProps) => {
   const MemberList = () => (
@@ -22,7 +23,6 @@ export const Members = ({ members }: MembersProps) => {
             github: member.github,
             description: member.description,
           }}
-          backgroundColor='#F15B88'
         />
       ))}
     </>
@@ -30,11 +30,17 @@ export const Members = ({ members }: MembersProps) => {
 
   return (
     <section
-      id='members'
+      id="members"
       css={css`
         padding: 5rem 0;
         width: 84%;
         margin: 0 auto;
+        ${maxScreen('md')} {
+          width: 90%;
+        }
+        ${maxScreen('sm')} {
+          width: 95%;
+        }
       `}
     >
       <div

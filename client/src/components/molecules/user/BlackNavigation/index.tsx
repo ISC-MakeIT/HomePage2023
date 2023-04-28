@@ -3,7 +3,7 @@ import { BlackNavigationLink } from 'src/components/atoms/Button/BlackNavigation
 import { USER_ROUTE_PATH_MAP } from 'src/routes/routePath';
 
 export const BlackNavigation = () => {
-  const navigationList: { to: string; title: string }[] = [
+  const navigationList: Array<{ to: string; title: string }> = [
     {
       to: `${USER_ROUTE_PATH_MAP.TOP}#about`,
       title: 'Make ITについて',

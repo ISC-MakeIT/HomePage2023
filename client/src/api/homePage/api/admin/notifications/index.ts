@@ -1,50 +1,50 @@
-export type Notification = {
+export interface Notification {
   notificationId: number;
   title: string;
   contents: string;
   createdAt: string;
   updatedAt: string;
   isActive: boolean;
-};
+}
 
 export type GetResponse = {
   message?: string;
-  errors?: { [key: string]: string }[];
+  errors?: Array<Record<string, string>>;
 } & Notification[];
 
-export type PostRequest = {
+export interface PostRequest {
   title: string;
   contents: string;
-};
+}
 
-export type PostResponse = {
+export interface PostResponse {
   message?: string;
-  errors?: { [key: string]: string }[];
-};
+  errors?: Array<Record<string, string>>;
+}
 
-export type PutRequest = {
+export interface PutRequest {
   notificationId: number;
   title: string;
   contents: string;
   isActive: boolean;
   currentVersion: number;
-};
+}
 
-export type PutResponse = {
+export interface PutResponse {
   message?: string;
-  errors?: { [key: string]: string }[];
-};
+  errors?: Array<Record<string, string>>;
+}
 
-export type DeleteRequest = {
+export interface DeleteRequest {
   notificationId: number;
-};
+}
 
-export type DeleteResponse = {
+export interface DeleteResponse {
   message?: string;
-  errors?: { [key: string]: string }[];
-};
+  errors?: Array<Record<string, string>>;
+}
 
-export type Methods = {
+export interface Methods {
   get: {
     reqHeaders: {
       Authorization: string;
@@ -72,4 +72,4 @@ export type Methods = {
     reqBody: DeleteRequest;
     resBody: DeleteResponse;
   };
-};
+}

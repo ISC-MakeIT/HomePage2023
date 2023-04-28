@@ -16,6 +16,11 @@ main() {
     echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY >> api/.env
     echo AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION >> api/.env
     echo AWS_BUCKET=$AWS_BUCKET >> api/.env
+    echo LOG_CHANNEL=$LOG_CHANNEL >> api/.env
+    echo LOG_DISCORD_WEBHOOK_URL=$LOG_DISCORD_WEBHOOK_URL >> api/.env
+
+    echo DYNAMODB_END_POINT=$DYNAMODB_END_POINT >> api/.env
+    echo DYNAMODB_TABLE_NAME=$DYNAMODB_TABLE_NAME >> api/.env
 
     echo 'Laravel env variables configured'
 }

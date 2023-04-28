@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
 import { GithubLogo } from 'src/components/atoms/IconWithTitle/Github';
-import { WhiteMediumText } from '../../Text/WhiteMediumText';
+import { BlackMediumText } from '../../Text/BlackMediumText';
 
-type IntroduceGithubAccountProps = {
+interface IntroduceGithubAccountProps {
   children?: React.ReactNode;
-};
+}
 
 export const IntroduceGithubAccount = ({ children }: IntroduceGithubAccountProps) => {
   if (!children) {
@@ -17,11 +17,11 @@ export const IntroduceGithubAccount = ({ children }: IntroduceGithubAccountProps
         display: grid;
         justify-content: flex-start;
         align-items: center;
-        grid-template-columns: 140px 1fr;
+        grid-template-columns: 8.75rem 1fr;
       `}
     >
       <GithubLogo />
-      <WhiteMediumText>{children}</WhiteMediumText>
+      <BlackMediumText>{children}</BlackMediumText>
     </div>
   );
 };

@@ -1,9 +1,9 @@
 import { css } from '@emotion/react';
 
-type RedToOrangeGradientButtonProps = {
+interface RedToOrangeGradientButtonProps {
   children: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
-};
+}
 
 export const RedToOrangeGradientButton = ({ type, children }: RedToOrangeGradientButtonProps) => {
   return (

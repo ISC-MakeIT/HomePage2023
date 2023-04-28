@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
 import { TwitterLogo } from 'src/components/atoms/IconWithTitle/Twitter';
-import { WhiteMediumText } from '../../Text/WhiteMediumText';
+import { BlackMediumText } from '../../Text/BlackMediumText';
 
-type IntroduceTwitterAccountProps = {
+interface IntroduceTwitterAccountProps {
   children?: React.ReactNode;
-};
+}
 
 export const IntroduceTwitterAccount = ({ children }: IntroduceTwitterAccountProps) => {
   if (!children) {
@@ -17,11 +17,11 @@ export const IntroduceTwitterAccount = ({ children }: IntroduceTwitterAccountPro
         display: grid;
         justify-content: flex-start;
         align-items: center;
-        grid-template-columns: 140px 1fr;
+        grid-template-columns: 8.75rem 1fr;
       `}
     >
       <TwitterLogo />
-      <WhiteMediumText>{children}</WhiteMediumText>
+      <BlackMediumText>{children}</BlackMediumText>
     </div>
   );
 };

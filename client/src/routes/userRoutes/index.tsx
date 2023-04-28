@@ -8,7 +8,7 @@ import { EnableScrollToHashLinkMiddleware } from 'src/app/middlewares/EnableScro
 export const UserRoutes = () => {
   return (
     <Routes>
-      <Route path='/' element={<EnableScrollToHashLinkMiddleware />}>
+      <Route path="/" element={<EnableScrollToHashLinkMiddleware />}>
         <Route path={USER_ROUTE_PATH_MAP.TOP} element={<Home />} />
         <Route path={USER_ROUTE_PATH_MAP.WORKS} element={<Works />} />
         <Route path={USER_ROUTE_PATH_MAP.NOTIFICATIONS} element={<Notifications />} />

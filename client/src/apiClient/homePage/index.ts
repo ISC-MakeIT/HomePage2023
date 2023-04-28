@@ -1,7 +1,8 @@
 import aspida from '@aspida/axios';
-import axios, { AxiosRequestConfig } from 'axios';
-import { ApiInstance, default as api } from '../../api/homePage/$api';
+import axios, { type AxiosRequestConfig } from 'axios';
+import { type ApiInstance, default as api } from '../../api/homePage/$api';
 
+// eslint-disable-next-line
 export const homePageClient = (config?: AxiosRequestConfig<any> | undefined) => {
   return api(
     aspida(
@@ -14,8 +15,8 @@ export const homePageClient = (config?: AxiosRequestConfig<any> | undefined) => 
           },
           withCredentials: true,
         },
-        config,
-      ),
-    ),
+        config
+      )
+    )
   ) as ApiInstance;
 };

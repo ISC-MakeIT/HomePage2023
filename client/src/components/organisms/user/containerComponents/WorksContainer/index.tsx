@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Work, apiWorks } from '@api/user/works';
+import { type Work, apiWorks } from '@api/user/works';
 import { Works } from '../../presentationalComponents/Works';
 
 export const WorksContainer = () => {
@@ -18,7 +18,7 @@ export const WorksContainer = () => {
     main();
   }, []);
 
-  if (!works) {
+  if (works == null) {
     return <></>;
   }
 

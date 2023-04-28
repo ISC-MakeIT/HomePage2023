@@ -1,17 +1,17 @@
-export type PostRequest = {
+export interface PostRequest {
   email: string;
   name: string;
   category: string;
-};
+}
 
-export type PostResponse = {
+export interface PostResponse {
   message?: string;
-  errors?: { [key: string]: string }[];
-};
+  errors?: Array<Record<string, string>>;
+}
 
-export type Methods = {
+export interface Methods {
   post: {
     reqBody: PostRequest;
     resBody: PostResponse;
   };
-};
+}

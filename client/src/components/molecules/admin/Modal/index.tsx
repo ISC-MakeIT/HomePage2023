@@ -1,11 +1,11 @@
 import { Modal as MuiModal, Stack } from '@mui/material';
 
-type ModalProps = {
+interface ModalProps {
   isActive: boolean;
   handleClose: () => void;
   width?: number;
   children?: React.ReactNode;
-};
+}
 
 export const Modal = ({ isActive, width = 400, handleClose, children }: ModalProps) => {
   return (
@@ -16,7 +16,7 @@ export const Modal = ({ isActive, width = 400, handleClose, children }: ModalPro
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: width,
+          width,
           maxHeight: '90vh',
           overflow: 'auto',
           bgcolor: 'background.paper',

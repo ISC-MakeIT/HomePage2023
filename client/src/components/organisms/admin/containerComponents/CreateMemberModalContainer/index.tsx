@@ -1,15 +1,15 @@
-import { apiCreateMember } from '@api/admin/members';
-import { apiRoles, Role } from '@api/admin/members/roles';
+import { apiCreateMember, type PostResponse } from '@api/admin/members';
+import { apiRoles, type GetResponse, type Role } from '@api/admin/members/roles';
 import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { CreateMemberModal } from '../../presentationalComponents/CreateMemberModal';
-import { CreateMemberFormInput } from '../../types/CreateMemberFormInput';
+import { type CreateMemberFormInput } from '../../types/CreateMemberFormInput';
 
 export const CreateMemberModalContainer = () => {
   const {
@@ -34,13 +34,8 @@ export const CreateMemberModalContainer = () => {
         setRoleList(await apiRoles(userToken));
       } catch (e) {
         if (axios.isAxiosError(e)) {
-          const responseData = e.response!.data;
           const status = e.response!.status;
-
-          if (status === 400) {
-            alert.show({ type: 'error', content: Object.values(responseData.errors!).join('\n') });
-            return;
-          }
+          const responseData = e.response!.data as GetResponse;
 
           if (status === 401) {
             return;
@@ -54,7 +49,7 @@ export const CreateMemberModalContainer = () => {
             return;
           }
 
-          if (responseData.message) {
+          if (responseData.message !== '') {
             alert.show({ type: 'error', content: responseData.message! });
             return;
           }
@@ -70,8 +65,12 @@ export const CreateMemberModalContainer = () => {
     main();
   }, []);
 
-  const handleOpen = () => setIsActive(true);
-  const handleClose = () => setIsActive(false);
+  const handleOpen = () => {
+    setIsActive(true);
+  };
+  const handleClose = () => {
+    setIsActive(false);
+  };
 
   const handleCreateMember: SubmitHandler<CreateMemberFormInput> = async (createMemberFormInput) => {
     try {
@@ -87,10 +86,10 @@ export const CreateMemberModalContainer = () => {
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const status = e.response!.status;
-        const responseData = e.response!.data;
+        const responseData = e.response!.data as PostResponse;
 
-        if (status === 400 && responseData.message) {
-          setError(responseData.message!);
+        if (status === 400 && responseData.message !== '') {
+          setError(responseData.message);
           return;
         }
 
@@ -104,12 +103,12 @@ export const CreateMemberModalContainer = () => {
           return;
         }
 
-        setError(responseData.message!);
+        setError(responseData.message);
         return;
       }
 
       setError(
-        '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。',
+        '不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。\n時間を置いても同様のエラーが発生する場合は、管理者にお問い合わせください。'
       );
     }
   };

@@ -1,4 +1,4 @@
-export type Member = {
+export interface Member {
   memberId: number;
   name: string;
   jobTitle: string;
@@ -7,12 +7,12 @@ export type Member = {
   github?: string;
   description: string;
   thumbnail: string;
-};
+}
 
 export type GetResponse = Member[];
 
-export type Methods = {
+export interface Methods {
   get: {
     resBody: GetResponse;
   };
-};
+}

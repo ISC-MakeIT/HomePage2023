@@ -6,9 +6,9 @@ import { EditWorkModalContainer } from 'src/components/organisms/admin/container
 import { WorkContainer } from 'src/components/organisms/admin/containerComponents/WorkContainer';
 import { NavigationWithHeader } from '../../../../templates/admin/NavigraitonWithHeader';
 
-type RouterParams = {
+interface RouterParams {
   workId: string;
-};
+}
 
 export const Work = () => {
   const { workId } = useParams<RouterParams>();
@@ -19,7 +19,7 @@ export const Work = () => {
         <title>活動実績ID: {workId} の詳細 | MakeIT</title>
       </Helmet>
 
-      <Stack flexDirection='row' columnGap={2}>
+      <Stack flexDirection="row" columnGap={2}>
         <EditWorkModalContainer workId={Number(workId)} />
         <DeleteWorkModalContainer workId={Number(workId)} />
       </Stack>

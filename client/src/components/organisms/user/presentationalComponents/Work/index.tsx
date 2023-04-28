@@ -1,7 +1,5 @@
-import { Work as APIWork } from '@api/user/works';
+import { type Work as APIWork } from '@api/user/works';
 import { css } from '@emotion/react';
-import { Link } from 'react-router-dom';
-import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
 import { USER_ROUTE_PATH_MAP } from 'src/routes/routePath';
 import { Work as WorkComponent } from 'src/components/molecules/user/Work';
 import { AccessToList } from 'src/components/molecules/user/Button/AccessToList';
@@ -12,9 +10,10 @@ type WorkProps = APIWork;
 export const Work = (work: WorkProps) => {
   return (
     <section
-      id='work'
+      id="work"
       css={css`
         background-image: url(/work_background.png);
+        background-position: center;
       `}
     >
       <div
@@ -22,6 +21,7 @@ export const Work = (work: WorkProps) => {
           position: relative;
           background-color: rgba(255, 255, 255, 0.95);
           padding: 7.5rem 7rem;
+          overflow: hidden;
         `}
       >
         <div
@@ -33,15 +33,16 @@ export const Work = (work: WorkProps) => {
           <WorkComponent {...work} />
         </div>
 
+        <ToyBackGround />
         <div
           css={css`
+            position: relative;
             z-index: 1;
+            margin-top: 1rem;
           `}
         >
-          <ToyBackGround />
+          <AccessToList to={USER_ROUTE_PATH_MAP.WORKS} />
         </div>
-
-        <AccessToList to={USER_ROUTE_PATH_MAP.WORKS} />
       </div>
     </section>
   );
