@@ -79,6 +79,38 @@ class ContactController extends Controller {
             <p>MekeIT</p>
             EOM;
 
+            if ($category === "体験入部") {
+                $htmlBody = <<< "EOM"
+                <p>※このメールはシステムからの自動返信です<br/></p>
+
+                <p>
+                {$name}さんこんにちは！<br/><br/>
+                体験入部にご興味を持っていただき、ありがとうございます。<Br/>
+
+                まずはじめに、体験入部の準備としてDiscordというアプリのセットアップをお願いいたします。<br/>
+                Discordは、複数人でのコミュニケーションを取りやすくするためのアプリです。<br/>
+                もし、まだインストールされていない場合は、PCやスマートフォンにダウンロードしてセットアップしてくださいね。<br/>
+                (PCでの利用をお勧めします！)<br/><br/>
+
+                Discordの始め方<br/><br/>
+
+                https://support.discord.com/hc/ja/articles/360033931551-%E3%81%AE%E5%A7%8B%E3%82%81%E6%96%B9 <br/><br/>
+
+                次に、以下の招待リンクをクリックして、私たちのDiscordサーバーに参加してください！<br/><br/>
+
+                https://discord.gg/mPpSVCZNTs<br/><br/>
+
+                サーバーに参加したら、まずは簡単な自己紹介をお願いします！私たちもあなたに会えるのを楽しみにしています。<br/><br/>
+
+                もし何か質問があれば、お気軽にお問い合わせくださいね。それでは、体験入部でお会いできるのを楽しみにしています！<br/><br/>
+
+                よろしくお願いします！<br/><br/>
+
+                MakeIT
+                </p>
+                EOM;
+            }
+
             $errorMessage = '';
 
             try {
