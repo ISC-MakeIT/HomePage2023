@@ -19,6 +19,7 @@ type ContactProps = {
   errors: FieldErrors<ContactFormInput>;
   error?: string;
   success?: string;
+  isSubmitting: boolean;
 
   contactCategories: Option[];
 };
@@ -30,6 +31,7 @@ export const Contact = ({
   errors,
   error,
   success,
+  isSubmitting,
   contactCategories,
 }: ContactProps) => {
   return (
@@ -129,6 +131,7 @@ export const Contact = ({
               buttonType='submit'
               icon={<Woman width='1.5rem' height='1.5rem' />}
               gradientType='redToOrange'
+              disabled={isSubmitting}
             >
               この内容で送信する
             </GradientButtonWithIconAndArrow>
