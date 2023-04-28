@@ -17,6 +17,7 @@ export const ContactContainer = () => {
   } = useForm<ContactFormInput>();
   const [error, setError] = useState<string>();
   const [success, setSuccess] = useState<string>();
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -28,6 +29,10 @@ export const ContactContainer = () => {
 
   const handleContact: SubmitHandler<ContactFormInput> = async (contactFormInput) => {
     try {
+      if (isSubmitting) {
+        return;
+      }
+      setIsSubmitting(true);
       await apiContact(contactFormInput);
       setError(undefined);
       reset();
@@ -52,6 +57,8 @@ export const ContactContainer = () => {
       }
 
       setError('不明なエラーが発生したため、少し時間を置いてからもう一度お試しください。');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -63,6 +70,7 @@ export const ContactContainer = () => {
       errors={errors}
       error={error}
       success={success}
+      isSubmitting={isSubmitting}
       contactCategories={CONTACT_CATEGORIES_FOR_SELECT}
     />
   );
