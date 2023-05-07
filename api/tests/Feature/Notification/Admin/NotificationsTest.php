@@ -9,8 +9,10 @@ use Faker\Generator;
 use Illuminate\Http\Request;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class NotificationsTest extends AlreadyLoggedInTestCase {
-    public function test_お知らせの一覧取得を行うこと(): void {
+class NotificationsTest extends AlreadyLoggedInTestCase
+{
+    public function test_お知らせの一覧取得を行うこと(): void
+    {
         (new NotificationSeeder(new Generator()))->run();
 
         $response = $this->get('/api/admin/notifications');

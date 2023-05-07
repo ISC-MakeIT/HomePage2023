@@ -10,8 +10,10 @@ use App\Models\Member\Role;
 use Illuminate\Http\UploadedFile;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class RegisterMemberTest extends AlreadyLoggedInTestCase {
-    public function test_メンバーの作成を行えること(): void {
+class RegisterMemberTest extends AlreadyLoggedInTestCase
+{
+    public function test_メンバーの作成を行えること(): void
+    {
         $role = Role::where('name', RoleName::MEMBER->toString())->first();
         $icon = UploadedFile::fake()->image('dummy.jpg', 800, 800);
 
@@ -48,7 +50,8 @@ class RegisterMemberTest extends AlreadyLoggedInTestCase {
         );
     }
 
-    public function test_既に使用されているユーザー名だった場合エラーが発生すること(): void {
+    public function test_既に使用されているユーザー名だった場合エラーが発生すること(): void
+    {
         $role = Role::where('name', RoleName::MEMBER->toString())->first();
         $icon = UploadedFile::fake()->image('dummy.jpg', 800, 800);
 

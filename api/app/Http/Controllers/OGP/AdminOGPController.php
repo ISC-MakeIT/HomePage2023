@@ -13,14 +13,17 @@ use App\Http\Resources\OGP\Admin\OGPResources;
 use App\Models\OGP\OGP;
 use Illuminate\Http\JsonResponse;
 
-class AdminOGPController extends Controller {
-    public function OGPList(): JsonResponse {
+class AdminOGPController extends Controller
+{
+    public function OGPList(): JsonResponse
+    {
         $this->authorize('OGPList', OGP::class);
 
         return OGPResources::collection(OGP::all())->response();
     }
 
-    public function registerOGP(RegisterOGPRequest $request): JsonResponse {
+    public function registerOGP(RegisterOGPRequest $request): JsonResponse
+    {
         $this->authorize('registerOGP', OGP::class);
 
         $validatedRequest = $request->validated();
@@ -42,7 +45,8 @@ class AdminOGPController extends Controller {
         return response()->json(['message' => 'OGPの作成に成功しました。']);
     }
 
-    public function editOGP(EditOGPRequest $request): JsonResponse {
+    public function editOGP(EditOGPRequest $request): JsonResponse
+    {
         $this->authorize('editOGP', OGP::class);
 
         $validatedRequest = $request->validated();
@@ -77,7 +81,8 @@ class AdminOGPController extends Controller {
         return response()->json(['message' => 'OGPの編集に成功しました。']);
     }
 
-    public function deleteOGP(DeleteOGPRequest $request): JsonResponse {
+    public function deleteOGP(DeleteOGPRequest $request): JsonResponse
+    {
         $this->authorize('deleteOGP', OGP::class);
 
         $validatedRequest = $request->validated();
@@ -86,7 +91,8 @@ class AdminOGPController extends Controller {
         return response()->json(['message' => 'OGPの削除に成功しました。']);
     }
 
-    public function OGP(OGPRequest $request): array {
+    public function OGP(OGPRequest $request): array
+    {
         $this->authorize('OGP', OGP::class);
 
         $validatedRequest = $request->validated();

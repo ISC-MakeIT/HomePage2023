@@ -7,8 +7,10 @@ use App\Models\Work\NonActiveWork;
 use Illuminate\Http\UploadedFile;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class RegisterWorkTest extends AlreadyLoggedInTestCase {
-    public function test_活動実績の作成を行えること(): void {
+class RegisterWorkTest extends AlreadyLoggedInTestCase
+{
+    public function test_活動実績の作成を行えること(): void
+    {
         $request = new RegisterWorkRequest([
             'title'    => 'test',
             'contents' => 'contents',
@@ -24,7 +26,8 @@ class RegisterWorkTest extends AlreadyLoggedInTestCase {
         ]);
     }
 
-    public function test_活動実績でThumbnailを含めて作成を行えること(): void {
+    public function test_活動実績でThumbnailを含めて作成を行えること(): void
+    {
         $picture = UploadedFile::fake()->image('dummy.jpg', 800, 800);
 
         $request = new RegisterWorkRequest([

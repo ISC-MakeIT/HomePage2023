@@ -4,5 +4,6 @@ namespace App\Exceptions\Notification;
 
 use RuntimeException;
 
-class AlreadyEditedNotificationException extends RuntimeException {
+class AlreadyEditedNotificationException extends RuntimeException
+{
 }

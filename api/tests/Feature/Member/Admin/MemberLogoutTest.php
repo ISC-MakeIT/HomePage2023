@@ -7,8 +7,10 @@ use App\Models\Member\Member;
 use Illuminate\Support\Facades\Hash;
 use Tests\Feature\BaseTestCase;
 
-class MemberLogoutTest extends BaseTestCase {
-    public function test_ログアウトを行えること(): void {
+class MemberLogoutTest extends BaseTestCase
+{
+    public function test_ログアウトを行えること(): void
+    {
         $username = 'admin';
         $password = 'password';
 

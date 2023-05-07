@@ -22,7 +22,7 @@ Route::prefix('/admin')->group(function () {
             Route::put('/icon', [AdminMemberController::class, 'editIcon']);
             Route::put('/password', [AdminMemberController::class, 'changePassword']);
             Route::put('/role', [AdminMemberController::class, 'changeRole']);
-            Route::put('/active', [AdminMemberController::class, 'changeActive']);
+            Route::put('/activity', [AdminMemberController::class, 'changeActivity']);
             Route::get('/{memberId}', [AdminMemberController::class, 'member']);
         });
         Route::prefix('/notifications')->group(function () {

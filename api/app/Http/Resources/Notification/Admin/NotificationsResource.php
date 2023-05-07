@@ -6,8 +6,10 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class NotificationsResource extends JsonResource {
-    public function toArray(Request $request): array {
+class NotificationsResource extends JsonResource
+{
+    public function toArray(Request $request): array
+    {
         unset($request);
 
         if ($this->activeNotification) {

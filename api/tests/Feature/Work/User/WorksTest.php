@@ -7,8 +7,10 @@ use App\Models\Work\ActiveWork;
 use Illuminate\Http\Request;
 use Tests\TestCase;
 
-class WorksTest extends TestCase {
-    public function test_活動実績の一覧取得を行うこと(): void {
+class WorksTest extends TestCase
+{
+    public function test_活動実績の一覧取得を行うこと(): void
+    {
         $response = $this->get('/api/works');
         $response->assertOk();
         $response->assertJson(

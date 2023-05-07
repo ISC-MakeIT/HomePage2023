@@ -6,8 +6,10 @@ use App\Http\Requests\Member\Admin\EditMemberRequest;
 use App\Models\Member\NonActiveMember;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class EditMemberTest extends AlreadyLoggedInTestCase {
-    public function test_ログインしているメンバーの編集を行うこと(): void {
+class EditMemberTest extends AlreadyLoggedInTestCase
+{
+    public function test_ログインしているメンバーの編集を行うこと(): void
+    {
         $request = new EditMemberRequest([
             'name'        => 'test_of_test',
             'jobTitle'    => 'Programer',

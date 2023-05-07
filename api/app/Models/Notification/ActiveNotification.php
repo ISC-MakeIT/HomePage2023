@@ -5,7 +5,8 @@ namespace App\Models\Notification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ActiveNotification extends Model {
+class ActiveNotification extends Model
+{
     use HasFactory;
 
     public const UPDATED_AT = null;

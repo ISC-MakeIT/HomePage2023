@@ -11,11 +11,13 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
 
-class AlreadyLoggedInTestCase extends BaseTestCase {
+class AlreadyLoggedInTestCase extends BaseTestCase
+{
     use DatabaseTransactions;
     use WithFaker;
 
-    protected function setUp(): void {
+    protected function setUp(): void
+    {
         parent::setUp();
 
         $member = Member::create();

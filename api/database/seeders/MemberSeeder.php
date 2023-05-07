@@ -13,14 +13,17 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class MemberSeeder extends Seeder {
+class MemberSeeder extends Seeder
+{
     private Faker $faker;
 
-    public function __construct(Faker $faker) {
+    public function __construct(Faker $faker)
+    {
         $this->faker = $faker;
     }
 
-    public function run(): void {
+    public function run(): void
+    {
         for ($i = 0; $i < $this->faker->numberBetween(3, 5); $i++) {
             $member = Member::create();
 

@@ -5,7 +5,8 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
-class AuthServiceProvider extends ServiceProvider {
+class AuthServiceProvider extends ServiceProvider
+{
     protected $policies = [
         App\Models\Member\Member::class             => App\Policies\MemberPolicy::class,
         App\Models\Notification\Notification::class => App\Policies\NotificationPolicy::class,
@@ -13,7 +14,8 @@ class AuthServiceProvider extends ServiceProvider {
         App\Models\OGP\OGP::class                   => App\Policies\OGPPolicy::class,
     ];
 
-    public function boot(): void {
+    public function boot(): void
+    {
         $this->registerPolicies();
     }
 }

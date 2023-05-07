@@ -1,0 +1,254 @@
+<?php
+
+namespace MakeIT\Member\Repository;
+
+use App\Exceptions\Common\DataIntegrityViolationException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use MakeIT\Member\Domain\Bean\CredentialBean;
+use MakeIT\Member\Domain\Bean\MemberBean;
+use MakeIT\Member\Domain\Eloquent\Member as MemberORM;
+use MakeIT\Member\Domain\Eloquent\ActiveMember as ActiveMemberORM;
+use MakeIT\Member\Domain\Eloquent\MemberAbility as MemberAbilityORM;
+use MakeIT\Member\Domain\Eloquent\NonActiveMember as NonActiveMemberORM;
+use MakeIT\Member\Domain\Entity\MemberConstant;
+use MakeIT\Role\Domain\Bean\Role;
+
+class MemberRepository implements \MakeIT\Member\Repository\Interface\MemberRepository
+{
+    public function findOneByCredential(CredentialBean $credential): ?MemberBean
+    {
+        /** @var ?ActiveMemberORM */
+        $activeMemberORM = ActiveMemberORM::where('username', $credential->getUsername())->first();
+
+        if ($activeMemberORM && Hash::check($credential->getPassword(), $activeMemberORM->getPassword())) {
+            /** @var MemberORM */
+            $memberORM = MemberORM::with('ability.role')->find($activeMemberORM->getMemberId());
+
+            return MemberBean::from(
+                $activeMemberORM->getMemberId(),
+                $activeMemberORM->getName(),
+                $activeMemberORM->getJobTitle(),
+                $activeMemberORM->getDiscord(),
+                $activeMemberORM->getTwitter(),
+                $activeMemberORM->getGithub(),
+                $activeMemberORM->getDescription(),
+                $activeMemberORM->getThumbnail(),
+                $activeMemberORM->getUsername(),
+                $activeMemberORM->getHashedPassword(),
+                $memberORM->getVersion(),
+                true,
+                Role::from(
+                    $memberORM->getAbility()->getRole()->getRoleId(),
+                    $memberORM->getAbility()->getRole()->getName(),
+                ),
+                $memberORM->getCreator(),
+                $activeMemberORM->getCreator(),
+            );
+        }
+
+        /** @var ?NonActiveMemberORM */
+        $nonActiveMemberORM = NonActiveMemberORM::where('username', $credential->getUsername())->first();
+
+        if ($nonActiveMemberORM && Hash::check($credential->getPassword(), $nonActiveMemberORM->getPassword())) {
+            /** @var MemberORM */
+            $memberORM = MemberORM::with('ability.role')->find($activeMemberORM->getMemberId());
+
+            return MemberBean::from(
+                $nonActiveMemberORM->getMemberId(),
+                $nonActiveMemberORM->getName(),
+                $nonActiveMemberORM->getJobTitle(),
+                $nonActiveMemberORM->getDiscord(),
+                $nonActiveMemberORM->getTwitter(),
+                $nonActiveMemberORM->getGithub(),
+                $nonActiveMemberORM->getDescription(),
+                $nonActiveMemberORM->getThumbnail(),
+                $nonActiveMemberORM->getUsername(),
+                $nonActiveMemberORM->getHashedPassword(),
+                $memberORM->getVersion(),
+                false,
+                Role::from(
+                    $memberORM->getAbility()->getRole()->getRoleId(),
+                    $memberORM->getAbility()->getRole()->getName(),
+                ),
+                $memberORM->getCreator(),
+                $nonActiveMemberORM->getCreator(),
+            );
+        }
+
+        return null;
+    }
+
+    public function findOneByMemberId(int $memberId): ?MemberBean
+    {
+        /** @var ?MemberORM */
+        $memberORM = MemberORM::doesntHave('archiveMember')
+            ->with(['activeMember', 'nonActiveMember', 'ability.role'])
+            ->find($memberId);
+
+        if (!$memberORM) {
+            return null;
+        }
+
+        if ($memberORM->getActiveMember()) {
+            $activeMemberORM = $memberORM->getActiveMember();
+
+            return MemberBean::from(
+                $activeMemberORM->getMemberId(),
+                $activeMemberORM->getName(),
+                $activeMemberORM->getJobTitle(),
+                $activeMemberORM->getDiscord(),
+                $activeMemberORM->getTwitter(),
+                $activeMemberORM->getGithub(),
+                $activeMemberORM->getDescription(),
+                $activeMemberORM->getThumbnail(),
+                $activeMemberORM->getUsername(),
+                $activeMemberORM->getHashedPassword(),
+                $memberORM->getVersion(),
+                true,
+                Role::from(
+                    $memberORM->getAbility()->getRole()->getRoleId(),
+                    $memberORM->getAbility()->getRole()->getName(),
+                ),
+                $memberORM->getCreator(),
+                $activeMemberORM->getCreator(),
+            );
+        }
+
+        if ($memberORM->getNonActiveMember()) {
+            $nonActiveMemberORM = $memberORM->getActiveMember();
+
+            return MemberBean::from(
+                $nonActiveMemberORM->getMemberId(),
+                $nonActiveMemberORM->getName(),
+                $nonActiveMemberORM->getJobTitle(),
+                $nonActiveMemberORM->getDiscord(),
+                $nonActiveMemberORM->getTwitter(),
+                $nonActiveMemberORM->getGithub(),
+                $nonActiveMemberORM->getDescription(),
+                $nonActiveMemberORM->getThumbnail(),
+                $nonActiveMemberORM->getUsername(),
+                $nonActiveMemberORM->getHashedPassword(),
+                $memberORM->getVersion(),
+                false,
+                Role::from(
+                    $memberORM->getAbility()->getRole()->getRoleId(),
+                    $memberORM->getAbility()->getRole()->getName(),
+                ),
+                $memberORM->getCreator(),
+                $nonActiveMemberORM->getCreator(),
+            );
+        }
+
+        throw new DataIntegrityViolationException("メンバーの状態を管理する，active_members, non_active_membersテーブルが存在しません");
+    }
+
+    public function save(MemberBean $memberBean): MemberBean
+    {
+        /** @var ?MemberORM */
+        $memberORM = MemberORM::doesntHave('archiveMember')
+            ->with(['activeMember', 'nonActiveMember', 'ability.role'])
+            ->find($memberBean->getMemberId());
+
+        if (!$memberORM) {
+            /** @var MemberORM */
+            $createdMemberORM = MemberORM::create([
+                'creator' => auth()->id()
+            ]);
+            NonActiveMemberORM::create([
+                'member_id'   => $createdMemberORM->getMemberId(),
+                'name'        => $memberBean->getName(),
+                'job_title'   => $memberBean->getJobTitle(),
+                'discord'     => $memberBean->getDiscord(),
+                'twitter'     => $memberBean->getTwitter(),
+                'github'      => $memberBean->getGithub(),
+                'description' => $memberBean->getDescription(),
+                'thumbnail'   => $memberBean->getThumbnail(),
+                'username'    => $memberBean->getUsername(),
+                'password'    => $memberBean->getHashedPassword(),
+                'creator'     => auth()->id(),
+            ]);
+            MemberAbilityORM::create([
+                'member_id' => $createdMemberORM->getMemberId(),
+                'role_id'   => $memberBean->getRole()->getRoleId(),
+                'creator'   => auth()->id(),
+                'updator'   => auth()->id(),
+            ]);
+
+            return $memberBean->overwrite(
+                memberId: $createdMemberORM->getMemberId(),
+                password: MemberConstant::PASSWORD_DEFAULT_VALUE,
+            );
+        }
+
+        return DB::transaction(function () use ($memberORM, $memberBean) {
+            $memberORM->activeMember()->delete();
+            $memberORM->nonActiveMember()->delete();
+
+            $memberORM->version = $memberBean->getVersion() + 1;
+            $memberORM->update();
+
+            $latestMemberBean = $memberBean->overwrite(version: $memberORM->getVersion());
+
+            /** @var MemberAbilityORM */
+            $memberAbilityORM          = MemberAbilityORM::where('member_id', $latestMemberBean->getMemberId())->first();
+            $memberAbilityORM->role_id = $latestMemberBean->getRole()->getRoleId();
+            $memberAbilityORM->update();
+
+            /** @var ?string */
+            $memberPassword = null;
+            if ($memberORM->activeMember()) {
+                $memberPassword = $memberORM->getActiveMember()->getHashedPassword();
+            }
+            if ($memberORM->nonActiveMember()) {
+                $memberPassword = $memberORM->getNonActiveMember()->getHashedPassword();
+            }
+
+            if ($latestMemberBean->getIsActive()) {
+                ActiveMemberORM::create([
+                    'member_id'   => $latestMemberBean->getMemberId(),
+                    'name'        => $latestMemberBean->getName(),
+                    'job_title'   => $latestMemberBean->getJobTitle(),
+                    'discord'     => $latestMemberBean->getDiscord(),
+                    'twitter'     => $latestMemberBean->getTwitter(),
+                    'github'      => $latestMemberBean->getGithub(),
+                    'description' => $latestMemberBean->getDescription(),
+                    'thumbnail'   => $latestMemberBean->getThumbnail(),
+                    'username'    => $latestMemberBean->getUsername(),
+                    'password'    => $memberPassword,
+                    'creator'     => auth()->id(),
+                ]);
+
+                return $latestMemberBean;
+            }
+
+            NonActiveMemberORM::create([
+                'member_id'   => $latestMemberBean->getMemberId(),
+                'name'        => $latestMemberBean->getName(),
+                'job_title'   => $latestMemberBean->getJobTitle(),
+                'discord'     => $latestMemberBean->getDiscord(),
+                'twitter'     => $latestMemberBean->getTwitter(),
+                'github'      => $latestMemberBean->getGithub(),
+                'description' => $latestMemberBean->getDescription(),
+                'thumbnail'   => $latestMemberBean->getThumbnail(),
+                'username'    => $latestMemberBean->getUsername(),
+                'password'    => $memberPassword,
+                'creator'     => auth()->id(),
+            ]);
+
+            return $latestMemberBean;
+        }, 3);
+    }
+
+    public function createTokenByMemberId(int $memberId): string
+    {
+        return MemberORM::find($memberId)->createToken(config('app.key'))->plainTextToken;
+    }
+
+    public function deleteToken(int $memberId, string $currentToken): void
+    {
+        $tokenId = Str::before($currentToken, '|');
+        MemberORM::find($memberId)->tokens()->where('id', $tokenId)->delete();
+    }
+}

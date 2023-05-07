@@ -11,16 +11,19 @@ use Aws\Exception\AwsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
-class ContactController extends Controller {
+class ContactController extends Controller
+{
     private MailHelper $mailHelper;
     private DiscordHelper $discordHelper;
 
-    public function __construct(MailHelper $mailHelper, DiscordHelper $discordHelper) {
+    public function __construct(MailHelper $mailHelper, DiscordHelper $discordHelper)
+    {
         $this->mailHelper    = $mailHelper;
         $this->discordHelper = $discordHelper;
     }
 
-    public function contact(ContactRequest $request): JsonResponse {
+    public function contact(ContactRequest $request): JsonResponse
+    {
         $validatedRequest = $request->validated();
 
         DB::transaction(function () use ($validatedRequest) {

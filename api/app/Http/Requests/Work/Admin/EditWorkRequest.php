@@ -4,12 +4,15 @@ namespace App\Http\Requests\Work\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EditWorkRequest extends FormRequest {
-    public function authorize(): bool {
+class EditWorkRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
         return true;
     }
 
-    public function rules(): array {
+    public function rules(): array
+    {
         if ($this['isActive'] && gettype($this['isActive']) === 'string') {
             $this['isActive'] = $this['isActive'] === 'true';
         }

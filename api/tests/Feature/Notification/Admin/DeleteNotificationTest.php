@@ -8,8 +8,10 @@ use App\Models\Notification\ArchiveNotification;
 use App\Models\Notification\Notification;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class DeleteNotificationTest extends AlreadyLoggedInTestCase {
-    public function test_お知らせの削除を行えること(): void {
+class DeleteNotificationTest extends AlreadyLoggedInTestCase
+{
+    public function test_お知らせの削除を行えること(): void
+    {
         $createRequest = new RegisterNotificationRequest([
             'title'    => 'test',
             'contents' => 'contents',
@@ -31,7 +33,8 @@ class DeleteNotificationTest extends AlreadyLoggedInTestCase {
         ]);
     }
 
-    public function test_お知らせの削除を2回行った場合エラーが発生すること(): void {
+    public function test_お知らせの削除を2回行った場合エラーが発生すること(): void
+    {
         $createRequest = new RegisterNotificationRequest([
             'title'    => 'test',
             'contents' => 'contents',

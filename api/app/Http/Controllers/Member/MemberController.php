@@ -7,8 +7,10 @@ use App\Http\Resources\Member\User\MembersResource;
 use App\Models\Member\ActiveMember;
 use Illuminate\Http\JsonResponse;
 
-class MemberController extends Controller {
-    public function members(): JsonResponse {
+class MemberController extends Controller
+{
+    public function members(): JsonResponse
+    {
         $activeMembers = ActiveMember::all();
 
         return MembersResource::collection($activeMembers)->response();

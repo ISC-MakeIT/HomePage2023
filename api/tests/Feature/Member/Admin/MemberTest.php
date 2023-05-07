@@ -8,8 +8,10 @@ use Database\Seeders\MemberSeeder;
 use Illuminate\Http\Request;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class MemberTest extends AlreadyLoggedInTestCase {
-    public function test_メンバーの詳細取得を行えること(): void {
+class MemberTest extends AlreadyLoggedInTestCase
+{
+    public function test_メンバーの詳細取得を行えること(): void
+    {
         (new MemberSeeder($this->faker))->run();
 
         $member = Member::doesntHave('archiveMember')

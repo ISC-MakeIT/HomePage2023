@@ -12,8 +12,10 @@ use Carbon\Carbon;
 use DateTime;
 use Illuminate\Database\Events\QueryExecuted;
 
-class DataBaseQueryServiceProvider extends ServiceProvider {
-    private function bindingToOriginPlaceHolderBy(mixed $binding): string {
+class DataBaseQueryServiceProvider extends ServiceProvider
+{
+    private function bindingToOriginPlaceHolderBy(mixed $binding): string
+    {
         if (is_string($binding)) {
             return "'{$binding}'";
         }
@@ -37,7 +39,8 @@ class DataBaseQueryServiceProvider extends ServiceProvider {
     }
 
     /** @return string[] */
-    private function bindingsToOriginPlaceHoldersBy(QueryExecuted $query): array {
+    private function bindingsToOriginPlaceHoldersBy(QueryExecuted $query): array
+    {
         $originPlaceHolders = [];
         foreach ($query->bindings as $binding) {
             $originPlaceHolders[] = $this->bindingToOriginPlaceHolderBy($binding);
@@ -45,7 +48,8 @@ class DataBaseQueryServiceProvider extends ServiceProvider {
         return $originPlaceHolders;
     }
 
-    private function sqlPlaceHoldersReplaceToOriginPlaceHoldersBy(array $originPlaceHolders, string $sql): string {
+    private function sqlPlaceHoldersReplaceToOriginPlaceHoldersBy(array $originPlaceHolders, string $sql): string
+    {
         $result = $sql;
         foreach ($originPlaceHolders as $originPlaceHolder) {
             $result = preg_replace('/\\?/', $originPlaceHolder, $result, 1);
@@ -53,11 +57,13 @@ class DataBaseQueryServiceProvider extends ServiceProvider {
         return $result;
     }
 
-    private function outputToLogBy(QueryExecuted $query, string $sql): void {
+    private function outputToLogBy(QueryExecuted $query, string $sql): void
+    {
         logs()->info('SQL', ['sql' => $sql, 'time' => "{$query->time} ms"]);
     }
 
-    public function register(): void {
+    public function register(): void
+    {
         DB::listen(function (QueryExecuted $query): void {
             $originPlaceHolders = $this->bindingsToOriginPlaceHoldersBy($query);
             $sql                = $this->sqlPlaceHoldersReplaceToOriginPlaceHoldersBy($originPlaceHolders, $query->sql);
@@ -75,8 +81,5 @@ class DataBaseQueryServiceProvider extends ServiceProvider {
         Event::listen(TransactionRolledBack::class, function (TransactionRolledBack $event): void {
             logs()->info('SQL ROLLBACK');
         });
-    }
-
-    public function boot(): void {
     }
 }

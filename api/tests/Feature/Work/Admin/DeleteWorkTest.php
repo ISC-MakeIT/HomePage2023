@@ -8,8 +8,10 @@ use App\Models\Work\ArchiveWork;
 use App\Models\Work\NonActiveWork;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class DeleteWorkTest extends AlreadyLoggedInTestCase {
-    public function test_活動実績の削除を行うこと(): void {
+class DeleteWorkTest extends AlreadyLoggedInTestCase
+{
+    public function test_活動実績の削除を行うこと(): void
+    {
         $createWorkRequest = new RegisterWorkRequest([
             'title'    => 'test',
             'contents' => 'contents',
@@ -31,7 +33,8 @@ class DeleteWorkTest extends AlreadyLoggedInTestCase {
         ]);
     }
 
-    public function test_活動実績の削除を2回行った場合エラーが発生すること(): void {
+    public function test_活動実績の削除を2回行った場合エラーが発生すること(): void
+    {
         $createWorkRequest = new RegisterWorkRequest([
             'title'    => 'test',
             'contents' => 'contents',

@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Member;
 
 use App\Domain\Beans\Member\MemberWithAbility;
 use App\Domain\ValueObjects\Helpers\S3Path;
-use App\Exceptions\Member\IllegalChangeMyRole;
 use App\Helpers\S3ImageHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Member\Admin\ChangeActiveRequest;
+use App\Http\Requests\Member\Admin\ChangeActivityRequest;
 use App\Http\Requests\Member\Admin\ChangePasswordRequest;
 use App\Http\Requests\Member\Admin\ChangeRoleRequest;
 use App\Http\Requests\Member\Admin\DeleteMemberRequest;
@@ -17,278 +16,135 @@ use App\Http\Requests\Member\Admin\MemberLoginRequest;
 use App\Http\Requests\Member\Admin\MemberRequest;
 use App\Http\Requests\Member\Admin\RegisterMemberRequest;
 use App\Http\Resources\Member\Admin\MembersResource;
-use App\Http\Resources\Member\Admin\RolesResource;
+use App\Http\Response\Member\Admin\ChangeActivityResponse;
+use App\Http\Response\Member\Admin\ChangePasswordResponse;
+use App\Http\Response\Member\Admin\ChangeRoleResponse;
+use App\Http\Response\Member\Admin\EditMemberResponse;
+use App\Http\Response\Member\Admin\LoginResponse;
+use App\Http\Response\Member\Admin\LogoutResponse;
+use App\Http\Response\Member\Admin\RegisterMemberResponse;
+use App\Http\Response\Member\Admin\RolesResponse;
 use App\Models\Member\ActiveMember;
 use App\Models\Member\ArchiveMember;
 use App\Models\Member\Member;
-use App\Models\Member\MemberAbility;
 use App\Models\Member\NonActiveMember;
-use App\Models\Member\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use MakeIT\Member\Service\Command\ChangeMemberActivityService;
+use MakeIT\Member\Service\Command\ChangeMemberPasswordService;
+use MakeIT\Member\Service\Command\ChangeMemberRoleService;
+use MakeIT\Member\Service\Command\EditMemberService;
+use MakeIT\Member\Service\Command\LoginService;
+use MakeIT\Member\Service\Command\LogoutService;
+use MakeIT\Member\Service\Command\RegisterMemberService;
+use MakeIT\Role\Service\Query\RolesService;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-class AdminMemberController extends Controller {
-    public function login(MemberLoginRequest $request): JsonResponse {
-        return DB::transaction(function () use ($request) {
-            $validatedRequest = $request->validated();
+class AdminMemberController extends Controller
+{
+    private LoginService $loginService;
+    private LogoutService $logoutService;
+    private RolesService $rolesService;
+    private ChangeMemberRoleService $changeMemberRoleService;
+    private ChangeMemberActivityService $changeMemberActivityService;
+    private ChangeMemberPasswordService $changeMemberPasswordService;
+    private RegisterMemberService $registerMemberService;
+    private EditMemberService $editMemberService;
 
-            $activeMember = ActiveMember::getActiveMemberIfCanLogin($validatedRequest['username'], $validatedRequest['password']);
-            if ($activeMember) {
-                return response()->json([
-                    'token'    => Member::find($activeMember->member_id)->createToken(config('app.key'))->plainTextToken,
-                    'memberId' => $activeMember->member_id,
-                    'message'  => 'ログインに成功しました。',
-                ]);
-            }
-
-            $nonActiveMember = NonActiveMember::getNonActiveMemberIfCanLogin($validatedRequest['username'], $validatedRequest['password']);
-            if ($nonActiveMember) {
-                return response()->json([
-                    'token'    => Member::find($nonActiveMember->member_id)->createToken(config('app.key'))->plainTextToken,
-                    'memberId' => $nonActiveMember->member_id,
-                    'message'  => 'ログインに成功しました。',
-                ]);
-            }
-
-            throw new AccessDeniedHttpException('ユーザー名かパスワードが違います。');
-        });
+    public function __construct(
+        LoginService $loginService,
+        LogoutService $logoutService,
+        RolesService $rolesService,
+        ChangeMemberRoleService $changeMemberRoleService,
+        ChangeMemberActivityService $changeMemberActivityService,
+        ChangeMemberPasswordService $changeMemberPasswordService,
+        RegisterMemberService $registerMemberService,
+        EditMemberService $editMemberService,
+    ) {
+        $this->loginService                = $loginService;
+        $this->logoutService               = $logoutService;
+        $this->rolesService                = $rolesService;
+        $this->changeMemberRoleService     = $changeMemberRoleService;
+        $this->changeMemberActivityService = $changeMemberActivityService;
+        $this->changeMemberPasswordService = $changeMemberPasswordService;
+        $this->registerMemberService       = $registerMemberService;
+        $this->editMemberService           = $editMemberService;
     }
 
-    public function logout(Request $request): JsonResponse {
-        return DB::transaction(function () use ($request) {
-            $currentToken = $request->bearerToken();
+    public function login(MemberLoginRequest $request): JsonResponse
+    {
+        $memberWithTokenBean = $this->loginService->execute($request->toBean());
 
-            Member::find(auth()->id())->deleteTokensBy($currentToken);
-            return response()->json([
-                'message' => 'ログアウトに成功しました。',
-            ]);
-        });
+        return LoginResponse::success($memberWithTokenBean);
     }
 
-    public function roles(): JsonResponse {
+    public function logout(Request $request): JsonResponse
+    {
+        $currentToken = $request->bearerToken();
+
+        $this->logoutService->execute($currentToken);
+
+        return LogoutResponse::success();
+    }
+
+    public function roles(): JsonResponse
+    {
         $this->authorize('roles', Member::class);
 
-        return RolesResource::collection(Role::all())->response();
+        $roles = $this->rolesService->execute();
+
+        return RolesResponse::success($roles);
     }
 
-    public function changeRole(ChangeRoleRequest $request): JsonResponse {
+    public function changeRole(ChangeRoleRequest $request): JsonResponse
+    {
         $this->authorize('changeRole', Member::class);
 
-        $validatedRequest = $request->validated();
+        $latestMember = $this->changeMemberRoleService->execute($request->toDomain());
 
-        if ($validatedRequest['memberId'] === auth()->id()) {
-            throw new IllegalChangeMyRole();
-        }
-
-        DB::transaction(function () use ($validatedRequest) {
-            $memberAbility = MemberAbility::where('member_id', $validatedRequest['memberId'])->first();
-            $memberAbility->update([
-                'role_id' => $validatedRequest['roleId'],
-                'updator' => auth()->id()
-            ]);
-        });
-
-        return response()->json(['message' => 'ロールの変更に成功しました。']);
+        return ChangeRoleResponse::success($latestMember);
     }
 
-    public function changeActive(ChangeActiveRequest $request): JsonResponse {
-        $this->authorize('changeActive', Member::class);
+    public function changeActivity(ChangeActivityRequest $request): JsonResponse
+    {
+        $this->authorize('changeActivity', Member::class);
 
-        $validatedRequest  = $request->validated();
+        $latestMember = $this->changeMemberActivityService->execute($request->toDomain());
 
-        return DB::transaction(function () use ($validatedRequest) {
-            $member = Member::doesntHave('archiveMember')
-                ->with(['activeMember', 'nonActiveMember'])
-                ->findOrFail($validatedRequest['memberId']);
-
-            $member->activeMember()->delete();
-            $member->nonActiveMember()->delete();
-
-            $memberContent = [];
-
-            if ($member->activeMember) {
-                $memberContent = [
-                    'member_id'   => $member->member_id,
-                    'name'        => $member->activeMember->name,
-                    'job_title'   => $member->activeMember->job_title,
-                    'discord'     => $member->activeMember->discord,
-                    'twitter'     => $member->activeMember->twitter,
-                    'github'      => $member->activeMember->github,
-                    'description' => $member->activeMember->description,
-                    'thumbnail'   => $member->activeMember->thumbnail,
-                    'username'    => $member->activeMember->username,
-                    'password'    => $member->activeMember->password,
-                    'creator'     => auth()->id(),
-                ];
-            }
-            if ($member->nonActiveMember) {
-                $memberContent = [
-                    'member_id'   => $member->member_id,
-                    'name'        => $member->nonActiveMember->name,
-                    'job_title'   => $member->nonActiveMember->job_title,
-                    'discord'     => $member->nonActiveMember->discord,
-                    'twitter'     => $member->nonActiveMember->twitter,
-                    'github'      => $member->nonActiveMember->github,
-                    'description' => $member->nonActiveMember->description,
-                    'thumbnail'   => $member->nonActiveMember->thumbnail,
-                    'username'    => $member->nonActiveMember->username,
-                    'password'    => $member->nonActiveMember->password,
-                    'creator'     => auth()->id(),
-                ];
-            }
-
-            if ($validatedRequest['isActive']) {
-                ActiveMember::create($memberContent);
-                return response()->json(['message' => '表示状態の変更に成功しました。']);
-            }
-
-            NonActiveMember::create($memberContent);
-            return response()->json(['message' => '表示状態の変更に成功しました。']);
-        });
+        return ChangeActivityResponse::success($latestMember);
     }
 
-    public function changePassword(ChangePasswordRequest $request): JsonResponse {
+    public function changePassword(ChangePasswordRequest $request): JsonResponse
+    {
         $this->authorize('changePassword', Member::class);
 
-        return DB::transaction(function () use ($request) {
-            $validatedRequest = $request->validated();
-            /** @var Member */
-            $member = Member::with(['activeMember', 'nonActiveMember'])->find(auth()->id());
+        $latestMember = $this->changeMemberPasswordService->execute($request->toDomain());
 
-            if ($member->withActiveMemberIsExistsBy($validatedRequest['oldPassword'])) {
-                $activeMember = ActiveMember::find(auth()->id());
-                $activeMember->update([
-                    'password' => Hash::make($validatedRequest['newPassword'])
-                ]);
-                return response()->json(['message' => 'パスワードの変更に成功しました。']);
-            }
-            if ($member->withNonActiveMemberIsExistsBy($validatedRequest['oldPassword'])) {
-                $nonActiveMember = NonActiveMember::find(auth()->id());
-                $nonActiveMember->update([
-                    'password' => Hash::make($validatedRequest['newPassword'])
-                ]);
-                return response()->json(['message' => 'パスワードの変更に成功しました。']);
-            }
-
-            throw new AccessDeniedHttpException('パスワードが違います。');
-        });
+        return ChangePasswordResponse::success($latestMember);
     }
 
-    public function register(RegisterMemberRequest $request): JsonResponse {
+    public function register(RegisterMemberRequest $request): JsonResponse
+    {
         $this->authorize('register', Member::class);
 
-        DB::transaction(function () use ($request) {
-            $validatedRequest = $request->validated();
-            $hashedPassword   = Hash::make($validatedRequest['password']);
+        $registeredMember = $this->registerMemberService->execute($request->toDomain());
 
-            $thumbnailUrl = S3ImageHelper::putImageWithThumbnail($request->file('icon'), S3Path::MEMBER_THUMBNAIL->toString());
-
-            Member::createMemberWithAbility(MemberWithAbility::from(
-                $validatedRequest['name'],
-                $validatedRequest['jobTitle'],
-                $validatedRequest['discord'],
-                $validatedRequest['twitter'],
-                $validatedRequest['github'],
-                $validatedRequest['description'],
-                $thumbnailUrl,
-                $validatedRequest['username'],
-                $hashedPassword,
-                $validatedRequest['roleId'],
-                auth()->id(),
-                auth()->id(),
-            ));
-        });
-
-        return response()->json(['message' => 'メンバーの作成に成功しました。'], 201);
+        return RegisterMemberResponse::success($registeredMember);
     }
 
-    public function edit(EditMemberRequest $request): JsonResponse {
+    public function edit(EditMemberRequest $request): JsonResponse
+    {
         $this->authorize('edit', Member::class);
 
-        return DB::transaction(function () use ($request) {
-            $validatedRequest = $request->validated();
+        $editedMember = $this->editMemberService->execute($request->toDomain());
 
-            $member = Member::doesntHave('archiveMember')
-                ->with(['activeMember', 'nonActiveMember'])
-                ->find(auth()->id());
-            $member->update([
-                'updator' => auth()->id()
-            ]);
-            $member->activeMember()->delete();
-            $member->nonActiveMember()->delete();
-
-            if ($member->activeMember) {
-                if ($validatedRequest['isActive']) {
-                    ActiveMember::create([
-                        'member_id'   => $member->member_id,
-                        'name'        => $validatedRequest['name'],
-                        'job_title'   => $validatedRequest['jobTitle'],
-                        'discord'     => $validatedRequest['discord'],
-                        'twitter'     => $validatedRequest['twitter'],
-                        'github'      => $validatedRequest['github'],
-                        'description' => $validatedRequest['description'],
-                        'thumbnail'   => $member->activeMember->thumbnail,
-                        'username'    => $member->activeMember->username,
-                        'password'    => $member->activeMember->password,
-                        'creator'     => auth()->id(),
-                    ]);
-                    return response()->json(['message' => 'メンバーの編集に成功しました。']);
-                }
-
-                NonActiveMember::create([
-                    'member_id'   => $member->member_id,
-                    'name'        => $validatedRequest['name'],
-                    'job_title'   => $validatedRequest['jobTitle'],
-                    'discord'     => $validatedRequest['discord'],
-                    'twitter'     => $validatedRequest['twitter'],
-                    'github'      => $validatedRequest['github'],
-                    'description' => $validatedRequest['description'],
-                    'thumbnail'   => $member->activeMember->thumbnail,
-                    'username'    => $member->activeMember->username,
-                    'password'    => $member->activeMember->password,
-                    'creator'     => auth()->id(),
-                ]);
-                return response()->json(['message' => 'メンバーの編集に成功しました。']);
-            }
-
-            if ($validatedRequest['isActive']) {
-                ActiveMember::create([
-                    'member_id'   => $member->member_id,
-                    'name'        => $validatedRequest['name'],
-                    'job_title'   => $validatedRequest['jobTitle'],
-                    'discord'     => $validatedRequest['discord'],
-                    'twitter'     => $validatedRequest['twitter'],
-                    'github'      => $validatedRequest['github'],
-                    'description' => $validatedRequest['description'],
-                    'thumbnail'   => $member->nonActiveMember->thumbnail,
-                    'username'    => $member->nonActiveMember->username,
-                    'password'    => $member->nonActiveMember->password,
-                    'creator'     => auth()->id(),
-                ]);
-                return response()->json(['message' => 'メンバーの編集に成功しました。']);
-            }
-
-            NonActiveMember::create([
-                'member_id'   => $member->member_id,
-                'name'        => $validatedRequest['name'],
-                'job_title'   => $validatedRequest['jobTitle'],
-                'discord'     => $validatedRequest['discord'],
-                'twitter'     => $validatedRequest['twitter'],
-                'github'      => $validatedRequest['github'],
-                'description' => $validatedRequest['description'],
-                'thumbnail'   => $member->nonActiveMember->thumbnail,
-                'username'    => $member->nonActiveMember->username,
-                'password'    => $member->nonActiveMember->password,
-                'creator'     => auth()->id(),
-            ]);
-            return response()->json(['message' => 'メンバーの編集に成功しました。']);
-        });
+        return EditMemberResponse::success($editedMember);
     }
 
-    public function editIcon(EditMemberIconRequest $request): JsonResponse {
+    public function editIcon(EditMemberIconRequest $request): JsonResponse
+    {
         $this->authorize('editIcon', Member::class);
 
         return DB::transaction(function () use ($request) {
@@ -340,7 +196,8 @@ class AdminMemberController extends Controller {
         });
     }
 
-    public function delete(DeleteMemberRequest $request): JsonResponse {
+    public function delete(DeleteMemberRequest $request): JsonResponse
+    {
         $this->authorize('delete', Member::class);
 
         return DB::transaction(function () use ($request) {
@@ -388,7 +245,8 @@ class AdminMemberController extends Controller {
         });
     }
 
-    public function members(): JsonResponse {
+    public function members(): JsonResponse
+    {
         $this->authorize('members', Member::class);
 
         $members = Member::doesntHave('archiveMember')
@@ -399,7 +257,8 @@ class AdminMemberController extends Controller {
         return MembersResource::collection($members)->response();
     }
 
-    public function member(MemberRequest $request): array {
+    public function member(MemberRequest $request): array
+    {
         $this->authorize('member', Member::class);
 
         $validatedRequest = $request->validated();
@@ -410,7 +269,8 @@ class AdminMemberController extends Controller {
         return MembersResource::make($member)->toArray($request);
     }
 
-    public function me(Request $request): array {
+    public function me(Request $request): array
+    {
         $member = Member::doesntHave('archiveMember')
             ->with(['activeMember', 'nonActiveMember', 'ability.role'])
             ->findOrFail(auth()->id());

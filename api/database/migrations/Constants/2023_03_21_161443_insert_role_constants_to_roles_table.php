@@ -1,17 +1,19 @@
 <?php
 
-use App\Domain\ValueObjects\Member\RoleName;
-use App\Models\Member\Role;
 use Illuminate\Database\Migrations\Migration;
+use MakeIT\Role\Domain\Eloquent\Role;
+use MakeIT\Role\Domain\Entity\RoleName;
 
-return new class () extends Migration {
-    public function up(): void {
+return new class() extends Migration {
+    public function up(): void
+    {
         foreach (RoleName::cases() as $roleName) {
             Role::create(['name' => $roleName->toString()]);
         }
     }
 
-    public function down(): void {
+    public function down(): void
+    {
         foreach (RoleName::cases() as $roleName) {
             Role::where(['name' => $roleName->toString()])->delete();
         }

@@ -16,8 +16,10 @@ use App\Models\Notification\Notification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
-class AdminNotificationController extends Controller {
-    public function register(RegisterNotificationRequest $request): JsonResponse {
+class AdminNotificationController extends Controller
+{
+    public function register(RegisterNotificationRequest $request): JsonResponse
+    {
         $this->authorize('register', Notification::class);
 
         DB::transaction(function () use ($request) {
@@ -40,7 +42,8 @@ class AdminNotificationController extends Controller {
         return response()->json(['message' => 'お知らせの作成に成功しました。'], 201);
     }
 
-    public function edit(EditNotificationRequest $request): JsonResponse {
+    public function edit(EditNotificationRequest $request): JsonResponse
+    {
         $this->authorize('edit', Notification::class);
 
         return DB::transaction(function () use ($request) {
@@ -82,7 +85,8 @@ class AdminNotificationController extends Controller {
         });
     }
 
-    public function delete(DeleteNotificationRequest $request): JsonResponse {
+    public function delete(DeleteNotificationRequest $request): JsonResponse
+    {
         $this->authorize('delete', Notification::class);
 
         return DB::transaction(function () use ($request) {
@@ -117,7 +121,8 @@ class AdminNotificationController extends Controller {
         });
     }
 
-    public function notifications(): JsonResponse {
+    public function notifications(): JsonResponse
+    {
         $this->authorize('notifications', Notification::class);
 
         $notifications = Notification::doesntHave('archiveNotification')
@@ -128,7 +133,8 @@ class AdminNotificationController extends Controller {
         return NotificationsResource::collection($notifications)->response();
     }
 
-    public function notification(NotificationRequest $request): array {
+    public function notification(NotificationRequest $request): array
+    {
         $this->authorize('notification', Notification::class);
 
         $validatedRequest = $request->validated();

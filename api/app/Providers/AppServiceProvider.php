@@ -7,8 +7,10 @@ use Aws\Sdk;
 use Aws\Ses\SesClient;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider {
-    public function register(): void {
+class AppServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
         $this->app->bind(SesClient::class, function () {
             return new SesClient([
                 'version' => '2010-12-01',
@@ -28,8 +30,5 @@ class AppServiceProvider extends ServiceProvider {
             ]);
             return $sdk->createDynamoDb();
         });
-    }
-
-    public function boot(): void {
     }
 }

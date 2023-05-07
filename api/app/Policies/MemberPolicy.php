@@ -2,49 +2,60 @@
 
 namespace App\Policies;
 
-use App\Models\Member\Member;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use MakeIT\Member\Domain\Eloquent\Member;
 
-class MemberPolicy {
+class MemberPolicy
+{
     use HandlesAuthorization;
 
-    public function roles(Member $member): bool {
+    public function roles(Member $member): bool
+    {
         return $member->isAdminOrMore();
     }
 
-    public function changeRole(Member $member): bool {
+    public function changeRole(Member $member): bool
+    {
         return $member->isAdminOrMore();
     }
 
-    public function changeActive(Member $member): bool {
+    public function changeActivity(Member $member): bool
+    {
         return $member->isAdminOrMore();
     }
 
-    public function changePassword(Member $member): bool {
+    public function changePassword(Member $member): bool
+    {
         return $member->isTrialOrMore();
     }
 
-    public function register(Member $member): bool {
+    public function register(Member $member): bool
+    {
         return $member->isAdminOrMore();
     }
 
-    public function edit(Member $member): bool {
+    public function edit(Member $member): bool
+    {
         return $member->isTrialOrMore();
     }
 
-    public function editIcon(Member $member): bool {
+    public function editIcon(Member $member): bool
+    {
         return $member->isTrialOrMore();
     }
 
-    public function delete(Member $member): bool {
+    public function delete(Member $member): bool
+    {
         return $member->isAdminOrMore();
     }
 
-    public function members(Member $member): bool {
+    public function members(Member $member): bool
+    {
         return $member->isAdminOrMore();
     }
 
-    public function member(Member $member): bool {
+    public function member(Member $member): bool
+    {
         return $member->isAdminOrMore();
     }
 }

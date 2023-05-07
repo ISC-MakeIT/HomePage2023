@@ -4,12 +4,15 @@ namespace App\Http\Requests\Notification\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EditNotificationRequest extends FormRequest {
-    public function authorize(): bool {
+class EditNotificationRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
         return true;
     }
 
-    public function rules(): array {
+    public function rules(): array
+    {
         return [
             'notificationId' => ['required', 'integer', 'exists:notifications,notification_id'],
             'currentVersion' => ['required', 'integer'],

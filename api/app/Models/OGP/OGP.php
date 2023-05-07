@@ -5,8 +5,10 @@ namespace App\Models\OGP;
 use Aws\Sdk;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class OGP {
-    public static function dynamodbClient() {
+class OGP
+{
+    public static function dynamodbClient()
+    {
         $sdk = new Sdk([
             'endpoint'    => config('database.dynamodb.endpoint'),
             'region'      => config('filesystems.disks.s3.region'),
@@ -19,7 +21,8 @@ class OGP {
         return $sdk->createDynamoDb();
     }
 
-    public static function all() {
+    public static function all()
+    {
         $dynamodbClient = self::dynamoDbClient();
 
         $response = $dynamodbClient->scan([
@@ -36,7 +39,8 @@ class OGP {
         }, $response['Items']);
     }
 
-    public static function findByUrl(string $url) {
+    public static function findByUrl(string $url)
+    {
         $dynamodbClient = self::dynamoDbClient();
 
         $response = $dynamodbClient->getItem([
@@ -59,7 +63,8 @@ class OGP {
         ];
     }
 
-    public static function update(string $url, string $description, string $title, string $keywords, string $thumbnail) {
+    public static function update(string $url, string $description, string $title, string $keywords, string $thumbnail)
+    {
         $dynamodbClient = self::dynamoDbClient();
 
         $response = $dynamodbClient->getItem([
@@ -94,7 +99,8 @@ class OGP {
         ]);
     }
 
-    public static function insert(string $url, string $description, string $title, string $keywords, string $thumbnail) {
+    public static function insert(string $url, string $description, string $title, string $keywords, string $thumbnail)
+    {
         $dynamodbClient = self::dynamoDbClient();
 
         $dynamodbClient->putItem([
@@ -109,7 +115,8 @@ class OGP {
         ]);
     }
 
-    public static function deleteByUrl(string $url) {
+    public static function deleteByUrl(string $url)
+    {
         $dynamodbClient = self::dynamoDbClient();
 
         $dynamodbClient->deleteItem([

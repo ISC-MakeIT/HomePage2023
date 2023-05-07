@@ -9,8 +9,10 @@ use Faker\Generator;
 use Illuminate\Http\Request;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class WorksTest extends AlreadyLoggedInTestCase {
-    public function test_活動実績の一覧取得を行うこと(): void {
+class WorksTest extends AlreadyLoggedInTestCase
+{
+    public function test_活動実績の一覧取得を行うこと(): void
+    {
         (new WorkSeeder(new Generator()))->run();
 
         $response = $this->get('/api/admin/works');

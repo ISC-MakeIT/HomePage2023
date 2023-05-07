@@ -10,14 +10,17 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
-class NotificationSeeder extends Seeder {
+class NotificationSeeder extends Seeder
+{
     private Faker $faker;
 
-    public function __construct(Faker $faker) {
+    public function __construct(Faker $faker)
+    {
         $this->faker = $faker;
     }
 
-    public function run(): void {
+    public function run(): void
+    {
         $creatorMember = Member::first();
 
         for ($i = 0; $i < $this->faker->numberBetween(5, 60); $i++) {

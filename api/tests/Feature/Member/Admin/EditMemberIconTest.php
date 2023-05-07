@@ -7,8 +7,10 @@ use App\Models\Member\Member;
 use Illuminate\Http\UploadedFile;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class EditMemberIconTest extends AlreadyLoggedInTestCase {
-    public function test_ログインしているメンバーのアイコンの編集を行うこと(): void {
+class EditMemberIconTest extends AlreadyLoggedInTestCase
+{
+    public function test_ログインしているメンバーのアイコンの編集を行うこと(): void
+    {
         $member = Member::with(['activeMember', 'nonActiveMember'])->find(auth()->id());
 
         $preIconUrl = '';

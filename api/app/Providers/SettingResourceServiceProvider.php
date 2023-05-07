@@ -11,7 +11,8 @@ use App\Http\Resources\Work\User\WorksResource as UserWorksResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 
-class SettingResourceServiceProvider extends ServiceProvider {
+class SettingResourceServiceProvider extends ServiceProvider
+{
     /** @var JsonResource[] */
     private array $withoutWrappingResources = [
         AdminNotificationsResource::class,
@@ -22,12 +23,10 @@ class SettingResourceServiceProvider extends ServiceProvider {
         UserNotificationsResource::class,
     ];
 
-    public function register(): void {
+    public function register(): void
+    {
         foreach ($this->withoutWrappingResources as $withoutWrappingResource) {
             $withoutWrappingResource::withoutWrapping();
         }
-    }
-
-    public function boot(): void {
     }
 }

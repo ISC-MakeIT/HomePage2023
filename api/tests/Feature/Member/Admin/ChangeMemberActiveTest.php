@@ -7,8 +7,10 @@ use App\Models\Member\Member;
 use Database\Seeders\MemberSeeder;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class ChangeMemberActiveTest extends AlreadyLoggedInTestCase {
-    public function test_メンバーの活性化の変更を行うこと(): void {
+class ChangeMemberActiveTest extends AlreadyLoggedInTestCase
+{
+    public function test_メンバーの活性化の変更を行うこと(): void
+    {
         (new MemberSeeder($this->faker))->run();
         $preMember = Member::orderBy('member_id', 'DESC')
             ->first();

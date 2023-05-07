@@ -2,16 +2,22 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Common\DataIntegrityViolationException;
 use App\Exceptions\Helpers\FailSendMailException;
-use App\Exceptions\Member\AlreadyCreatedUserNameOfMemberException;
-use App\Exceptions\Member\IllegalChangeMyRole;
 use App\Exceptions\Notification\AlreadyEditedNotificationException;
 use App\Exceptions\Work\AlreadyEditedWorkException;
+use App\Http\Response\Response;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use MakeIT\Member\Exception\AlreadyCreatedUserNameOfMemberException;
+use MakeIT\Member\Exception\AlreadyEditMemberException;
+use MakeIT\Member\Exception\IllegalChangeMyRole;
+use MakeIT\Member\Exception\IllegalPasswordDifferentException;
 use Throwable;
 
-class Handler extends ExceptionHandler {
+class Handler extends ExceptionHandler
+{
     /**
      * A list of exception types with their corresponding custom log levels.
      *
@@ -41,24 +47,44 @@ class Handler extends ExceptionHandler {
         'password_confirmation',
     ];
 
-    public function render($request, Throwable $e) {
+    public function render($request, Throwable $e)
+    {
+        if (!$request->isMethod('GET')) {
+            logs()->error('REQUEST:', count($request->toArray()) === 0 ? ['Empty request'] : $request->toArray());
+            logs()->error('URL:', [$request->fullUrl()]);
+            logs()->error($e);
+        }
+
+        if ($e instanceof DataIntegrityViolationException) {
+            return Response::error($e->getMessage(), null, 500);
+        }
+        if ($e instanceof ModelNotFoundException) {
+            return Response::error($e->getMessage(), null, 400);
+        }
         if ($e instanceof AlreadyCreatedUserNameOfMemberException) {
-            return response(['message' => '既に使用されているユーザー名です'], 400);
+            return Response::error('既に使用されているユーザー名です。', null, 400);
+        }
+        if ($e instanceof AlreadyEditMemberException) {
+            return Response::error('既に編集されているメンバーです。', null, 400);
+        }
+        if ($e instanceof IllegalPasswordDifferentException) {
+            return Response::error('古いパスワードが違います。', null, 400);
         }
         if ($e instanceof IllegalChangeMyRole) {
-            return response(['message' => '自分自身のロール変更は不可能です。'], 400);
+            return Response::error('自分自身のロール変更は不可能です。', null, 400);
         }
         if ($e instanceof AlreadyEditedNotificationException) {
-            return response(['message' => '既に編集されているお知らせです。'], 500);
+            return Response::error('既に編集されているお知らせです。', null, 500);
         }
         if ($e instanceof AlreadyEditedWorkException) {
-            return response(['message' => '既に編集されている活動実績です。'], 500);
-        }
-        if ($e instanceof ValidationException) {
-            return response(['errors' => $e->errors()], 400);
+            return Response::error('既に編集されている活動実績です。', null, 500);
         }
         if ($e instanceof FailSendMailException) {
-            return response(['message' => 'メールの送信に失敗しました。'], 500);
+            return Response::error('メールの送信に失敗しました。', null, 500);
+        }
+
+        if ($e instanceof ValidationException) {
+            return response(['errors' => $e->errors()], 400);
         }
 
         return parent::render($request, $e);
@@ -67,7 +93,8 @@ class Handler extends ExceptionHandler {
     /**
      * Register the exception handling callbacks for the application.
      */
-    public function register(): void {
+    public function register(): void
+    {
         $this->reportable(function (Throwable $e) {
             //
         });

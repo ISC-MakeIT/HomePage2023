@@ -8,8 +8,10 @@ use Database\Seeders\MemberSeeder;
 use Illuminate\Http\Request;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class MembersTest extends AlreadyLoggedInTestCase {
-    public function test_メンバーの一覧取得を行うこと(): void {
+class MembersTest extends AlreadyLoggedInTestCase
+{
+    public function test_メンバーの一覧取得を行うこと(): void
+    {
         (new MemberSeeder($this->faker))->run();
 
         $response = $this->get('/api/admin/members');

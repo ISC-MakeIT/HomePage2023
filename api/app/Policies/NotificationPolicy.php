@@ -5,26 +5,32 @@ namespace App\Policies;
 use App\Models\Member\Member;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class NotificationPolicy {
+class NotificationPolicy
+{
     use HandlesAuthorization;
 
-    public function register(Member $member): bool {
+    public function register(Member $member): bool
+    {
         return $member->isMemberOrMore();
     }
 
-    public function edit(Member $member): bool {
+    public function edit(Member $member): bool
+    {
         return $member->isMemberOrMore();
     }
 
-    public function delete(Member $member): bool {
+    public function delete(Member $member): bool
+    {
         return $member->isMemberOrMore();
     }
 
-    public function notifications(Member $member): bool {
+    public function notifications(Member $member): bool
+    {
         return $member->isMemberOrMore();
     }
 
-    public function notification(Member $member): bool {
+    public function notification(Member $member): bool
+    {
         return $member->isMemberOrMore();
     }
 }

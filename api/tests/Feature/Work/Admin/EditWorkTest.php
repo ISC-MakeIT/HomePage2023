@@ -9,8 +9,10 @@ use App\Models\Work\Work;
 use Illuminate\Http\UploadedFile;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class EditWorkTest extends AlreadyLoggedInTestCase {
-    public function test_活動実績の編集を行うこと(): void {
+class EditWorkTest extends AlreadyLoggedInTestCase
+{
+    public function test_活動実績の編集を行うこと(): void
+    {
         $registerWorkRequest = new RegisterWorkRequest([
             'title'    => 'test',
             'contents' => 'contents',
@@ -47,7 +49,8 @@ class EditWorkTest extends AlreadyLoggedInTestCase {
         ]);
     }
 
-    public function test_活動実績でThumbnailの編集を行うこと(): void {
+    public function test_活動実績でThumbnailの編集を行うこと(): void
+    {
         $picture = UploadedFile::fake()->image('dummy.jpg', 800, 800);
 
         $registerWorkRequest = new RegisterWorkRequest([
@@ -90,7 +93,8 @@ class EditWorkTest extends AlreadyLoggedInTestCase {
         ]);
     }
 
-    public function test_活動実績の排他的制御を行えていること(): void {
+    public function test_活動実績の排他的制御を行えていること(): void
+    {
         $registerWorkRequest = new RegisterWorkRequest([
             'title'    => 'test',
             'contents' => 'contents',

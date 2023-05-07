@@ -8,8 +8,10 @@ use App\Models\Notification\ActiveNotification;
 use App\Models\Notification\Notification;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class EditNotificationTest extends AlreadyLoggedInTestCase {
-    public function test_お知らせの編集を行えること(): void {
+class EditNotificationTest extends AlreadyLoggedInTestCase
+{
+    public function test_お知らせの編集を行えること(): void
+    {
         $createRequest = new RegisterNotificationRequest([
             'title'    => 'test',
             'contents' => 'contents',
@@ -40,7 +42,8 @@ class EditNotificationTest extends AlreadyLoggedInTestCase {
         ]);
     }
 
-    public function test_お知らせの排他的制御を行えていること(): void {
+    public function test_お知らせの排他的制御を行えていること(): void
+    {
         $createRequest = new RegisterNotificationRequest([
             'title'    => 'test',
             'contents' => 'contents',

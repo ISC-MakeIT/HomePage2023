@@ -6,8 +6,10 @@ use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class WorksResource extends JsonResource {
-    public function toArray(Request $request): array {
+class WorksResource extends JsonResource
+{
+    public function toArray(Request $request): array
+    {
         unset($request);
 
         if ($this->activeWork) {

@@ -3,13 +3,17 @@
 namespace App\Http\Requests\Member\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use MakeIT\Member\Domain\Bean\InitMemberBean;
 
-class RegisterMemberRequest extends FormRequest {
-    public function authorize(): bool {
+class RegisterMemberRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
         return true;
     }
 
-    public function rules(): array {
+    public function rules(): array
+    {
         return [
             'name'        => ['required', 'string', 'max:255'],
             'jobTitle'    => ['required', 'string', 'max:255'],
@@ -22,5 +26,23 @@ class RegisterMemberRequest extends FormRequest {
             'username'    => ['required', 'string', 'max:255'],
             'password'    => ['required', 'string', 'max:255'],
         ];
+    }
+
+    public function toDomain(): InitMemberBean
+    {
+        $validatedRequest = $this->validated();
+
+        return InitMemberBean::from(
+            $validatedRequest['name'],
+            $validatedRequest['jobTitle'],
+            $validatedRequest['roleId'],
+            $validatedRequest['discord'],
+            $validatedRequest['twitter'],
+            $validatedRequest['github'],
+            $validatedRequest['description'],
+            $this->file('icon'),
+            $validatedRequest['username'],
+            $validatedRequest['password'],
+        );
     }
 }

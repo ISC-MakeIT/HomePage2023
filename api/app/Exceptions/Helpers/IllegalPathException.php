@@ -4,5 +4,6 @@ namespace App\Exceptions\Helpers;
 
 use RuntimeException;
 
-class IllegalPathException extends RuntimeException {
+class IllegalPathException extends RuntimeException
+{
 }

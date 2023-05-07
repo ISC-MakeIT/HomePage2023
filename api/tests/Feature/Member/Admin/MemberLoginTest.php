@@ -7,8 +7,10 @@ use App\Models\Member\Member;
 use Illuminate\Support\Facades\Hash;
 use Tests\Feature\BaseTestCase;
 
-class MemberLoginTest extends BaseTestCase {
-    public function test_ログインを行えること(): void {
+class MemberLoginTest extends BaseTestCase
+{
+    public function test_ログインを行えること(): void
+    {
         $username = 'admin';
         $password = 'password';
 
@@ -35,7 +37,8 @@ class MemberLoginTest extends BaseTestCase {
         $response->assertOk();
     }
 
-    public function test_ログインを失敗した場合エラーが発生すること(): void {
+    public function test_ログインを失敗した場合エラーが発生すること(): void
+    {
         $username = 'admin';
         $password = 'password';
 

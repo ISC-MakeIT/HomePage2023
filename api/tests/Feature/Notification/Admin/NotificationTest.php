@@ -9,8 +9,10 @@ use Faker\Generator;
 use Illuminate\Http\Request;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class NotificationTest extends AlreadyLoggedInTestCase {
-    public function test_お知らせの詳細取得を行うこと(): void {
+class NotificationTest extends AlreadyLoggedInTestCase
+{
+    public function test_お知らせの詳細取得を行うこと(): void
+    {
         (new NotificationSeeder(new Generator()))->run();
 
         $notification = Notification::doesntHave('archiveNotification')

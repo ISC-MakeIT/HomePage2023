@@ -10,8 +10,10 @@ use App\Models\Member\Role;
 use Illuminate\Http\UploadedFile;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class DeleteMemberTest extends AlreadyLoggedInTestCase {
-    public function test_メンバーの削除を行えること(): void {
+class DeleteMemberTest extends AlreadyLoggedInTestCase
+{
+    public function test_メンバーの削除を行えること(): void
+    {
         $role                  = Role::where('name', RoleName::MEMBER->toString())->first();
         $icon                  = UploadedFile::fake()->image('dummy.jpg', 800, 800);
 
@@ -39,7 +41,8 @@ class DeleteMemberTest extends AlreadyLoggedInTestCase {
         $response->assertOk();
     }
 
-    public function test_メンバーの削除を2回行うとエラーが発生すること(): void {
+    public function test_メンバーの削除を2回行うとエラーが発生すること(): void
+    {
         $role                  = Role::where('name', RoleName::MEMBER->toString())->first();
         $icon                  = UploadedFile::fake()->image('dummy.jpg', 800, 800);
 

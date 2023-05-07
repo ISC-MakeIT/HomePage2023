@@ -4,5 +4,6 @@ namespace App\Exceptions\Helpers;
 
 use RuntimeException;
 
-class FailSendMailException extends RuntimeException {
+class FailSendMailException extends RuntimeException
+{
 }

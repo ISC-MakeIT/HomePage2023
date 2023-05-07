@@ -9,8 +9,10 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image as InterventionImage;
 
-class S3ImageHelper {
-    public static function putImageWithThumbnail(UploadedFile $image, string $path): string {
+class S3ImageHelper
+{
+    public static function putImageWithThumbnail(UploadedFile $image, string $path): string
+    {
         $explodedPath = explode('/', $path);
         if ($explodedPath[count($explodedPath) - 1] !== 'thumbnail') {
             throw new IllegalPathException('thumbnailがpathに含まれていません。', 1);
@@ -35,7 +37,8 @@ class S3ImageHelper {
         return $s3Storage->url($filePath);
     }
 
-    public static function putImage(UploadedFile $image, string $path, int $width, int $height, int $quality = 80): string {
+    public static function putImage(UploadedFile $image, string $path, int $width, int $height, int $quality = 80): string
+    {
         $now                     = date_format(CarbonImmutable::now(), 'YmdHis');
         $name                    = str_replace(' ', '_', $image->getClientOriginalName());
         $tmpFileName             = "/tmp/{$now}_{$name}";

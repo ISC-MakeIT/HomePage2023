@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Work extends Model {
+class Work extends Model
+{
     use HasFactory;
 
     public const UPDATED_AT = null;
@@ -18,19 +19,23 @@ class Work extends Model {
         'updator',
     ];
 
-    public function hasDifferentVersion(int $version): bool {
+    public function hasDifferentVersion(int $version): bool
+    {
         return $this->version !== $version;
     }
 
-    public function activeWork(): HasOne {
+    public function activeWork(): HasOne
+    {
         return $this->hasOne(ActiveWork::class, 'work_id', 'work_id');
     }
 
-    public function nonActiveWork(): HasOne {
+    public function nonActiveWork(): HasOne
+    {
         return $this->hasOne(NonActiveWork::class, 'work_id', 'work_id');
     }
 
-    public function archiveWork(): HasOne {
+    public function archiveWork(): HasOne
+    {
         return $this->hasOne(ArchiveWork::class, 'work_id', 'work_id');
     }
 }

@@ -7,8 +7,10 @@ use App\Models\Member\MemberAbility;
 use App\Models\Member\Role;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
-class ChangeMemberRoleTest extends AlreadyLoggedInTestCase {
-    public function test_メンバーのロールの変更を行うこと(): void {
+class ChangeMemberRoleTest extends AlreadyLoggedInTestCase
+{
+    public function test_メンバーのロールの変更を行うこと(): void
+    {
         $memberAbility = MemberAbility::orderBy('member_id', 'DESC')
             ->first();
 

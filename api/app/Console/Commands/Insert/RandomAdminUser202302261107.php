@@ -11,11 +11,13 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class RandomAdminUser202302261107 extends Command {
+class RandomAdminUser202302261107 extends Command
+{
     protected $signature   = 'insert:random_admin_member';
     protected $description = 'insert random admin member into the members table';
 
-    public function handle(): void {
+    public function handle(): void
+    {
         $username = Str::random(16);
         $password = Str::random(16);
 

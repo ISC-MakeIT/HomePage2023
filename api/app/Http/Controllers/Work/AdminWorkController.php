@@ -18,8 +18,10 @@ use App\Models\Work\Work;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
-class AdminWorkController extends Controller {
-    public function register(RegisterWorkRequest $request): JsonResponse {
+class AdminWorkController extends Controller
+{
+    public function register(RegisterWorkRequest $request): JsonResponse
+    {
         $this->authorize('register', Work::class);
 
         DB::transaction(function () use ($request) {
@@ -52,7 +54,8 @@ class AdminWorkController extends Controller {
         return response()->json(['message' => '活動実績の作成に成功しました。'], 201);
     }
 
-    public function edit(EditWorkRequest $request): JsonResponse {
+    public function edit(EditWorkRequest $request): JsonResponse
+    {
         $this->authorize('edit', Work::class);
 
         return DB::transaction(function () use ($request) {
@@ -117,7 +120,8 @@ class AdminWorkController extends Controller {
         });
     }
 
-    public function delete(DeleteWorkRequest $request): JsonResponse {
+    public function delete(DeleteWorkRequest $request): JsonResponse
+    {
         $this->authorize('delete', Work::class);
 
         return DB::transaction(function () use ($request) {
@@ -154,7 +158,8 @@ class AdminWorkController extends Controller {
         });
     }
 
-    public function works(): JsonResponse {
+    public function works(): JsonResponse
+    {
         $this->authorize('works', Work::class);
 
         $works = Work::doesntHave('archiveWork')
@@ -165,7 +170,8 @@ class AdminWorkController extends Controller {
         return WorksResource::collection($works)->response();
     }
 
-    public function work(WorkRequest $request): array {
+    public function work(WorkRequest $request): array
+    {
         $this->authorize('work', Work::class);
 
         $work = Work::doesntHave('archiveWork')
