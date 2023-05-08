@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers\Member;
 
-use App\Domain\Beans\Member\MemberWithAbility;
-use App\Domain\ValueObjects\Helpers\S3Path;
-use App\Helpers\S3ImageHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Member\Admin\ChangeActivityRequest;
 use App\Http\Requests\Member\Admin\ChangePasswordRequest;
@@ -15,32 +12,35 @@ use App\Http\Requests\Member\Admin\EditMemberRequest;
 use App\Http\Requests\Member\Admin\MemberLoginRequest;
 use App\Http\Requests\Member\Admin\MemberRequest;
 use App\Http\Requests\Member\Admin\RegisterMemberRequest;
-use App\Http\Resources\Member\Admin\MembersResource;
 use App\Http\Response\Member\Admin\ChangeActivityResponse;
 use App\Http\Response\Member\Admin\ChangePasswordResponse;
 use App\Http\Response\Member\Admin\ChangeRoleResponse;
+use App\Http\Response\Member\Admin\DeleteMemberResponse;
+use App\Http\Response\Member\Admin\EditMemberIconResponse;
 use App\Http\Response\Member\Admin\EditMemberResponse;
+use App\Http\Response\Member\Admin\FindAllMemberResponse;
+use App\Http\Response\Member\Admin\FindMeResponse;
+use App\Http\Response\Member\Admin\FindOneMemberResponse;
 use App\Http\Response\Member\Admin\LoginResponse;
 use App\Http\Response\Member\Admin\LogoutResponse;
 use App\Http\Response\Member\Admin\RegisterMemberResponse;
 use App\Http\Response\Member\Admin\RolesResponse;
-use App\Models\Member\ActiveMember;
-use App\Models\Member\ArchiveMember;
 use App\Models\Member\Member;
-use App\Models\Member\NonActiveMember;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use MakeIT\Member\Service\Command\ChangeMemberActivityService;
 use MakeIT\Member\Service\Command\ChangeMemberPasswordService;
 use MakeIT\Member\Service\Command\ChangeMemberRoleService;
+use MakeIT\Member\Service\Command\DeleteMemberService;
+use MakeIT\Member\Service\Command\EditMemberIconService;
 use MakeIT\Member\Service\Command\EditMemberService;
 use MakeIT\Member\Service\Command\LoginService;
 use MakeIT\Member\Service\Command\LogoutService;
 use MakeIT\Member\Service\Command\RegisterMemberService;
+use MakeIT\Member\Service\Query\FindAllMemberService;
+use MakeIT\Member\Service\Query\FindMeService;
+use MakeIT\Member\Service\Query\FindOneMemberService;
 use MakeIT\Role\Service\Query\RolesService;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class AdminMemberController extends Controller
 {
@@ -52,6 +52,11 @@ class AdminMemberController extends Controller
     private ChangeMemberPasswordService $changeMemberPasswordService;
     private RegisterMemberService $registerMemberService;
     private EditMemberService $editMemberService;
+    private EditMemberIconService $editMemberIconService;
+    private DeleteMemberService $deleteMemberService;
+    private FindAllMemberService $findAllMemberService;
+    private FindOneMemberService $findOneMemberService;
+    private FindMeService $findMeService;
 
     public function __construct(
         LoginService $loginService,
@@ -62,6 +67,11 @@ class AdminMemberController extends Controller
         ChangeMemberPasswordService $changeMemberPasswordService,
         RegisterMemberService $registerMemberService,
         EditMemberService $editMemberService,
+        EditMemberIconService $editMemberIconService,
+        DeleteMemberService $deleteMemberService,
+        FindAllMemberService $findAllMemberService,
+        FindOneMemberService $findOneMemberService,
+        FindMeService $findMeService
     ) {
         $this->loginService                = $loginService;
         $this->logoutService               = $logoutService;
@@ -71,6 +81,11 @@ class AdminMemberController extends Controller
         $this->changeMemberPasswordService = $changeMemberPasswordService;
         $this->registerMemberService       = $registerMemberService;
         $this->editMemberService           = $editMemberService;
+        $this->editMemberIconService       = $editMemberIconService;
+        $this->deleteMemberService         = $deleteMemberService;
+        $this->findAllMemberService        = $findAllMemberService;
+        $this->findOneMemberService        = $findOneMemberService;
+        $this->findMeService               = $findMeService;
     }
 
     public function login(MemberLoginRequest $request): JsonResponse
@@ -147,134 +162,46 @@ class AdminMemberController extends Controller
     {
         $this->authorize('editIcon', Member::class);
 
-        return DB::transaction(function () use ($request) {
-            $member = Member::doesntHave('archiveMember')
-                ->with(['activeMember', 'nonActiveMember'])
-                ->find(auth()->id());
-            $member->update([
-                'updator' => auth()->id()
-            ]);
-            $member->activeMember()->delete();
-            $member->nonActiveMember()->delete();
+        $editedMember = $this->editMemberIconService->execute($request->toDomain());
 
-            $thumbnailUrl = S3ImageHelper::putImageWithThumbnail($request->file('icon'), S3Path::MEMBER_THUMBNAIL->toString());
-
-            if ($member->activeMember) {
-                ActiveMember::create([
-                    'member_id'   => $member->activeMember->member_id,
-                    'name'        => $member->activeMember->name,
-                    'job_title'   => $member->activeMember->job_title,
-                    'discord'     => $member->activeMember->discord,
-                    'twitter'     => $member->activeMember->twitter,
-                    'github'      => $member->activeMember->github,
-                    'description' => $member->activeMember->description,
-                    'thumbnail'   => $thumbnailUrl,
-                    'username'    => $member->activeMember->username,
-                    'password'    => $member->activeMember->password,
-                    'creator'     => auth()->id()
-                ]);
-                return response()->json(['message' => 'メンバーの編集に成功しました。']);
-            }
-            if ($member->nonActiveMember) {
-                NonActiveMember::create([
-                    'member_id'   => $member->nonActiveMember->member_id,
-                    'name'        => $member->nonActiveMember->name,
-                    'job_title'   => $member->nonActiveMember->job_title,
-                    'discord'     => $member->nonActiveMember->discord,
-                    'twitter'     => $member->nonActiveMember->twitter,
-                    'github'      => $member->nonActiveMember->github,
-                    'description' => $member->nonActiveMember->description,
-                    'thumbnail'   => $thumbnailUrl,
-                    'username'    => $member->nonActiveMember->username,
-                    'password'    => $member->nonActiveMember->password,
-                    'creator'     => auth()->id()
-                ]);
-                return response()->json(['message' => 'メンバーの削除に成功しました。']);
-            }
-
-            return response()->json(['message' => '予期しないエラーです。'], 500);
-        });
+        return EditMemberIconResponse::success($editedMember);
     }
 
     public function delete(DeleteMemberRequest $request): JsonResponse
     {
         $this->authorize('delete', Member::class);
 
-        return DB::transaction(function () use ($request) {
-            $validatedRequest = $request->validated();
+        $validatedRequest = $request->validated();
 
-            $member = Member::doesntHave('archiveMember')
-                ->with(['activeMember', 'nonActiveMember'])
-                ->findOrFail($validatedRequest['memberId']);
-            $member->activeMember()->delete();
-            $member->nonActiveMember()->delete();
+        $this->deleteMemberService->execute($validatedRequest['memberId']);
 
-            if ($member->activeMember) {
-                ArchiveMember::create([
-                    'member_id'   => $member->activeMember->member_id,
-                    'name'        => $member->activeMember->name,
-                    'job_title'   => $member->activeMember->job_title,
-                    'discord'     => $member->activeMember->discord,
-                    'twitter'     => $member->activeMember->twitter,
-                    'github'      => $member->activeMember->github,
-                    'description' => $member->activeMember->description,
-                    'thumbnail'   => $member->activeMember->thumbnail,
-                    'username'    => $member->activeMember->username,
-                    'password'    => $member->activeMember->password,
-                    'creator'     => auth()->id()
-                ]);
-                return response()->json(['message' => 'メンバーの削除に成功しました。']);
-            }
-            if ($member->nonActiveMember) {
-                ArchiveMember::create([
-                    'member_id'   => $member->nonActiveMember->member_id,
-                    'name'        => $member->nonActiveMember->name,
-                    'job_title'   => $member->nonActiveMember->job_title,
-                    'discord'     => $member->nonActiveMember->discord,
-                    'twitter'     => $member->nonActiveMember->twitter,
-                    'github'      => $member->nonActiveMember->github,
-                    'description' => $member->nonActiveMember->description,
-                    'thumbnail'   => $member->nonActiveMember->thumbnail,
-                    'username'    => $member->nonActiveMember->username,
-                    'password'    => $member->nonActiveMember->password,
-                    'creator'     => auth()->id()
-                ]);
-                return response()->json(['message' => 'メンバーの削除に成功しました。']);
-            }
-            return response()->json(['message' => '予期しないエラーです。'], 500);
-        });
+        return DeleteMemberResponse::success();
     }
 
     public function members(): JsonResponse
     {
         $this->authorize('members', Member::class);
 
-        $members = Member::doesntHave('archiveMember')
-            ->with(['activeMember', 'nonActiveMember', 'ability.role'])
-            ->orderBy('member_id', 'ASC')
-            ->get();
+        $members = $this->findAllMemberService->execute();
 
-        return MembersResource::collection($members)->response();
+        return FindAllMemberResponse::success($members);
     }
 
-    public function member(MemberRequest $request): array
+    public function member(MemberRequest $request): JsonResponse
     {
         $this->authorize('member', Member::class);
 
         $validatedRequest = $request->validated();
-        $member           = Member::doesntHave('archiveMember')
-            ->with(['activeMember', 'nonActiveMember', 'ability.role'])
-            ->findOrFail($validatedRequest['memberId']);
 
-        return MembersResource::make($member)->toArray($request);
+        $member = $this->findOneMemberService->execute($validatedRequest['memberId']);
+
+        return FindOneMemberResponse::success($member);
     }
 
-    public function me(Request $request): array
+    public function me(): JsonResponse
     {
-        $member = Member::doesntHave('archiveMember')
-            ->with(['activeMember', 'nonActiveMember', 'ability.role'])
-            ->findOrFail(auth()->id());
+        $member = $this->findMeService->execute();
 
-        return MembersResource::make($member)->toArray($request);
+        return FindMeResponse::success($member);
     }
 }

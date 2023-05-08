@@ -2,7 +2,6 @@
 
 namespace MakeIT\Member\Service\Command;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use MakeIT\Member\Domain\Bean\MemberBean;
 use MakeIT\Member\Domain\Bean\ChangeRoleBean;
 use MakeIT\Member\Domain\Entity\ChangeRole;
@@ -34,10 +33,6 @@ class ChangeMemberRoleService
         }
 
         $preMember = $this->memberRepo->findOneByMemberId($changeRole->getMemberId());
-        if (!$preMember) {
-            throw new ModelNotFoundException('存在しないメンバーです。');
-        }
-
         if ($changeRole->isDifferentVersion($preMember->getVersion())) {
             throw new AlreadyEditMemberException();
         }

@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Http\Resources\Member\Admin\MembersResource as AdminMembersResource;
+use App\Http\Resources\Member\Admin\MemberResource as AdminMemberResource;
 use App\Http\Resources\Notification\Admin\NotificationsResource as AdminNotificationsResource;
 use App\Http\Resources\Work\Admin\WorksResource as AdminWorksResource;
 use App\Http\Resources\Member\User\MembersResource as UserMembersResource;
@@ -17,7 +17,7 @@ class SettingResourceServiceProvider extends ServiceProvider
     private array $withoutWrappingResources = [
         AdminNotificationsResource::class,
         AdminWorksResource::class,
-        AdminMembersResource::class,
+        AdminMemberResource::class,
         UserWorksResource::class,
         UserMembersResource::class,
         UserNotificationsResource::class,
