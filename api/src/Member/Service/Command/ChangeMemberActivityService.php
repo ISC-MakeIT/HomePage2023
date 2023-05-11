@@ -23,9 +23,6 @@ class ChangeMemberActivityService
         $changeActivity = ChangeActivity::fromBean($changeActivityBean);
 
         $preMember = $this->memberRepo->findOneByMemberId($changeActivity->getMemberId());
-        if (!$preMember) {
-            throw new ModelNotFoundException('存在しないメンバーです。');
-        }
 
         if ($changeActivity->isDifferentVersion($preMember->getVersion())) {
             throw new AlreadyEditMemberException();

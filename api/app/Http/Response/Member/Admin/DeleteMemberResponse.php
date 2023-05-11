@@ -3,7 +3,6 @@
 namespace App\Http\Response\Member\Admin;
 
 use App\Http\Response\Response;
-use MakeIT\Member\Domain\Bean\MemberBean;
 
 class DeleteMemberResponse
 {
