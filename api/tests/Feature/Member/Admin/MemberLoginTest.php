@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Member\Admin;
 
-use App\Models\Member\ActiveMember;
-use App\Models\Member\Member;
 use Illuminate\Support\Facades\Hash;
+use MakeIT\Member\Domain\Eloquent\ActiveMember as ActiveMemberORM;
+use MakeIT\Member\Domain\Eloquent\Member as MemberORM;
 use Tests\Feature\BaseTestCase;
 
 class MemberLoginTest extends BaseTestCase
@@ -14,8 +14,8 @@ class MemberLoginTest extends BaseTestCase
         $username = 'admin';
         $password = 'password';
 
-        $member       = Member::create();
-        ActiveMember::create([
+        $member       = MemberORM::create();
+        ActiveMemberORM::create([
             'member_id'   => $member->member_id,
             'name'        => 'test',
             'job_title'   => 'Programer',
@@ -42,8 +42,8 @@ class MemberLoginTest extends BaseTestCase
         $username = 'admin';
         $password = 'password';
 
-        $member       = Member::create();
-        ActiveMember::create([
+        $member       = MemberORM::create();
+        ActiveMemberORM::create([
             'member_id'   => $member->member_id,
             'name'        => 'test',
             'job_title'   => 'Programer',

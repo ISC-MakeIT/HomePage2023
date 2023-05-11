@@ -20,6 +20,9 @@ class RoleRepository implements \MakeIT\Role\Repository\Interface\RoleRepository
 
     public function findOneByRoleId(int $roleId): Role
     {
-        return RoleORM::find($roleId);
+        /** @var RoleORM */
+        $roleORM = RoleORM::find($roleId);
+
+        return Role::from($roleORM->getRoleId(), $roleORM->getName());
     }
 }

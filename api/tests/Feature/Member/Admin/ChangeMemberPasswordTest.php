@@ -3,8 +3,8 @@
 namespace Tests\Feature\Member\Admin;
 
 use App\Http\Requests\Member\Admin\ChangePasswordRequest;
-use App\Models\Member\ActiveMember;
 use Illuminate\Support\Facades\Hash;
+use MakeIT\Member\Domain\Eloquent\ActiveMember as ActiveMemberORM;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
 class ChangeMemberPasswordTest extends AlreadyLoggedInTestCase
@@ -18,7 +18,7 @@ class ChangeMemberPasswordTest extends AlreadyLoggedInTestCase
 
         $response = $this->put('/api/admin/members/password', $request->toArray());
         $response->assertOk();
-        $this->assertTrue(Hash::check($request->newPassword, ActiveMember::find(auth()->id())->password));
+        $this->assertTrue(Hash::check($request->newPassword, ActiveMemberORM::find(auth()->id())->password));
     }
 
     public function test_パスワードの変更時にoldPasswordが違った場合エラーが発生すること(): void

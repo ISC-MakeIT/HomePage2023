@@ -2,9 +2,7 @@
 
 namespace Tests\Feature\Member\Admin;
 
-use App\Http\Resources\Member\Admin\RolesResource;
-use App\Models\Member\Role;
-use Illuminate\Http\Request;
+use App\Http\Response\Member\Admin\RolesResponse;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
 class RolesTest extends AlreadyLoggedInTestCase
@@ -14,8 +12,7 @@ class RolesTest extends AlreadyLoggedInTestCase
         $response = $this->get('/api/admin/members/roles');
         $response->assertOk();
         $response->assertJson(
-            RolesResource::collection(Role::all())
-                ->toArray(new Request())
+            RolesResponse::success($this->roleRepo->findAll())
         );
     }
 }

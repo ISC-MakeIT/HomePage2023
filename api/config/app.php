@@ -196,6 +196,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\DataBaseQueryServiceProvider::class,
         App\Providers\SettingResourceServiceProvider::class,
+        App\Providers\RepositoryProvider::class,
     ],
 
     /*

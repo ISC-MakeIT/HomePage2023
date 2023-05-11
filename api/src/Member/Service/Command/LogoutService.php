@@ -15,6 +15,8 @@ class LogoutService
 
     public function execute(string $token): void
     {
-        $this->memberRepo->deleteToken(auth()->id(), $token);
+        $me = $this->memberRepo->findMe();
+
+        $this->memberRepo->deleteToken($me->getMemberId(), $token);
     }
 }

@@ -2,19 +2,19 @@
 
 namespace Tests\Feature\Member\Admin;
 
-use App\Domain\ValueObjects\Member\RoleName;
 use App\Http\Requests\Member\Admin\RegisterMemberRequest;
-use App\Models\Member\MemberAbility;
-use App\Models\Member\NonActiveMember;
-use App\Models\Member\Role;
 use Illuminate\Http\UploadedFile;
+use MakeIT\Member\Domain\Eloquent\MemberAbility as MemberAbilityORM;
+use MakeIT\Member\Domain\Eloquent\NonActiveMember as NonActiveMemberORM;
+use MakeIT\Role\Domain\Eloquent\Role as RoleORM;
+use MakeIT\Role\Domain\Entity\RoleName;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
 class RegisterMemberTest extends AlreadyLoggedInTestCase
 {
     public function test_メンバーの作成を行えること(): void
     {
-        $role = Role::where('name', RoleName::MEMBER->toString())->first();
+        $role = RoleORM::where('name', RoleName::MEMBER->toString())->first();
         $icon = UploadedFile::fake()->image('dummy.jpg', 800, 800);
 
         $request = new RegisterMemberRequest([
@@ -32,7 +32,7 @@ class RegisterMemberTest extends AlreadyLoggedInTestCase
 
         $response = $this->post('/api/admin/members', $request->toArray());
         $response->assertStatus(201);
-        $createdMember = NonActiveMember::orderBy('member_id', 'DESC')->first();
+        $createdMember = NonActiveMemberORM::orderBy('member_id', 'DESC')->first();
         unset($request['password'], $request['icon']);
 
         $this->assertEquals(
@@ -40,7 +40,7 @@ class RegisterMemberTest extends AlreadyLoggedInTestCase
             [
                 'name'        => $createdMember->name,
                 'jobTitle'    => $createdMember->job_title,
-                'roleId'      => MemberAbility::where('member_id', $createdMember->member_id)->first()->role_id,
+                'roleId'      => MemberAbilityORM::where('member_id', $createdMember->member_id)->first()->role_id,
                 'discord'     => $createdMember->discord,
                 'twitter'     => $createdMember->twitter,
                 'github'      => $createdMember->github,
@@ -52,7 +52,7 @@ class RegisterMemberTest extends AlreadyLoggedInTestCase
 
     public function test_既に使用されているユーザー名だった場合エラーが発生すること(): void
     {
-        $role = Role::where('name', RoleName::MEMBER->toString())->first();
+        $role = RoleORM::where('name', RoleName::MEMBER->toString())->first();
         $icon = UploadedFile::fake()->image('dummy.jpg', 800, 800);
 
         $request = new RegisterMemberRequest([

@@ -29,7 +29,7 @@ class EditMemberIconService
     {
         $latestMemberIcon = LatestMemberIcon::fromBean($latestMemberIconBean);
 
-        $member = $this->memberRepo->findOneByMemberId(auth()->id());
+        $member = $this->memberRepo->findMe();
         if ($latestMemberIcon->isDifferentVersion($member->getVersion())) {
             throw new AlreadyEditMemberException();
         }

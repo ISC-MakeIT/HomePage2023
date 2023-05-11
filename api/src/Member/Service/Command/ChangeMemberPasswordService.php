@@ -23,10 +23,7 @@ class ChangeMemberPasswordService
     {
         $changePassword = ChangePassword::fromBean($changePasswordBean);
 
-        $preMember = $this->memberRepo->findOneByMemberId(auth()->id());
-        if (!$preMember) {
-            throw new ModelNotFoundException('存在しないメンバーです。');
-        }
+        $preMember = $this->memberRepo->findMe();
 
         if ($changePassword->isDifferentOldPassword($preMember->getHashedPassword())) {
             throw new IllegalPasswordDifferentException();

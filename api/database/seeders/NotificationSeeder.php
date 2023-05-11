@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Member\Member;
 use App\Models\Notification\ActiveNotification;
 use App\Models\Notification\NonActiveNotification;
 use App\Models\Notification\Notification;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
+use MakeIT\Member\Domain\Eloquent\Member as MemberORM;
 
 class NotificationSeeder extends Seeder
 {
@@ -21,7 +21,7 @@ class NotificationSeeder extends Seeder
 
     public function run(): void
     {
-        $creatorMember = Member::first();
+        $creatorMember = MemberORM::first();
 
         for ($i = 0; $i < $this->faker->numberBetween(5, 60); $i++) {
             $notification = Notification::create([

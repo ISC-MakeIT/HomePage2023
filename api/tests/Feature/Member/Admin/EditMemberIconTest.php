@@ -3,15 +3,15 @@
 namespace Tests\Feature\Member\Admin;
 
 use App\Http\Requests\Member\Admin\EditMemberIconRequest;
-use App\Models\Member\Member;
 use Illuminate\Http\UploadedFile;
+use MakeIT\Member\Domain\Eloquent\Member as MemberORM;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
 class EditMemberIconTest extends AlreadyLoggedInTestCase
 {
     public function test_ログインしているメンバーのアイコンの編集を行うこと(): void
     {
-        $member = Member::with(['activeMember', 'nonActiveMember'])->find(auth()->id());
+        $member = MemberORM::with(['activeMember', 'nonActiveMember'])->find(auth()->id());
 
         $preIconUrl = '';
 

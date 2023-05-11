@@ -2,14 +2,14 @@
 
 namespace Tests\Feature;
 
-use App\Domain\ValueObjects\Member\RoleName;
-use App\Models\Member\ActiveMember;
-use App\Models\Member\Member;
-use App\Models\Member\MemberAbility;
-use App\Models\Member\Role;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
+use MakeIT\Member\Domain\Eloquent\Member as MemberORM;
+use MakeIT\Member\Domain\Eloquent\ActiveMember as ActiveMemberORM;
+use MakeIT\Member\Domain\Eloquent\MemberAbility as MemberAbilityORM;
+use MakeIT\Role\Domain\Eloquent\Role as RoleORM;
+use MakeIT\Role\Domain\Entity\RoleName;
 
 class AlreadyLoggedInTestCase extends BaseTestCase
 {
@@ -20,8 +20,11 @@ class AlreadyLoggedInTestCase extends BaseTestCase
     {
         parent::setUp();
 
-        $member = Member::create();
-        ActiveMember::create([
+        $member = MemberORM::create([
+            'version' => 0,
+            'creator' => 1,
+        ]);
+        ActiveMemberORM::create([
             'member_id'   => $member->member_id,
             'name'        => 'test',
             'job_title'   => 'Programer',
@@ -35,9 +38,9 @@ class AlreadyLoggedInTestCase extends BaseTestCase
             'creator'     => $member->member_id,
             'updator'     => $member->member_id,
         ]);
-        MemberAbility::create([
+        MemberAbilityORM::create([
             'member_id' => $member->member_id,
-            'role_id'   => Role::where('name', RoleName::ADMIN->toString())->first()->role_id,
+            'role_id'   => RoleORM::where('name', RoleName::ADMIN->toString())->first()->role_id,
             'creator'   => $member->member_id,
             'updator'   => $member->member_id,
         ]);

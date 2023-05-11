@@ -12,8 +12,6 @@ return new class extends Migration {
     {
         Schema::table($this->tableName, function (Blueprint $table) {
             $table->foreignId($this->columnName)->after('version')->default(1);
-
-            $table->foreign($this->columnName)->references('member_id')->on('members');
         });
     }
 
