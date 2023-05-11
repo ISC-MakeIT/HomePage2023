@@ -3,8 +3,8 @@
 namespace Tests\Feature\Member\User;
 
 use App\Http\Resources\Member\User\MembersResource;
-use App\Models\Member\ActiveMember;
 use Illuminate\Http\Request;
+use MakeIT\Member\Domain\Eloquent\ActiveMember as ActiveMemberORM;
 use Tests\TestCase;
 
 class MembersTest extends TestCase
@@ -13,6 +13,6 @@ class MembersTest extends TestCase
     {
         $response = $this->get('/api/members');
         $response->assertOk();
-        $response->assertJson(MembersResource::collection(ActiveMember::all())->toArray(new Request()));
+        $response->assertJson(MembersResource::collection(ActiveMemberORM::all())->toArray(new Request()));
     }
 }

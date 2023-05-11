@@ -14,6 +14,8 @@ interface MemberRepository
 
     public function findOneByMemberId(int $memberId): MemberBean;
 
+    public function findMe(): MemberBean;
+
     public function save(MemberBean $memberBean): MemberBean;
 
     public function deleteByMemberId(int $memberId): void;

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Member\Member;
+use MakeIT\Member\Domain\Eloquent\Member as MemberORM;
 use App\Models\Work\ActiveWork;
 use App\Models\Work\NonActiveWork;
 use App\Models\Work\Work;
@@ -21,7 +21,7 @@ class WorkSeeder extends Seeder
 
     public function run(): void
     {
-        $creatorMember = Member::first();
+        $creatorMember = MemberORM::first();
 
         for ($i = 0; $i < $this->faker->numberBetween(5, 60); $i++) {
             $work = Work::create([

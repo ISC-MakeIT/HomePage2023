@@ -3,7 +3,7 @@
 namespace Tests\Feature\Member\Admin;
 
 use App\Http\Requests\Member\Admin\EditMemberRequest;
-use App\Models\Member\NonActiveMember;
+use MakeIT\Member\Domain\Eloquent\NonActiveMember as NonActiveMemberORM;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
 class EditMemberTest extends AlreadyLoggedInTestCase
@@ -22,7 +22,7 @@ class EditMemberTest extends AlreadyLoggedInTestCase
 
         $response = $this->put('/api/admin/members', $request->toArray());
         $response->assertOk();
-        $nonActiveMember = NonActiveMember::find(auth()->id());
+        $nonActiveMember = NonActiveMemberORM::find(auth()->id());
 
         $this->assertNotEmpty($nonActiveMember);
         $this->assertEquals($request->toArray(), [

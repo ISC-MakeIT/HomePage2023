@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Member\Admin;
 
-use App\Http\Resources\Member\Admin\MembersResource;
-use App\Models\Member\Member;
+use App\Http\Resources\Member\Admin\MemberResource;
 use Database\Seeders\MemberSeeder;
 use Illuminate\Http\Request;
+use MakeIT\Member\Domain\Eloquent\Member as MemberORM;
 use Tests\Feature\AlreadyLoggedInTestCase;
 
 class MembersTest extends AlreadyLoggedInTestCase
@@ -17,8 +17,8 @@ class MembersTest extends AlreadyLoggedInTestCase
         $response = $this->get('/api/admin/members');
         $response->assertOk();
         $response->assertJson(
-            MembersResource::collection(
-                Member::doesntHave('archiveMember')
+            MemberResource::collection(
+                MemberORM::doesntHave('archiveMember')
                     ->with(['activeMember', 'nonActiveMember'])
                     ->get()
             )->toArray(new Request())

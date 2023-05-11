@@ -28,7 +28,8 @@ class ChangeMemberRoleService
     {
         $changeRole = ChangeRole::fromBean($changeRoleBean);
 
-        if ($changeRole->isSameMemberId(auth()->id())) {
+        $me = $this->memberRepo->findMe();
+        if ($changeRole->isSameMemberId($me->getMemberId())) {
             throw new IllegalChangeMyRole();
         }
 

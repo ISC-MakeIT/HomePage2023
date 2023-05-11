@@ -16,6 +16,6 @@ class FindMeService
 
     public function execute(): MemberBean
     {
-        return $this->memberRepo->findOneByMemberId(auth()->id());
+        return $this->memberRepo->findMe();
     }
 }

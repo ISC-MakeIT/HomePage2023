@@ -2,16 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Models\Member\ActiveMember;
-use App\Models\Member\Member;
-use App\Models\Member\MemberAbility;
-use App\Models\Member\NonActiveMember;
-use App\Models\Member\Role;
 use Faker\Generator as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use MakeIT\Member\Domain\Eloquent\Member as MemberORM;
+use MakeIT\Member\Domain\Eloquent\ActiveMember as ActiveMemberORM;
+use MakeIT\Member\Domain\Eloquent\MemberAbility as MemberAbilityORM;
+use MakeIT\Member\Domain\Eloquent\NonActiveMember as NonActiveMemberORM;
+use MakeIT\Role\Domain\Eloquent\Role as RoleORM;
 
 class MemberSeeder extends Seeder
 {
@@ -25,25 +24,25 @@ class MemberSeeder extends Seeder
     public function run(): void
     {
         for ($i = 0; $i < $this->faker->numberBetween(3, 5); $i++) {
-            $member = Member::create();
+            $member = MemberORM::create();
 
             if ($i % 2 === 0) {
-                ActiveMember::create([
+                ActiveMemberORM::create([
                     'member_id'   => $member->member_id,
                     'name'        => Str::random(50),
                     'job_title'   => Str::random(50),
-                    'discord'     => null,
-                    'twitter'     => null,
-                    'github'      => null,
+                    'discord'     => Str::random(10),
+                    'twitter'     => Str::random(10),
+                    'github'      => Str::random(10),
                     'thumbnail'   => $this->faker->imageUrl(),
                     'description' => Str::random(100),
                     'username'    => Str::random(50),
                     'password'    => Hash::make('password'),
                     'creator'     => $member->member_id,
                 ]);
-                MemberAbility::create([
+                MemberAbilityORM::create([
                     'member_id' => $member->member_id,
-                    'role_id'   => Role::where('role_id', $this->faker->numberBetween(1, Role::count()))
+                    'role_id'   => RoleORM::where('role_id', $this->faker->numberBetween(1, RoleORM::count()))
                         ->first()
                         ->role_id,
                     'creator'   => $member->member_id,
@@ -51,22 +50,22 @@ class MemberSeeder extends Seeder
                 ]);
                 continue;
             }
-            NonActiveMember::create([
+            NonActiveMemberORM::create([
                 'member_id'   => $member->member_id,
                 'name'        => Str::random(50),
                 'job_title'   => Str::random(50),
-                'discord'     => null,
-                'twitter'     => null,
-                'github'      => null,
+                'discord'     => Str::random(10),
+                'twitter'     => Str::random(10),
+                'github'      => Str::random(10),
                 'description' => Str::random(100),
                 'thumbnail'   => $this->faker->imageUrl(),
                 'username'    => Str::random(50),
                 'password'    => Hash::make('password'),
                 'creator'     => $member->member_id,
             ]);
-            MemberAbility::create([
+            MemberAbilityORM::create([
                 'member_id' => $member->member_id,
-                'role_id'   => Role::where('role_id', $this->faker->numberBetween(1, Role::count()))
+                'role_id'   => RoleORM::where('role_id', $this->faker->numberBetween(1, RoleORM::count()))
                     ->first()
                     ->role_id,
                 'creator'   => $member->member_id,

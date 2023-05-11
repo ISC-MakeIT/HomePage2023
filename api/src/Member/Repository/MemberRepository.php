@@ -209,6 +209,11 @@ class MemberRepository implements \MakeIT\Member\Repository\Interface\MemberRepo
         throw new DataIntegrityViolationException("メンバーの状態を管理する，active_members, non_active_membersテーブルが存在しません");
     }
 
+    public function findMe(): MemberBean
+    {
+        return $this->findOneByMemberId(auth()->id());
+    }
+
     public function save(MemberBean $memberBean): MemberBean
     {
         /** @var ?MemberORM */
