@@ -4,7 +4,7 @@ namespace App\Http\Response\Member\Admin;
 
 use App\Http\Resources\Member\Admin\RoleResource;
 use App\Http\Response\Response;
-use MakeIT\Role\Domain\Bean\Role;
+use MakeIT\Role\Domain\Bean\Admin\Role;
 
 class RolesResponse
 {

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Contact\ContactController;
 use App\Http\Controllers\Member\AdminMemberController;
+use App\Http\Controllers\Role\AdminRoleController;
 use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Notification\AdminNotificationController;
 use App\Http\Controllers\Notification\NotificationController;
@@ -18,13 +19,13 @@ Route::prefix('/admin')->group(function () {
             Route::put('/', [AdminMemberController::class, 'edit']);
             Route::delete('/', [AdminMemberController::class, 'delete']);
             Route::get('/me', [AdminMemberController::class, 'me']);
-            Route::get('/roles', [AdminMemberController::class, 'roles']);
             Route::put('/icon', [AdminMemberController::class, 'editIcon']);
             Route::put('/password', [AdminMemberController::class, 'changePassword']);
             Route::put('/role', [AdminMemberController::class, 'changeRole']);
             Route::put('/activity', [AdminMemberController::class, 'changeActivity']);
             Route::get('/{memberId}', [AdminMemberController::class, 'member']);
         });
+        Route::get('/roles', [AdminRoleController::class, 'roles']);
         Route::prefix('/notifications')->group(function () {
             Route::get('/', [AdminNotificationController::class, 'notifications']);
             Route::post('/', [AdminNotificationController::class, 'register']);

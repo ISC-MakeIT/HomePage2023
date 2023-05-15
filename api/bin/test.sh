@@ -2,7 +2,8 @@
 
 main() {
     php artisan migrate:fresh --path=database/migrations/**
-    php artisan test
+    php artisan db:seed
+    composer test
 }
 
 main

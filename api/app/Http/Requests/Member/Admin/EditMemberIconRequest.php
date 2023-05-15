@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Member\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use MakeIT\Member\Domain\Bean\LatestMemberIconBean;
+use MakeIT\Member\Domain\Bean\Admin\LatestMemberIconBean;
 
 class EditMemberIconRequest extends FormRequest
 {
@@ -15,12 +15,15 @@ class EditMemberIconRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'icon' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:4096'],
+            'icon'    => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:4096'],
+            'version' => ['required', 'integer'],
         ];
     }
 
     public function toDomain(): LatestMemberIconBean
     {
-        return LatestMemberIconBean::from($this->file('icon'));
+        $validatedRequest = $this->validated();
+
+        return LatestMemberIconBean::from($this->file('icon'), $validatedRequest['version']);
     }
 }

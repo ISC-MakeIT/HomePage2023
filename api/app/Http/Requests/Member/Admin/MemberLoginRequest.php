@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Member\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use MakeIT\Member\Domain\Bean\CredentialBean;
+use Illuminate\Support\Facades\Hash;
+use MakeIT\Member\Domain\Bean\Admin\CredentialBean;
 
 class MemberLoginRequest extends FormRequest
 {
@@ -24,6 +25,6 @@ class MemberLoginRequest extends FormRequest
     {
         $validatedRequest = $this->validated();
 
-        return CredentialBean::from($validatedRequest['username'], $validatedRequest['password']);
+        return CredentialBean::from($validatedRequest['username'], Hash::make($validatedRequest['password']));
     }
 }

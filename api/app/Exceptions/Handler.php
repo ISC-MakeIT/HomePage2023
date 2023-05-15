@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use MakeIT\Member\Exception\AlreadyCreatedUserNameOfMemberException;
-use MakeIT\Member\Exception\AlreadyEditMemberException;
+use MakeIT\Member\Exception\AlreadyEditedMemberException;
 use MakeIT\Member\Exception\IllegalChangeMyRole;
 use MakeIT\Member\Exception\IllegalPasswordDifferentException;
 use Throwable;
@@ -64,7 +64,7 @@ class Handler extends ExceptionHandler
         if ($e instanceof AlreadyCreatedUserNameOfMemberException) {
             return Response::error('既に使用されているユーザー名です。', null, 400);
         }
-        if ($e instanceof AlreadyEditMemberException) {
+        if ($e instanceof AlreadyEditedMemberException) {
             return Response::error('既に編集されているメンバーです。', null, 400);
         }
         if ($e instanceof IllegalPasswordDifferentException) {

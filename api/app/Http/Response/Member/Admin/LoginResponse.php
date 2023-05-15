@@ -4,7 +4,7 @@ namespace App\Http\Response\Member\Admin;
 
 use App\Http\Resources\Member\Admin\LoginResource;
 use App\Http\Response\Response;
-use MakeIT\Member\Domain\Bean\MemberWithTokenBean;
+use MakeIT\Member\Domain\Bean\Admin\MemberWithTokenBean;
 
 class LoginResponse
 {

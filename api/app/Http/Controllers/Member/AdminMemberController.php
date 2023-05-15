@@ -28,25 +28,23 @@ use App\Http\Response\Member\Admin\RolesResponse;
 use App\Models\Member\Member;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use MakeIT\Member\Service\Command\ChangeMemberActivityService;
-use MakeIT\Member\Service\Command\ChangeMemberPasswordService;
-use MakeIT\Member\Service\Command\ChangeMemberRoleService;
-use MakeIT\Member\Service\Command\DeleteMemberService;
-use MakeIT\Member\Service\Command\EditMemberIconService;
-use MakeIT\Member\Service\Command\EditMemberService;
-use MakeIT\Member\Service\Command\LoginService;
-use MakeIT\Member\Service\Command\LogoutService;
-use MakeIT\Member\Service\Command\RegisterMemberService;
-use MakeIT\Member\Service\Query\FindAllMemberService;
-use MakeIT\Member\Service\Query\FindMeService;
-use MakeIT\Member\Service\Query\FindOneMemberService;
-use MakeIT\Role\Service\Query\RolesService;
+use MakeIT\Member\Service\Command\Admin\ChangeMemberActivityService;
+use MakeIT\Member\Service\Command\Admin\ChangeMemberPasswordService;
+use MakeIT\Member\Service\Command\Admin\ChangeMemberRoleService;
+use MakeIT\Member\Service\Command\Admin\DeleteMemberService;
+use MakeIT\Member\Service\Command\Admin\EditMemberIconService;
+use MakeIT\Member\Service\Command\Admin\EditMemberService;
+use MakeIT\Member\Service\Command\Admin\LoginService;
+use MakeIT\Member\Service\Command\Admin\LogoutService;
+use MakeIT\Member\Service\Command\Admin\RegisterMemberService;
+use MakeIT\Member\Service\Query\Admin\FindAllMemberService;
+use MakeIT\Member\Service\Query\Admin\FindMeService;
+use MakeIT\Member\Service\Query\Admin\FindOneMemberService;
 
 class AdminMemberController extends Controller
 {
     private LoginService $loginService;
     private LogoutService $logoutService;
-    private RolesService $rolesService;
     private ChangeMemberRoleService $changeMemberRoleService;
     private ChangeMemberActivityService $changeMemberActivityService;
     private ChangeMemberPasswordService $changeMemberPasswordService;
@@ -61,7 +59,6 @@ class AdminMemberController extends Controller
     public function __construct(
         LoginService $loginService,
         LogoutService $logoutService,
-        RolesService $rolesService,
         ChangeMemberRoleService $changeMemberRoleService,
         ChangeMemberActivityService $changeMemberActivityService,
         ChangeMemberPasswordService $changeMemberPasswordService,
@@ -75,7 +72,6 @@ class AdminMemberController extends Controller
     ) {
         $this->loginService                = $loginService;
         $this->logoutService               = $logoutService;
-        $this->rolesService                = $rolesService;
         $this->changeMemberRoleService     = $changeMemberRoleService;
         $this->changeMemberActivityService = $changeMemberActivityService;
         $this->changeMemberPasswordService = $changeMemberPasswordService;
@@ -102,15 +98,6 @@ class AdminMemberController extends Controller
         $this->logoutService->execute($currentToken);
 
         return LogoutResponse::success();
-    }
-
-    public function roles(): JsonResponse
-    {
-        $this->authorize('roles', Member::class);
-
-        $roles = $this->rolesService->execute();
-
-        return RolesResponse::success($roles);
     }
 
     public function changeRole(ChangeRoleRequest $request): JsonResponse

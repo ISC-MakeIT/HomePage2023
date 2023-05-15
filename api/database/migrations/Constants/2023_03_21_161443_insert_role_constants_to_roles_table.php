@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use MakeIT\Role\Domain\Eloquent\Role;
-use MakeIT\Role\Domain\Entity\RoleName;
+use MakeIT\Role\Domain\Entity\Admin\RoleName;
 
 return new class() extends Migration {
     public function up(): void

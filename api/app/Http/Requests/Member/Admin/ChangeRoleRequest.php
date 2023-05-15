@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Member\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use MakeIT\Member\Domain\Bean\ChangeRoleBean;
+use MakeIT\Member\Domain\Bean\Admin\ChangeRoleBean;
 
 class ChangeRoleRequest extends FormRequest
 {

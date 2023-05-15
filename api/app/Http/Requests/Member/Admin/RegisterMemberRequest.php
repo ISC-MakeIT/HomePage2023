@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Member\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use MakeIT\Member\Domain\Bean\InitMemberBean;
+use Illuminate\Support\Facades\Hash;
+use MakeIT\Member\Domain\Bean\Admin\InitMemberBean;
 
 class RegisterMemberRequest extends FormRequest
 {
@@ -42,7 +43,7 @@ class RegisterMemberRequest extends FormRequest
             $validatedRequest['description'],
             $this->file('icon'),
             $validatedRequest['username'],
-            $validatedRequest['password'],
+            Hash::make($validatedRequest['password']),
         );
     }
 }

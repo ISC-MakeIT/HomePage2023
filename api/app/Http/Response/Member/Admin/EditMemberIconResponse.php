@@ -4,7 +4,7 @@ namespace App\Http\Response\Member\Admin;
 
 use App\Http\Resources\Member\Admin\MemberResource;
 use App\Http\Response\Response;
-use MakeIT\Member\Domain\Bean\MemberBean;
+use MakeIT\Member\Domain\Bean\Admin\MemberBean;
 
 class EditMemberIconResponse
 {

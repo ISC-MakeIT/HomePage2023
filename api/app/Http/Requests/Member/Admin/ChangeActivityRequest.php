@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Member\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use MakeIT\Member\Domain\Bean\ChangeActivityBean;
+use MakeIT\Member\Domain\Bean\Admin\ChangeActivityBean;
 
 class ChangeActivityRequest extends FormRequest
 {

@@ -19,20 +19,24 @@ class Response
 
     private function toJson()
     {
-        return response()->json([
-            'message' => $this->message,
-            'data'    => $this->data->response()
-        ], $this->statusCode);
+        return new JsonResponse(
+            [
+                'message' => $this->message,
+                'data'    => $this->data->response()
+            ],
+            $this->statusCode,
+        );
     }
 
-    public static function success(string $message, ?JsonResource $data = null, int $statusCode = 200)
+    public static function success(string $message, ?JsonResource $data = null, int $statusCode = 200): JsonResponse
     {
         if ($data) {
             return (new Response(
                 $statusCode,
                 $message,
                 $data
-            ))->toJson();
+            ))
+            ->toJson();
         }
 
         return (new Response(
@@ -42,7 +46,7 @@ class Response
         ))->toJson();
     }
 
-    public static function error(string $message, ?JsonResource $data = null, int $statusCode = 500)
+    public static function error(string $message, ?JsonResource $data = null, int $statusCode = 500): JsonResponse
     {
         if ($data) {
             return (new Response(

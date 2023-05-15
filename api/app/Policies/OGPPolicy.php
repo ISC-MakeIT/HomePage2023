@@ -2,34 +2,34 @@
 
 namespace App\Policies;
 
-use App\Models\Member\Member;
+use MakeIT\Member\Domain\Eloquent\Member as MemberORM;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class OGPPolicy
 {
     use HandlesAuthorization;
 
-    public function OGPList(Member $member)
+    public function OGPList(MemberORM $member)
     {
         return $member->isMemberOrMore();
     }
 
-    public function registerOGP(Member $member)
+    public function registerOGP(MemberORM $member)
     {
         return $member->isMemberOrMore();
     }
 
-    public function editOGP(Member $member)
+    public function editOGP(MemberORM $member)
     {
         return $member->isMemberOrMore();
     }
 
-    public function deleteOGP(Member $member)
+    public function deleteOGP(MemberORM $member)
     {
         return $member->isMemberOrMore();
     }
 
-    public function OGP(Member $member)
+    public function OGP(MemberORM $member)
     {
         return $member->isMemberOrMore();
     }

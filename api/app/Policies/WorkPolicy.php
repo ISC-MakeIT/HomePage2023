@@ -2,34 +2,34 @@
 
 namespace App\Policies;
 
-use App\Models\Member\Member;
+use MakeIT\Member\Domain\Eloquent\Member as MemberORM;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class WorkPolicy
 {
     use HandlesAuthorization;
 
-    public function register(Member $member): bool
+    public function register(MemberORM $member): bool
     {
         return $member->isMemberOrMore();
     }
 
-    public function edit(Member $member): bool
+    public function edit(MemberORM $member): bool
     {
         return $member->isMemberOrMore();
     }
 
-    public function delete(Member $member): bool
+    public function delete(MemberORM $member): bool
     {
         return $member->isMemberOrMore();
     }
 
-    public function works(Member $member): bool
+    public function works(MemberORM $member): bool
     {
         return $member->isMemberOrMore();
     }
 
-    public function work(Member $member): bool
+    public function work(MemberORM $member): bool
     {
         return $member->isMemberOrMore();
     }

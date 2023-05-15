@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use MakeIT\Member\Domain\Entity\MemberConstant;
+use MakeIT\Member\Domain\Entity\Admin\MemberConstant;
 
 return new class extends Migration {
     private array $memberRelationTableNames = [

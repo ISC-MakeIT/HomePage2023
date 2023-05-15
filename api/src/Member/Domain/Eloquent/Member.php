@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use MakeIT\Role\Domain\Eloquent\Role;
-use MakeIT\Role\Domain\Entity\RoleName;
+use MakeIT\Role\Domain\Entity\Admin\RoleName;
 
 class Member extends Authenticatable
 {
