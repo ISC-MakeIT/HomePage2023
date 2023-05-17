@@ -29,4 +29,8 @@ class MemberAbility extends Model
     {
         return $this->role;
     }
+
+    public function getRoleId(): int {
+        return $this->role_id;
+    }
 }

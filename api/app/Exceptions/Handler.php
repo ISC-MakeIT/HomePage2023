@@ -12,7 +12,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use MakeIT\Member\Exception\AlreadyCreatedUserNameOfMemberException;
 use MakeIT\Member\Exception\AlreadyEditedMemberException;
-use MakeIT\Member\Exception\IllegalChangeMyRole;
+use MakeIT\Member\Exception\IllegalChangeMyRoleException;
 use MakeIT\Member\Exception\IllegalPasswordDifferentException;
 use Throwable;
 
@@ -70,7 +70,7 @@ class Handler extends ExceptionHandler
         if ($e instanceof IllegalPasswordDifferentException) {
             return Response::error('古いパスワードが違います。', null, 400);
         }
-        if ($e instanceof IllegalChangeMyRole) {
+        if ($e instanceof IllegalChangeMyRoleException) {
             return Response::error('自分自身のロール変更は不可能です。', null, 400);
         }
         if ($e instanceof AlreadyEditedNotificationException) {

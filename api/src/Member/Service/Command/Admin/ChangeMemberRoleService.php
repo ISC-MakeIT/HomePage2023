@@ -6,7 +6,7 @@ use MakeIT\Member\Domain\Bean\Admin\MemberBean;
 use MakeIT\Member\Domain\Bean\Admin\ChangeRoleBean;
 use MakeIT\Member\Domain\Entity\Admin\ChangeRole;
 use MakeIT\Member\Exception\AlreadyEditedMemberException;
-use MakeIT\Member\Exception\IllegalChangeMyRole;
+use MakeIT\Member\Exception\IllegalChangeMyRoleException;
 use MakeIT\Member\Repository\Admin\Interface\MemberRepository;
 use MakeIT\Role\Domain\Bean\Admin\RoleBean;
 use MakeIT\Role\Repository\Admin\Interface\RoleRepository;
@@ -30,7 +30,7 @@ class ChangeMemberRoleService
 
         $me = $this->memberRepo->findMe();
         if ($changeRole->isSameMemberId($me->getMemberId())) {
-            throw new IllegalChangeMyRole();
+            throw new IllegalChangeMyRoleException();
         }
 
         $preMember = $this->memberRepo->findOneByMemberId($changeRole->getMemberId());
