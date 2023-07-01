@@ -11,6 +11,10 @@ on:
 jobs:
   to_s3:
     runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: ./client
+
     steps:
       - name: Checkout
         uses: actions/checkout@master 
@@ -18,15 +22,13 @@ jobs:
       - name: Install Dependencies
         run: |
           yarn install
-        working-directory: ./client
 
       - name: Build
         env:
           NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
         run:  |
-          yarn build && yarn export
           bash ./bin/init_env.sh
-        working-directory: ./client
+          yarn build && yarn export
 
       - name: Deploy  # S3にデプロイ 
         env:
@@ -35,4 +37,3 @@ jobs:
         run: |
           aws s3 cp --recursive --region ap-northeast-1 --acl public-read out s3://makeit-homepage
           aws s3 cp --region ap-northeast-1 .env s3://makeit-homepage
-        working-directory: ./client
