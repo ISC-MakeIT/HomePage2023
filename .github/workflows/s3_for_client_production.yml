@@ -28,7 +28,7 @@ jobs:
           NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
         run:  |
           bash ./bin/init_env.sh
-          yarn build && yarn export
+          yarn api:build && yarn build && yarn export
 
       - name: Deploy  # S3にデプロイ 
         env:
