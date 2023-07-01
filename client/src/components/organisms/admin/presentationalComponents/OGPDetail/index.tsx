@@ -2,7 +2,7 @@ import { Box, Chip, Stack, Typography } from '@mui/material';
 import { type OGP } from '@api/admin/ogps/detail';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { css } from '@emotion/css';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 interface OGPDetailProps {
   ogp?: OGP;
@@ -23,7 +23,7 @@ export const OGPDetail = ({ ogp, error }: OGPDetailProps) => {
 
   return (
     <Stack spacing={4}>
-      <Link to={ogp.thumbnail} target="_blank">
+      <Link href={ogp.thumbnail} target="_blank">
         <img src={ogp.thumbnail} alt="サムネイル" width={500} height={261.7801} />
       </Link>
 

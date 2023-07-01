@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 interface BlackNavigationLinkProps {
   to: string;
@@ -9,7 +9,7 @@ interface BlackNavigationLinkProps {
 export const BlackNavigationLink = ({ to, name }: BlackNavigationLinkProps) => {
   return (
     <Link
-      to={to}
+      href={to}
       css={css`
         display: block;
         text-decoration: none;

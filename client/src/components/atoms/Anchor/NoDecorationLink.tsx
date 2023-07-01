@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
-import { Link, type LinkProps } from 'react-router-dom';
+import Link, { type LinkProps } from 'next/link';
 
-type NoDecorationLinkProps = LinkProps;
+type NoDecorationLinkProps = {children: React.ReactNode} & LinkProps;
 
 export const NoDecorationLink = (props: NoDecorationLinkProps) => {
   return (
@@ -10,6 +10,8 @@ export const NoDecorationLink = (props: NoDecorationLinkProps) => {
         text-decoration: none;
       `}
       {...props}
-    />
+    >
+      {props.children}
+    </Link>
   );
 };

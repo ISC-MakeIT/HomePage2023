@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
 import { type Notification } from 'src/api/homePage/api/admin/notifications';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { colors, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import Link from 'next/link';
 
 interface NotificaitonListProps {
   notificationList: Notification[];
@@ -44,7 +44,7 @@ export const NotificationList = ({ notificationList }: NotificaitonListProps) =>
         {notificationList.map((notification) => (
           <TableRow
             component={Link}
-            to={`${ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS}/${notification.notificationId}`}
+            href={`${ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS}/${notification.notificationId}`}
             key={notification.notificationId}
             sx={{
               backgroundColor: getRowBackgroudColorBy(notification.isActive),

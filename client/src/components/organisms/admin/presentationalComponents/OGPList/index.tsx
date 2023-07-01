@@ -1,5 +1,5 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { type OGP } from 'src/api/homePage/api/admin/ogps';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
@@ -16,7 +16,7 @@ export const OGPList = ({ ogpList, error }: OGPListProps) => {
         {ogpList!.map((ogp) => (
           <TableRow
             component={Link}
-            to={`${ADMIN_ROUTE_FULL_PATH_MAP.OGP_SETTING_DETAIL}?url=${encodeURIComponent(ogp.url)}`}
+            href={`${ADMIN_ROUTE_FULL_PATH_MAP.OGP_SETTING_DETAIL}?url=${encodeURIComponent(ogp.url)}`}
             key={ogp.url}
             sx={{
               textDecoration: 'none',

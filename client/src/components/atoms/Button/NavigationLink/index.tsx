@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 interface LinkProps {
   elementId: string;
@@ -9,7 +9,7 @@ interface LinkProps {
 export const NavigationLink: React.FC<LinkProps> = ({ elementId, name }) => {
   return (
     <Link
-      to={`#${elementId}`}
+      href={`#${elementId}`}
       css={css`
         display: block;
         text-decoration: none;

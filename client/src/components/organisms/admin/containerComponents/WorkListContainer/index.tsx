@@ -3,7 +3,6 @@ import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { WorkList } from '../../presentationalComponents/WorkList';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 
@@ -12,7 +11,6 @@ export const WorkListContainer = () => {
   const [error, setError] = useState<string>();
 
   const userToken = useAppSelector(selectUserToken);
-  const state = useLocation().state as { refresh?: boolean };
   const proccessingLine = useProcessingLine();
 
   useEffect(() => {
@@ -52,7 +50,7 @@ export const WorkListContainer = () => {
     };
 
     main();
-  }, [state]);
+  }, []);
 
   return <WorkList workList={workList} error={error} />;
 };

@@ -57,7 +57,7 @@ export const Members = ({ members }: MembersProps) => {
         css={css`
           display: flex;
           flex-wrap: wrap;
-          row-gap: 40px;
+          gap: 40px;
           justify-content: space-around;
         `}
       >

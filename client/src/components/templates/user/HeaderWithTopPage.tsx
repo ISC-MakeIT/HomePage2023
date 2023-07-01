@@ -6,9 +6,9 @@ interface HeaderWithPageProps {
 
 export const HeaderWithTopPage = ({ children }: HeaderWithPageProps) => {
   return (
-    <main>
+    <>
       <HeaderContainer />
       {children}
-    </main>
+    </>
   );
 };

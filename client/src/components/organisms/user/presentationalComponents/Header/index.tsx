@@ -9,9 +9,9 @@ import { WhiteNavigation } from 'src/components/molecules/user/WhiteNavigation';
 import { BlackNavigation } from 'src/components/molecules/user/BlackNavigation';
 import { WhiteRadiusGithubButton } from 'src/components/molecules/user/Button/WhiteRadiusGithubButton';
 import { BlackGithubButton } from 'src/components/molecules/user/Button/BlackGithubButton';
-import { Link } from 'react-router-dom';
 import { USER_ROUTE_PATH_MAP } from 'src/routes/routePath';
 import { CONSTANT_CONTACT_CATEGORIE } from '../../constants/ContactCategories';
+import Link from 'next/link';
 
 interface HeaderProps {
   isStartingLocationInThisPage: boolean;
@@ -36,7 +36,7 @@ export const Header = ({ isStartingLocationInThisPage }: HeaderProps) => {
           `}
         >
           <Link
-            to={USER_ROUTE_PATH_MAP.TOP}
+            href={USER_ROUTE_PATH_MAP.TOP}
             css={css`
               width: 7.18rem;
               &:hover {
@@ -85,7 +85,7 @@ export const Header = ({ isStartingLocationInThisPage }: HeaderProps) => {
           `}
         >
           <Link
-            to={USER_ROUTE_PATH_MAP.TOP}
+            href={USER_ROUTE_PATH_MAP.TOP}
             css={css`
               width: 7.18rem;
               &:hover {

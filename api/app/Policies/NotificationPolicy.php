@@ -19,4 +19,12 @@ class NotificationPolicy {
     public function delete(Member $member): bool {
         return $member->isMemberOrMore();
     }
+
+    public function notifications(Member $member): bool {
+        return $member->isMemberOrMore();
+    }
+
+    public function notification(Member $member): bool {
+        return $member->isMemberOrMore();
+    }
 }

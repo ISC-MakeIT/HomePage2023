@@ -118,6 +118,8 @@ class AdminNotificationController extends Controller {
     }
 
     public function notifications(): JsonResponse {
+        $this->authorize('notifications', Notification::class);
+
         $notifications = Notification::doesntHave('archiveNotification')
             ->with(['activeNotification', 'nonActiveNotification'])
             ->orderBy('notification_id', 'ASC')
@@ -127,6 +129,8 @@ class AdminNotificationController extends Controller {
     }
 
     public function notification(NotificationRequest $request): array {
+        $this->authorize('notification', Notification::class);
+
         $validatedRequest = $request->validated();
 
         $notification = Notification::doesntHave('archiveNotification')

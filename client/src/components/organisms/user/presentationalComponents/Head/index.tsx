@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import NextHead from 'next/head';
 
 interface HeadProps {
   title: string;
@@ -9,7 +9,7 @@ interface HeadProps {
 
 export const Head = ({ title, description, keywords, thumbnail }: HeadProps) => {
   return (
-    <Helmet>
+    <NextHead>
       <title>{title}</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta name="keywords" content={keywords} />
@@ -29,6 +29,6 @@ export const Head = ({ title, description, keywords, thumbnail }: HeadProps) => 
       <meta name="theme-color" content="#f8f8f8" />
 
       <meta name="robots" content="index, follow" />
-    </Helmet>
+    </NextHead>
   );
 };

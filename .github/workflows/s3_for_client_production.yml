@@ -22,9 +22,9 @@ jobs:
 
       - name: Build
         env:
-          REACT_APP_API_URL: ${{ vars.REACT_APP_API_URL }}
+          NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
         run:  |
-          yarn build
+          yarn build && yarn export
           bash ./bin/init_env.sh
         working-directory: ./client
 
@@ -33,6 +33,6 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          aws s3 cp --recursive --region ap-northeast-1 --acl public-read build s3://makeit-homepage
+          aws s3 cp --recursive --region ap-northeast-1 --acl public-read out s3://makeit-homepage
           aws s3 cp --region ap-northeast-1 .env s3://makeit-homepage
         working-directory: ./client

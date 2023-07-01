@@ -14,13 +14,22 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "jsxImportSource": "@emotion/react",
     "baseUrl": "./",
     "paths": {
       "@redux/*": ["src/redux/*"],
-      "@api/*": ["src/modules/api/*"]
-    }
+      "@api/*": ["src/modules/api/*"],
+      "@components/*": ["src/components/*"],
+      "@app/*": ["src/app/*"]
+    },
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src"]
+  "include": ["src", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }

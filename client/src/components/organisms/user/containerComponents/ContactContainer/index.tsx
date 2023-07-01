@@ -4,8 +4,8 @@ import { type ContactFormInput } from '../../types/ContactFormInput';
 import { useEffect, useState } from 'react';
 import { type PostResponse, apiContact } from '@api/user/contact';
 import axios from 'axios';
-import { useSearchParams } from 'react-router-dom';
 import { type CONTACT_CATEGORIE, CONTACT_CATEGORIES_FOR_SELECT } from '../../constants/ContactCategories';
+import { useRouter } from 'next/router';
 
 export const ContactContainer = () => {
   const {
@@ -18,14 +18,14 @@ export const ContactContainer = () => {
   const [error, setError] = useState<string>();
   const [success, setSuccess] = useState<string>();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [searchParams] = useSearchParams();
+  const router = useRouter();
+  const { contactCategory } = router.query;
 
   useEffect(() => {
-    if (searchParams.has('contactCategory')) {
-      const contactCategory = searchParams.get('contactCategory') as CONTACT_CATEGORIE;
-      setValue('category', contactCategory);
+    if (router.isReady && contactCategory) {
+      setValue('category', contactCategory as CONTACT_CATEGORIE);
     }
-  }, [searchParams]);
+  }, [contactCategory, router]);
 
   const handleContact: SubmitHandler<ContactFormInput> = async (contactFormInput) => {
     try {

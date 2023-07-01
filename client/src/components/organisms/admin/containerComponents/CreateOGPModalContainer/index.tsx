@@ -4,12 +4,12 @@ import axios from 'axios';
 import { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { type CreateOGPFormInput } from '../../types/CreateOGPFormInput';
 import { apiCreateOGP } from '@api/admin/ogps';
 import { CreateOGPModal } from '../../presentationalComponents/CreateOGPModal';
+import { useRouter } from 'next/router';
 
 export const CreateOGPModalContainer = () => {
   const {
@@ -25,7 +25,7 @@ export const CreateOGPModalContainer = () => {
 
   const alert = useAlert();
   const userToken = useSelector(selectUserToken);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleOpen = () => {
     setIsActive(true);
@@ -42,9 +42,7 @@ export const CreateOGPModalContainer = () => {
       setIsActive(false);
       setThumbnailForDisplay(undefined);
 
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.OGP_SETTING, {
-        state: { refresh: true },
-      });
+      router.push(ADMIN_ROUTE_FULL_PATH_MAP.OGP_SETTING);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const status = e.response!.status;
