@@ -2,12 +2,12 @@ import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { type DeleteResponse } from 'src/api/homePage/api/admin/members';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { apiDeleteOGP } from '@api/admin/ogps';
 import { DeleteOGPModel } from '../../presentationalComponents/DeleteOGPModal';
+import { useRouter } from 'next/router';
 
 interface DeleteOGPModalContainerProps {
   url: string | null;
@@ -18,7 +18,7 @@ export const DeleteOGPModalContainer = ({ url }: DeleteOGPModalContainerProps) =
   const [error, setError] = useState<string>();
   const userToken = useAppSelector(selectUserToken);
   const alert = useAlert();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleDeleteOGP = async () => {
     try {
@@ -27,7 +27,7 @@ export const DeleteOGPModalContainer = ({ url }: DeleteOGPModalContainerProps) =
         type: 'success',
         content: response.message!,
       });
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.OGP_SETTING);
+      router.push(ADMIN_ROUTE_FULL_PATH_MAP.OGP_SETTING);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const status = e.response!.status;

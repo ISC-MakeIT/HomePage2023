@@ -50,19 +50,19 @@ export const Footer = () => {
                 row-gap: 1.75rem;
               `}
             >
-              <NoDecorationLink to={`${USER_ROUTE_PATH_MAP.TOP}#about`}>
+              <NoDecorationLink href={`${USER_ROUTE_PATH_MAP.TOP}#about`}>
                 <WhiteMediumText>MakeITについて</WhiteMediumText>
               </NoDecorationLink>
-              <NoDecorationLink to={`${USER_ROUTE_PATH_MAP.TOP}#notification`}>
+              <NoDecorationLink href={`${USER_ROUTE_PATH_MAP.TOP}#notification`}>
                 <WhiteMediumText>新着情報</WhiteMediumText>
               </NoDecorationLink>
               <NoDecorationLink
-                to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.EXPERIENCE}#contact`}
+                href={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.EXPERIENCE}#contact`}
               >
                 <WhiteMediumText>体験入部</WhiteMediumText>
               </NoDecorationLink>
 
-              <NoDecorationLink to={USER_ROUTE_PATH_MAP.WORKS}>
+              <NoDecorationLink href={USER_ROUTE_PATH_MAP.WORKS}>
                 <WhiteButton
                   style={css`
                     width: 9.5rem;
@@ -74,12 +74,12 @@ export const Footer = () => {
               </NoDecorationLink>
 
               <NoDecorationLink
-                to={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.PROJECT}#contact`}
+                href={`${USER_ROUTE_PATH_MAP.TOP}?contactCategory=${CONSTANT_CONTACT_CATEGORIE.PROJECT}#contact`}
               >
                 <WhiteMediumText>案件依頼・お問い合わせ</WhiteMediumText>
               </NoDecorationLink>
 
-              <NoDecorationLink to={`${USER_ROUTE_PATH_MAP.TOP}#members`}>
+              <NoDecorationLink href={`${USER_ROUTE_PATH_MAP.TOP}#members`}>
                 <WhiteButton
                   style={css`
                     width: 12rem;

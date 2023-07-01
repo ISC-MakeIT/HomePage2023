@@ -2,7 +2,7 @@ import { type Work } from '@api/admin/works';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 
@@ -46,7 +46,7 @@ export const WorkList = ({ workList, error }: WorkListProps) => {
         {workList.map((work) => (
           <TableRow
             component={Link}
-            to={`${ADMIN_ROUTE_FULL_PATH_MAP.WORKS}/${work.workId}`}
+            href={`${ADMIN_ROUTE_FULL_PATH_MAP.WORKS}/${work.workId}`}
             key={work.workId}
             sx={{
               backgroundColor: getRowBackgroudColorBy(work.isActive),

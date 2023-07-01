@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 
@@ -48,7 +48,7 @@ export const MemberList = ({ memberList, error }: MemberListProps) => {
         {memberList.map((member) => (
           <TableRow
             component={Link}
-            to={`${ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS}/${member.memberId}`}
+            href={`${ADMIN_ROUTE_FULL_PATH_MAP.MEMBERS}/${member.memberId}`}
             key={member.memberId}
             css={css`
               background-color: ${getRowBackgroudColorBy(member.isActive)};

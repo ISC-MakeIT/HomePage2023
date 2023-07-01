@@ -3,10 +3,10 @@ import { selectUserToken } from '@redux/actions/user/userTokenReducer';
 import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { DeleteNotificationModel } from '../../presentationalComponents/DeleteNotificationModel';
+import { useRouter } from 'next/router';
 
 interface DeleteNotificationModalContainerProps {
   notificationId: number;
@@ -17,7 +17,7 @@ export const DeleteNotificationModalContainer = ({ notificationId }: DeleteNotif
   const [error, setError] = useState<string>();
   const userToken = useAppSelector(selectUserToken);
   const alert = useAlert();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleDeleteNotification = async () => {
     try {
@@ -26,7 +26,7 @@ export const DeleteNotificationModalContainer = ({ notificationId }: DeleteNotif
         type: 'success',
         content: response.message!,
       });
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS);
+      router.push(ADMIN_ROUTE_FULL_PATH_MAP.NOTIFICATIONS);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const status = e.response!.status;

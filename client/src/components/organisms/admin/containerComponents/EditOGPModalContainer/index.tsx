@@ -3,7 +3,6 @@ import { useAppSelector } from '@redux/hooks';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
@@ -11,6 +10,7 @@ import { apiOGP, type GetResponse, type OGP } from '@api/admin/ogps/detail';
 import { type EditOGPFormInput } from '../../types/EditOGPFormInput';
 import { apiEditOGP, type PutResponse } from '@api/admin/ogps';
 import { EditOGPModal } from '../../presentationalComponents/EditOGPModal';
+import { useRouter } from 'next/router';
 
 interface EditOGPModalContainerProps {
   url: string | null;
@@ -30,7 +30,7 @@ export const EditOGPModalContainer = ({ url }: EditOGPModalContainerProps) => {
   const userToken = useAppSelector(selectUserToken);
   const alert = useAlert();
   const processingLine = useProcessingLine();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     const main = async () => {
@@ -134,7 +134,7 @@ export const EditOGPModalContainer = ({ url }: EditOGPModalContainerProps) => {
         milliSecondCountsToHide
       );
       setIsActive(false);
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.OGP_SETTING);
+      router.push(ADMIN_ROUTE_FULL_PATH_MAP.OGP_SETTING);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const responseData = e.response!.data as PutResponse;

@@ -1,9 +1,9 @@
 import { type SerializedStyles, css } from '@emotion/react';
-import { Link } from 'react-router-dom';
 import { DisabledRedToOrangeGradientButton } from 'src/components/atoms/Button/DisabledRedToOrangeGradientButton';
 import { GreenToBlueGradientButton } from 'src/components/atoms/Button/GreenToBlueGradientButton';
 import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
 import { RedToOrangeGradientButton } from 'src/components/atoms/Button/RedToOrangeGradientButton';
+import Link from 'next/link';
 
 type GRADIENT_TYPE = 'greenToBlue' | 'redToOrange';
 
@@ -67,7 +67,7 @@ export const GradientButtonWithIconAndArrow = ({
   if (to) {
     return (
       <Link
-        to={to}
+        href={to}
         css={css`
           text-decoration: none;
         `}

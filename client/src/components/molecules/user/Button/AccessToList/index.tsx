@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
-import { Link } from 'react-router-dom';
 import { Arrow } from 'src/components/atoms/Button/Icon/Arrow';
+import Link from 'next/link';
 
 interface AccessToListProps {
   to: string;
@@ -15,7 +15,7 @@ export const AccessToList = ({ to }: AccessToListProps) => {
       `}
     >
       <Link
-        to={to}
+        href={to}
         css={css`
           font-size: 1rem;
           line-height: 1.5rem;

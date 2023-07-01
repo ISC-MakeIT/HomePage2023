@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 interface WhiteNavigationLinkProps {
   to: string;
@@ -9,7 +9,7 @@ interface WhiteNavigationLinkProps {
 export const WhiteNavigationLink = ({ to, name }: WhiteNavigationLinkProps) => {
   return (
     <Link
-      to={to}
+      href={to}
       css={css`
         display: block;
         text-decoration: none;

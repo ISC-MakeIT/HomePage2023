@@ -4,11 +4,11 @@ import axios from 'axios';
 import { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'src/modules/hooks/useAlert';
 import { ADMIN_ROUTE_FULL_PATH_MAP } from 'src/routes/routePath';
 import { CreateWorkModal } from '../../presentationalComponents/CreateWorkModal';
 import { type CreateWorkFormInput } from '../../types/CreateWorkFormInput';
+import { useRouter } from 'next/router';
 
 export const CreateWorkModalContainer = () => {
   const {
@@ -26,7 +26,7 @@ export const CreateWorkModalContainer = () => {
 
   const alert = useAlert();
   const userToken = useSelector(selectUserToken);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleOpen = () => {
     setIsActive(true);
@@ -42,9 +42,7 @@ export const CreateWorkModalContainer = () => {
       reset();
       setIsActive(false);
 
-      navigate(ADMIN_ROUTE_FULL_PATH_MAP.WORKS, {
-        state: { refresh: true },
-      });
+      router.push(ADMIN_ROUTE_FULL_PATH_MAP.WORKS);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const status = e.response!.status;

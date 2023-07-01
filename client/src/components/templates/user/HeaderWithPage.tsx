@@ -7,13 +7,13 @@ interface HeaderWithPageProps {
 
 export const HeaderWithPage = ({ children }: HeaderWithPageProps) => {
   return (
-    <main
+    <div
       css={css`
         margin-top: 6rem;
       `}
     >
       <HeaderContainer />
       {children}
-    </main>
+    </div>
   );
 };

@@ -9,7 +9,7 @@ export const homePageClient = (config?: AxiosRequestConfig<any> | undefined) => 
       axios.create(),
       Object.assign(
         {
-          baseURL: process.env.REACT_APP_API_URL,
+          baseURL: process.env.NEXT_PUBLIC_API_URL,
           paramsSerializer: {
             indexes: false,
           },

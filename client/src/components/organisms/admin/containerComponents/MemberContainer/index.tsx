@@ -6,7 +6,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useProcessingLine } from 'src/modules/hooks/useProcessingLine';
 import { Member } from '../../presentationalComponents/Member';
-import { useLocation } from 'react-router-dom';
 
 interface MemberContainerProps {
   memberId: number;
@@ -17,7 +16,6 @@ export const MemberContainer = ({ memberId }: MemberContainerProps) => {
   const [error, setError] = useState<string>('');
   const userToken = useAppSelector(selectUserToken);
   const proccessingLine = useProcessingLine();
-  const state = useLocation().state as { refresh?: boolean };
 
   useEffect(() => {
     const main = async () => {
@@ -67,7 +65,7 @@ export const MemberContainer = ({ memberId }: MemberContainerProps) => {
     };
 
     main();
-  }, [state]);
+  }, []);
 
   const processMemberFrom = (preMember: APIMember) => {
     const elseDefaultDisplayUnExist = (memberElement?: string) => {

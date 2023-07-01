@@ -3,7 +3,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { AlertForError } from 'src/components/molecules/admin/AlertForError';
 
 interface WorkProps {
@@ -39,7 +39,7 @@ export const Work = ({ work, error }: WorkProps) => {
 
   return (
     <Stack flexDirection="row" columnGap={4}>
-      <Link target="_blank" to={work.thumbnail}>
+      <Link target="_blank" href={work.thumbnail}>
         <Box
           sx={{
             width: 300,
